@@ -17,10 +17,10 @@
       </AnchorPane>
    </center>
    <bottom>
-      <HBox prefHeight="40.0" prefWidth="600.0" spacing="10.0">
+      <HBox prefHeight="40.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <JFXButton fx:id="jbLogin" text="Login" />
-            <JFXButton fx:id="jbSair" text="Sair" />
+            <JFXButton fx:id="jbLogin" buttonType="RAISED" ripplerFill="#0d00ff" text="Login" />
+            <JFXButton fx:id="jbSair" buttonType="RAISED" onAction="#sair" ripplerFill="RED" text="Sair" />
          </children>
       </HBox>
    </bottom>

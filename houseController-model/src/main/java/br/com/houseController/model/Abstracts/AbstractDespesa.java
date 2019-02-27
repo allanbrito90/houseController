@@ -2,8 +2,8 @@ package br.com.houseController.model.Abstracts;
 
 import java.math.BigDecimal;
 
-import br.com.houseController.model.Categoria.Categoria;
 import br.com.houseController.model.Enums.EnumContaAtiva;
+import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.receita.Receita;
 
 public abstract class AbstractDespesa {

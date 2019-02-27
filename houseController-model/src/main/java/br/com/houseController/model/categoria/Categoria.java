@@ -1,4 +1,4 @@
-package br.com.houseController.model.Categoria;
+package br.com.houseController.model.categoria;
 
 public class Categoria {
 	

@@ -3,6 +3,8 @@ package br.com.houseController.login.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -27,9 +29,15 @@ public class LoginController implements Initializable {
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-				System.out.println("Funcionou, pode comemorar que deu certo.");
+				String encriptado = DigestUtils.md5Hex(jpfSenha.getText());
+				System.out.println("Funcionou, pode comemorar que deu certo." + encriptado);
 			}
 		});
+	}
+	
+	@FXML
+	public void sair(){
+		System.exit(0);
 	}
 
 }

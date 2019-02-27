@@ -10,7 +10,7 @@ public class Login {
 		try {
 		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 		stage.setTitle("Login");
-		stage.setScene(new Scene(root,250,200));
+		stage.setScene(new Scene(root,200,250));
 		stage.show();
 		}catch (Exception e) {
 			e.printStackTrace();
