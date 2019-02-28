@@ -13,8 +13,7 @@ import javax.persistence.Table;
 @Table(name="usuario")
 public class Usuario{
 	
-	@Id
-	@Column(name="id")
+
 	private int id;
 	
 	@Column
@@ -29,6 +28,7 @@ public class Usuario{
 	@Column
 	private String email;
 	
+	@Id
 	public int getId() {
 		return id;
 	}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration
+    PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory >
+		<!-- local connection properties -->
+        <property name="connection.driver_class">org.firebirdsql.jdbc.FBDriver</property>
+        <property name="connection.url">jdbc:firebirdsql:localhost/3050:c:\banco.fdb</property>
+        <property name="connection.username">SYSDBA</property>
+        <property name="connection.password">masterkey</property>
+        <property name="dialect">org.hibernate.dialect.FirebirdDialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
+        
+        <mapping class="br.com.houseController.model.usuario.Usuario"/>
+    </session-factory>    
+</hibernate-configuration>
