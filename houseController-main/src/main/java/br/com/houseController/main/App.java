@@ -4,6 +4,9 @@ package br.com.houseController.main;
 import java.util.List;
 import java.util.Properties;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +19,7 @@ import br.com.houseController.login.Login;
 import br.com.houseController.model.usuario.Usuario;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import net.bytebuddy.asm.Advice.Unused;
 
 /**
  * Hello world!
@@ -35,11 +39,26 @@ public class App extends Application{
     	Session session = factory.getCurrentSession();
     	
     	try {
-			Usuario usuario = new Usuario(4, "talita", "4321", "Talita", "talitanunes.tlt@hotmail.com");
+			/*Usuario usuario = new Usuario(7, "talita", "4321", "Talita", "talitanunes.tlt@hotmail.com");
 			session.beginTransaction();
 			session.save(usuario);
 			session.getTransaction().commit();
-			System.out.println("Inserido!");
+			System.out.println("Inserido!");*/
+			
+    		try {
+    			session.beginTransaction();
+    			/*String detalhesProdutoHQL = "from usuario where id='5'";
+    			  Query detalhesProdutoQuery = session.createQuery(detalhesProdutoHQL);
+    			  Usuario detalhesProduto = 
+    			  (Usuario) ((org.hibernate.query.Query) detalhesProdutoQuery).list().get(0);
+    			  System.out.println(detalhesProduto);*/
+    			
+    			Usuario usuario = session.get(Usuario.class, 1);
+    			System.out.println(usuario);
+    		} catch (RuntimeException e) {
+    			e.printStackTrace();
+    		}
+
 		} catch (Exception e) {
 			factory.close();
 		}
