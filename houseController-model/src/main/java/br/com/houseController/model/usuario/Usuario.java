@@ -2,6 +2,8 @@ package br.com.houseController.model.usuario;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,7 +15,8 @@ import javax.persistence.Table;
 @Table(name="usuario")
 public class Usuario{
 	
-
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	@Column
@@ -28,7 +31,7 @@ public class Usuario{
 	@Column
 	private String email;
 	
-	@Id
+
 	public int getId() {
 		return id;
 	}
@@ -65,6 +68,15 @@ public class Usuario{
 	}
 	
 	public Usuario(int id, String login, String senha, String nome, String email) {
+		super();
+		this.id = id;
+		this.login = login;
+		this.senha = senha;
+		this.nome = nome;
+		this.email = email;
+	}
+	
+	public Usuario(String login, String senha, String nome, String email) {
 		super();
 		this.id = id;
 		this.login = login;
