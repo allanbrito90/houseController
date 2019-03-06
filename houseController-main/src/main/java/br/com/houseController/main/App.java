@@ -3,24 +3,16 @@ package br.com.houseController.main;
 
 import java.io.File;
 import java.util.List;
-import java.util.Properties;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-//import org.hibernate.service.ServiceRegistryBuilder;
 
 import br.com.houseController.login.Login;
-import br.com.houseController.model.usuario.Usuario;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import net.bytebuddy.asm.Advice.Unused;
 
 /**
  * Hello world!
@@ -32,7 +24,7 @@ public class App extends Application{
     {    	
     	
     	File file = new File("src/main/java/hibernate.cfg.xml");
-    	System.out.println(file.exists());
+//    	System.out.println(file.exists());
 
     	
     	SessionFactory factory = new Configuration()
@@ -81,7 +73,7 @@ public class App extends Application{
     			
     			session.beginTransaction();
     			Query query = session.createQuery("from Usuario");
-    			List list = query.getResultList();
+    			List<?> list = query.getResultList();
     			System.out.println(list);
     			
     		} catch (RuntimeException e) {

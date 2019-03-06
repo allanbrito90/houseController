@@ -7,9 +7,7 @@
     <artifactId>houseController</artifactId>
     <version>1.0</version>
   </parent>
-  <groupId>br.com.allanbrito</groupId>
   <artifactId>houseController-service</artifactId>
-  <version>1.0</version>
   <name>houseController-service</name>
   <url>http://maven.apache.org</url>
   <properties>

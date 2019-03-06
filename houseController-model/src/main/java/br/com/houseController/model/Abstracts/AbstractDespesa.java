@@ -2,25 +2,21 @@ package br.com.houseController.model.Abstracts;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.receita.Receita;
 
 @MappedSuperclass
-public abstract class AbstractDespesa {
-	
+//@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class AbstractDespesa{
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	Integer id;

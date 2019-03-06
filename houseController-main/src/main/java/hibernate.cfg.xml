@@ -27,5 +27,9 @@
 		<mapping class="br.com.houseController.model.Abstracts.AbstractDespesa" />
 		<mapping class="br.com.houseController.model.receita.Receita" />
 		<mapping class="br.com.houseController.model.despesas.DespesaVariavel" />
+		<mapping class="br.com.houseController.model.despesas.DespesaFixa" />
+		<mapping class="br.com.houseController.model.produto.Produto" />
+		<mapping class="br.com.houseController.model.produto.Ingrediente" />
+		<mapping class="br.com.houseController.model.despesas.Compras" />
 	</session-factory>
 </hibernate-configuration>
