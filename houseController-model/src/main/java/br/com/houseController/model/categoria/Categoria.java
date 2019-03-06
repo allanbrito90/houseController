@@ -1,8 +1,24 @@
 package br.com.houseController.model.categoria;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+
+@Entity(name="categoria")
+@Table(name="categoria")
 public class Categoria {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	Integer id;
+	
+	@Column
 	String descricaoCategoria;	
 	
 	public Categoria() {	}

@@ -29,18 +29,19 @@ import net.bytebuddy.asm.Advice.Unused;
 public class App extends Application{
 
     public static void main( String[] args )
-    {
-    	launch(args);
-    	File file = new File("src/main/java/hibernate.cfg.xml");
+    {    	
     	
-//    	SessionFactory factory = new Configuration()
-//    			.configure(file)
-////    			.addAnnotatedClass(Usuario.class)
-//    			.buildSessionFactory();
-//    	
-//    	Session session = factory.getCurrentSession();
-//    	
-//    	try {
+    	File file = new File("src/main/java/hibernate.cfg.xml");
+    	System.out.println(file.exists());
+
+    	
+    	SessionFactory factory = new Configuration()
+    			.configure(file)
+//    			.addAnnotatedClass(Usuario.class)
+    			.buildSessionFactory();
+    	
+    	Session session = factory.getCurrentSession();
+    	
     		
     		//Para inserir (ou salvar update após o get)
 //			Usuario usuario = new Usuario(1, "alex.brito", "5678", "Alex", "alex@hotmail.com");
@@ -75,23 +76,22 @@ public class App extends Application{
 //			session.beginTransaction();
 //    		session.delete(usuario);
     		
-//    		try {   			
-//
-//    			
-//    			session.beginTransaction();
-//    			Query query = session.createQuery("from Usuario");
-//    			List list = query.getResultList();
-//    			System.out.println(list);
-//    			
-//    		} catch (RuntimeException e) {
-//    			e.printStackTrace();
-//    		}
-//
-//		} catch (Exception e) {
-//			factory.close();
-//		}
+    		try {   			
+
+    			
+    			session.beginTransaction();
+    			Query query = session.createQuery("from Usuario");
+    			List list = query.getResultList();
+    			System.out.println(list);
+    			
+    		} catch (RuntimeException e) {
+    			e.printStackTrace();
+    		}finally {
+    			//factory.close();
+    		}
     	  	 
     	
+    	launch(args);
     }
 
 	@Override

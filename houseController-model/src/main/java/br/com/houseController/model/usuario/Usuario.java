@@ -78,7 +78,6 @@ public class Usuario{
 	
 	public Usuario(String login, String senha, String nome, String email) {
 		super();
-		this.id = id;
 		this.login = login;
 		this.senha = senha;
 		this.nome = nome;
