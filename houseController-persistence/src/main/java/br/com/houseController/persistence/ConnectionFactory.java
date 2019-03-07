@@ -1,10 +1,13 @@
-package br.com.houseController.service.Usuario;
+package br.com.houseController.persistence;
 
-public class UsuarioService {
+import java.io.File;
 
-	public UsuarioService() {
-	}
-	
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+public class ConnectionFactory 
+{
 	
 	
 	//Para inserir (ou salvar update após o get)
@@ -40,20 +43,35 @@ public class UsuarioService {
 //	session.beginTransaction();
 //	session.delete(usuario);
 	
-//	try {   			
-//
-//		
-//		session.beginTransaction();
-//		Query query = session.createQuery("from Usuario");
-//		List list = query.getResultList();
-//		System.out.println(list);
-//		
-//	} catch (RuntimeException e) {
-//		e.printStackTrace();
-//	}
-//
-//} catch (Exception e) {
-//	factory.close();
-//}
-
+	static SessionFactory factory;
+	
+	public static void criarConexao(){
+    	File file = new File("src/main/java/hibernate.cfg.xml");
+    	if(!file.exists()){
+    		System.out.println("Arquivo Hibernate não encontrado, caminho configurado:" + file.getAbsolutePath());
+    	}
+    	
+    	factory = new Configuration()
+    			.configure(file)
+//    			.addAnnotatedClass(Usuario.class)
+    			.buildSessionFactory();
+   	}
+	
+	public static Session obterNovaSessao(){
+		return factory.openSession();
+	}
+	
+	public static void fecharSessao(Session session){
+		//Se estiver utilizando factory.getCurrentSession() provavelmente este método não será necessário
+		session.close();
+	}
+	
+	public static Session desfazer(Session session){
+		session.getTransaction().rollback();
+		return session;
+	}
+	
+	public static void salvar(Session session){
+		session.getTransaction().commit();
+	}
 }

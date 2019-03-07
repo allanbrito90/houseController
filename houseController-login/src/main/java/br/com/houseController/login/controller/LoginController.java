@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.model.usuario.Usuario;
+import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,6 +33,13 @@ public class LoginController implements Initializable {
 			public void handle(ActionEvent event) {
 				String encriptado = DigestUtils.md5Hex(jpfSenha.getText());
 				System.out.println("Funcionou, pode comemorar que deu certo." + encriptado);
+				
+				Usuario usuario = new Usuario();
+				usuario.setLogin(jtfLogin.getText());
+				usuario.setSenha(jpfSenha.getText());
+				
+				UsuarioService usuarioService = new UsuarioService();
+				
 			}
 		});
 	}

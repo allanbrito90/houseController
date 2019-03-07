@@ -10,6 +10,7 @@
 		<module>houseController-main</module>
 		<module>houseController-login</module>
     	<module>houseController-service</module>
+    <module>houseController-persistence</module>
   </modules>
 
 	<properties>

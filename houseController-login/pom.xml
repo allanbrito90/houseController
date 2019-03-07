@@ -8,4 +8,19 @@
 		<version>1.0</version>
 	</parent>
 	<artifactId>houseController-login</artifactId>
+	
+	<dependencies>
+		<dependency>
+		<groupId>br.com.allanbrito</groupId>
+		<artifactId>houseController-model</artifactId>
+		<version>1.0</version>
+		</dependency>
+		
+				<dependency>
+		<groupId>br.com.allanbrito</groupId>
+		<artifactId>houseController-service</artifactId>
+		<version>1.0</version>
+		</dependency>
+	</dependencies>
+	
 </project>
