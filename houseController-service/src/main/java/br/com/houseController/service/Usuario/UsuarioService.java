@@ -1,10 +1,57 @@
 package br.com.houseController.service.Usuario;
 
-public class UsuarioService {
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Query;
+
+import org.hibernate.Session;
+
+import br.com.houseController.model.Interfaces.InterfaceService;
+import br.com.houseController.model.usuario.Usuario;
+import br.com.houseController.persistence.ConnectionFactory;
+
+public class UsuarioService implements InterfaceService{
 
 	public UsuarioService() {
 	}
+
+	@Override
+	public Integer insert(Object obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> ArrayList<T> findAll() {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from Usuario");
+		ArrayList<Object> usuarios = new ArrayList<>();
+		List<?> list = query.getResultList();
+		for(Object obj : list){
+			Usuario usuario = (Usuario) obj; 
+			usuarios.add(usuario);
+		}
+		ConnectionFactory.fecharSessao(session);
+		return list;
+	}
+
+	@Override
+	public Integer delete(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object findOne(Object obj) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+	public void obterTodosUsuarios(){
+		
+	}
+
 	
 	
 	//Para inserir (ou salvar update após o get)

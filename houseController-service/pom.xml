@@ -20,5 +20,17 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
+   		<dependency>
+			<groupId>br.com.allanbrito</groupId>
+			<artifactId>houseController-model</artifactId>
+			<version>1.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>br.com.allanbrito</groupId>
+			<artifactId>houseController-persistence</artifactId>
+			<version>1.0</version>
+		</dependency>
   </dependencies>
 </project>
