@@ -1,7 +1,6 @@
 package br.com.houseController.service.Usuario;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Query;
 
@@ -11,48 +10,65 @@ import br.com.houseController.model.Interfaces.InterfaceService;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 
-public class UsuarioService implements InterfaceService{
+public class UsuarioService implements InterfaceService<Usuario>{
 
 	public UsuarioService() {
 	}
 
 	@Override
-	public Integer insert(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer insert(Usuario obj) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		session.save(obj);
+		ConnectionFactory.fecharSessao(session);
+		return obj.getId();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T> ArrayList<T> findAll() {
+	public ArrayList<Usuario> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
 		Query query = session.createQuery("from Usuario");
-		ArrayList<Object> usuarios = new ArrayList<>();
-		List<?> list = query.getResultList();
-		for(Object obj : list){
-			Usuario usuario = (Usuario) obj; 
-			usuarios.add(usuario);
-		}
+		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
 	}
+	
 
 	@Override
 	public Integer delete(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("delete from Usuario where id = :id");
+		query.setParameter("id", id);
+		Integer retorno = query.executeUpdate();
+		ConnectionFactory.fecharSessao(session);
+		return retorno;
 	}
 
 	@Override
-	public Object findOne(Object obj) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public void obterTodosUsuarios(){
-		
+	public Usuario findOne(Usuario obj) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Usuario usuario = session.get(Usuario.class, obj.getId());
+		ConnectionFactory.fecharSessao(session);
+		return usuario;
 	}
 
+	@SuppressWarnings("unchecked")
+	public boolean checaLogin(Usuario usuario){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from Usuario where login = :login and senha = :senha");
+		query.setParameter("login", usuario.getLogin());
+		query.setParameter("senha", usuario.getSenha());		
+		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		if(list.size()>0){
+			return true;
+		}
+		return false;		
+	}
+
+
 	
+
 	
 	//Para inserir (ou salvar update após o get)
 //	Usuario usuario = new Usuario(1, "alex.brito", "5678", "Alex", "alex@hotmail.com");

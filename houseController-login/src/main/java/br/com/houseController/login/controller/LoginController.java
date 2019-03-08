@@ -3,6 +3,8 @@ package br.com.houseController.login.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.jfoenix.controls.JFXButton;
@@ -39,6 +41,11 @@ public class LoginController implements Initializable {
 				usuario.setSenha(jpfSenha.getText());
 				
 				UsuarioService usuarioService = new UsuarioService();
+				if(usuarioService.checaLogin(usuario)){
+					JOptionPane.showMessageDialog(null, "USUÁRIO ENCONTRADO");
+				}else{
+					JOptionPane.showMessageDialog(null, "USUÁRIO NÃO ENCONTRADO");
+				}
 				
 			}
 		});

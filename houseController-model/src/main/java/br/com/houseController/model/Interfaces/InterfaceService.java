@@ -6,7 +6,7 @@ public interface InterfaceService <T extends Object>{
 	
 	public Integer insert(T obj);
 	
-	public Object findOne (Object obj);
+	public T findOne (T obj);
 	
 	public ArrayList<T> findAll();
 	
