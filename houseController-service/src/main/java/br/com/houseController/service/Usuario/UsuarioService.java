@@ -18,7 +18,9 @@ public class UsuarioService implements InterfaceService<Usuario>{
 	@Override
 	public Integer insert(Usuario obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
+		session.beginTransaction();
 		session.save(obj);
+		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();
 	}
@@ -37,9 +39,11 @@ public class UsuarioService implements InterfaceService<Usuario>{
 	@Override
 	public Integer delete(int id) {
 		Session session = ConnectionFactory.obterNovaSessao();
+		session.beginTransaction();
 		Query query = session.createQuery("delete from Usuario where id = :id");
 		query.setParameter("id", id);
 		Integer retorno = query.executeUpdate();
+		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return retorno;
 	}

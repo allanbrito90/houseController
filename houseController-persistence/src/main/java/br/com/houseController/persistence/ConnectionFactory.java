@@ -1,7 +1,5 @@
 package br.com.houseController.persistence;
 
-import java.io.File;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -46,13 +44,9 @@ public class ConnectionFactory
 	static SessionFactory factory;
 	
 	public static void criarConexao(){
-    	File file = new File("src/main/java/hibernate.cfg.xml");
-    	if(!file.exists()){
-    		System.out.println("Arquivo Hibernate não encontrado, caminho configurado:" + file.getAbsolutePath());
-    	}
     	
     	factory = new Configuration()
-    			.configure(file)
+    			.configure("hibernate/hibernate.cfg.xml")
 //    			.addAnnotatedClass(Usuario.class)
     			.buildSessionFactory();
    	}
@@ -73,5 +67,9 @@ public class ConnectionFactory
 	
 	public static void salvar(Session session){
 		session.getTransaction().commit();
+	}
+
+	public static void fecharConexao() {
+		factory.close();		
 	}
 }

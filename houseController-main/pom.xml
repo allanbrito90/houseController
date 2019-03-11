@@ -25,19 +25,19 @@
 
 		<dependency>
 			<groupId>br.com.allanbrito</groupId>
-			<artifactId>houseController-login</artifactId>
+			<artifactId>houseController-model</artifactId>
 			<version>1.0</version>
 		</dependency>
 
 		<dependency>
 			<groupId>br.com.allanbrito</groupId>
-			<artifactId>houseController-model</artifactId>
+			<artifactId>houseController-persistence</artifactId>
 			<version>1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>br.com.allanbrito</groupId>
-			<artifactId>houseController-persistence</artifactId>
+			<artifactId>houseController-files</artifactId>
 			<version>1.0</version>
 		</dependency>
 	</dependencies>

@@ -27,6 +27,12 @@ public class Categoria {
 		this.descricaoCategoria = descricaoCategoria;
 	}
 	
+	public Categoria(String descricaoCategoria) {
+		super();
+		this.id = id;
+		this.descricaoCategoria = descricaoCategoria;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

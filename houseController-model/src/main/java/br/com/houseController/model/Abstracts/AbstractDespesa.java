@@ -57,6 +57,16 @@ public abstract class AbstractDespesa{
 		this.valorDespesa = valorDespesa;
 		this.receitaUtilizada = receitaUtilizada;
 	}
+	
+	public AbstractDespesa(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
+		super();
+		this.pago = pago;
+		this.categoria = categoria;
+		this.contaAtiva = contaAtiva;
+		this.descricaoDespesa = descricaoDespesa;
+		this.valorDespesa = valorDespesa;
+		this.receitaUtilizada = receitaUtilizada;
+	}
 
 
 

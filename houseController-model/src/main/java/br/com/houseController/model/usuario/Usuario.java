@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Hello world!
+ * Modelo de usuário para login
+ * @author allan
+ * @version 1.0
  *
  */
 @Entity
@@ -17,9 +19,15 @@ public class Usuario{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	/**
+	 * Id do usuário
+	 */
 	private int id;
 	
 	@Column
+	/**
+	 * login para acesso e permissões
+	 */
 	private String login;
 	
 	@Column
@@ -67,6 +75,14 @@ public class Usuario{
 	public Usuario() {
 	}
 	
+	/**
+	 * Construtor de usuário com ID
+	 * @param id
+	 * @param login
+	 * @param senha
+	 * @param nome
+	 * @param email
+	 */
 	public Usuario(int id, String login, String senha, String nome, String email) {
 		super();
 		this.id = id;
@@ -76,6 +92,13 @@ public class Usuario{
 		this.email = email;
 	}
 	
+	/**
+	 * Construtor sem ID
+	 * @param login
+	 * @param senha
+	 * @param nome
+	 * @param email
+	 */
 	public Usuario(String login, String senha, String nome, String email) {
 		super();
 		this.login = login;
