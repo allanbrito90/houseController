@@ -1,4 +1,4 @@
-package br.com.houseController.service.Despesa;
+package br.com.houseController.service.Produto;
 
 import java.util.ArrayList;
 
@@ -7,14 +7,14 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 
 import br.com.houseController.model.Interfaces.InterfaceService;
-import br.com.houseController.model.despesas.DespesaVariavel;
+import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 
-public class DespesaVariavelService implements InterfaceService<DespesaVariavel>{
+public class IngredienteService implements InterfaceService<Ingrediente> {
 
 	@Override
-	public Integer insert(DespesaVariavel obj) {
+	public Integer insert(Ingrediente obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
 		session.save(obj);
@@ -24,16 +24,16 @@ public class DespesaVariavelService implements InterfaceService<DespesaVariavel>
 	}
 
 	@Override
-	public DespesaVariavel findOne(DespesaVariavel obj) {
+	public Ingrediente findOne(Ingrediente obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<DespesaVariavel> findAll() {
+	public ArrayList<Ingrediente> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from despesaVariavel");
-		ArrayList<DespesaVariavel> list = (ArrayList<DespesaVariavel>) query.getResultList();
+		Query query = session.createQuery("from ingrediente");
+		ArrayList<Ingrediente> list = (ArrayList<Ingrediente>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
 	}
@@ -42,7 +42,7 @@ public class DespesaVariavelService implements InterfaceService<DespesaVariavel>
 	public Integer delete(int id) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		Query query = session.createQuery("delete from despesa_variavel where id = :id");
+		Query query = session.createQuery("delete from ingrediente where id = :id");
 		query.setParameter("id", id);
 		Integer retorno = query.executeUpdate();
 		session.getTransaction().commit();

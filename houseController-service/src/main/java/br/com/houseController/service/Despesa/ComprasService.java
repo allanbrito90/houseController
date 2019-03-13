@@ -7,14 +7,13 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 
 import br.com.houseController.model.Interfaces.InterfaceService;
-import br.com.houseController.model.despesas.DespesaVariavel;
-import br.com.houseController.model.usuario.Usuario;
+import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.persistence.ConnectionFactory;
 
-public class DespesaVariavelService implements InterfaceService<DespesaVariavel>{
+public class ComprasService implements InterfaceService<Compras> {
 
 	@Override
-	public Integer insert(DespesaVariavel obj) {
+	public Integer insert(Compras obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
 		session.save(obj);
@@ -24,16 +23,16 @@ public class DespesaVariavelService implements InterfaceService<DespesaVariavel>
 	}
 
 	@Override
-	public DespesaVariavel findOne(DespesaVariavel obj) {
+	public Compras findOne(Compras obj) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<DespesaVariavel> findAll() {
+	public ArrayList<Compras> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from despesaVariavel");
-		ArrayList<DespesaVariavel> list = (ArrayList<DespesaVariavel>) query.getResultList();
+		Query query = session.createQuery("from compras");
+		ArrayList<Compras> list = (ArrayList<Compras>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
 	}

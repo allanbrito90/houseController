@@ -1,17 +1,32 @@
 package br.com.houseController.service.Usuario;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import javax.persistence.Query;
+import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
 
+import br.com.houseController.dialogs.Aguarde;
 import br.com.houseController.model.Interfaces.InterfaceService;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class UsuarioService implements InterfaceService<Usuario>{
-
+public class UsuarioService implements InterfaceService<Usuario>, Callable<Integer>{
+	Usuario usuario = new Usuario();
+	
+	public UsuarioService(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 	public UsuarioService() {
 	}
 
@@ -64,63 +79,46 @@ public class UsuarioService implements InterfaceService<Usuario>{
 		query.setParameter("senha", usuario.getSenha());		
 		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(list.size()>0){
+//			JOptionPane.showMessageDialog(null, "USUÁRIO ENCONTRADO");
 			return true;
 		}
+//		JOptionPane.showMessageDialog(null, "USUÁRIO NÃO ENCONTRADO");
 		return false;		
 	}
 
-
-	
-
-	
-	//Para inserir (ou salvar update após o get)
-//	Usuario usuario = new Usuario(1, "alex.brito", "5678", "Alex", "alex@hotmail.com");
-//	session.beginTransaction();
-//	session.save(usuario);
-//	session.getTransaction().commit();
-//	System.out.println("Inserido!");
-	
-	//Para obter um registro (ou para obter registro para alteração (após isso usar o save))
-//	session.beginTransaction();
-//	Usuario usuario = session.get(Usuario.class, 7);
-//	System.out.println("Usuário obtido: " + usuario);
-//	usuario.setNome("Alex");
-//	session.save(usuario);
-	
-	//Para obter vários registros
-//	session.beginTransaction();
-//	List<Usuario> usuarios = session.createQuery("from Usuario").getResultList(); //Utilizar o nome da Entity (classe) e não o nome da table
-//	for(Usuario usuario2 : usuarios){
-//		System.out.println(usuario2);
-//	}
-	
-//	Para trazer registros específicos com Where clause
-//	session.beginTransaction();
-//	Query query = session.createQuery("from Usuario where login = :nome and senha = :senha");
-//	query.setParameter("nome", "talita");
-//	query.setParameter("senha", "4321");
-//	List list = query.getResultList();
-//	System.out.println(list);
-	
-	//Para deletar registro
-//	session.beginTransaction();
-//	session.delete(usuario);
-	
-//	try {   			
+//	@Override
+//	protected Task<Boolean> createTask() {
+//		return new Task<Boolean>() {
 //
-//		
-//		session.beginTransaction();
-//		Query query = session.createQuery("from Usuario");
-//		List list = query.getResultList();
-//		System.out.println(list);
-//		
-//	} catch (RuntimeException e) {
-//		e.printStackTrace();
+//			@Override
+//			protected Boolean call() throws Exception {
+//				Stage stage = new Stage();
+//				try {
+//					Parent root1 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("fxml/aguarde.fxml"));
+//					stage = new Stage();
+//					stage.setScene(new Scene(root1));
+//					stage.show();
+//					checaLogin(usuario);
+//					stage.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}		
+//				return checaLogin(usuario);
+//			}
+//		};
 //	}
-//
-//} catch (Exception e) {
-//	factory.close();
-//}
 
+	@Override
+	public Integer call() throws Exception {
+		Thread.sleep(2000);
+		checaLogin(usuario);
+		return 10056;
+	}
 }

@@ -9,10 +9,12 @@ import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.despesas.DespesaVariavel;
 import br.com.houseController.model.receita.Receita;
+import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Categoria.CategoriaService;
 import br.com.houseController.service.Despesa.DespesaVariavelService;
 import br.com.houseController.service.Receita.ReceitaService;
+import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,24 +33,22 @@ public class App extends Application{
     {
     	ConnectionFactory.criarConexao();    		
     	
-    	ReceitaService receitaService = new ReceitaService();
-    	ArrayList<Receita> receitas = receitaService.findAll();
-    	
-    	CategoriaService categoriaService = new CategoriaService();
-    	ArrayList<Categoria> categorias = categoriaService.findAll();
-    	
-    	DespesaVariavel despesaVariavel = new DespesaVariavel();
-    	despesaVariavel.setCategoria(categorias.get(0));
-    	despesaVariavel.setContaAtiva(EnumContaAtiva.ATIVO);
-    	despesaVariavel.setDescricaoDespesa("Conta de Água");
-    	despesaVariavel.setDtPagamento(LocalDateTime.now());
-    	despesaVariavel.setPago(false);
-    	despesaVariavel.setReceitaUtilizada(receitas.get(0));
-    	despesaVariavel.setValorDespesa(new BigDecimal(19.09));
-    	DespesaVariavelService despesaVariavelService = new DespesaVariavelService();
-    	despesaVariavelService.insert(despesaVariavel);
-    	
-    	
+//    	ReceitaService receitaService = new ReceitaService();
+//    	ArrayList<Receita> receitas = receitaService.findAll();
+//    	
+//    	CategoriaService categoriaService = new CategoriaService();
+//    	ArrayList<Categoria> categorias = categoriaService.findAll();
+//    	
+//    	DespesaVariavel despesaVariavel = new DespesaVariavel();
+//    	despesaVariavel.setCategoria(categorias.get(0));
+//    	despesaVariavel.setContaAtiva(EnumContaAtiva.ATIVO);
+//    	despesaVariavel.setDescricaoDespesa("Conta de Água");
+//    	despesaVariavel.setDtPagamento(LocalDateTime.now());
+//    	despesaVariavel.setPago(false);
+//    	despesaVariavel.setReceitaUtilizada(receitas.get(0));
+//    	despesaVariavel.setValorDespesa(new BigDecimal(19.09));
+//    	DespesaVariavelService despesaVariavelService = new DespesaVariavelService();
+//    	despesaVariavelService.insert(despesaVariavel);
     	
     	launch(args);
     }
@@ -64,5 +64,11 @@ public class App extends Application{
 			e.printStackTrace();
 		}
 
+	}
+	
+	@Override
+	public void stop() throws Exception{
+		System.out.println("Conexão Fechada");
+		ConnectionFactory.fecharConexao();
 	}
 }
