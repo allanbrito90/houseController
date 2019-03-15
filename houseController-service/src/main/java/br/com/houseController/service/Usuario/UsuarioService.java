@@ -1,26 +1,17 @@
 package br.com.houseController.service.Usuario;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import javax.persistence.Query;
-import javax.swing.JOptionPane;
 
 import org.hibernate.Session;
 
-import br.com.houseController.dialogs.Aguarde;
 import br.com.houseController.model.Interfaces.InterfaceService;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
-public class UsuarioService implements InterfaceService<Usuario>, Callable<Integer>{
+public class UsuarioService implements InterfaceService<Usuario>, Callable<Boolean>{
 	Usuario usuario = new Usuario();
 	
 	public UsuarioService(Usuario usuario) {
@@ -79,12 +70,7 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Integ
 		query.setParameter("senha", usuario.getSenha());		
 		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		if(list.size()>0){
 //			JOptionPane.showMessageDialog(null, "USUÁRIO ENCONTRADO");
 			return true;
@@ -93,32 +79,10 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Integ
 		return false;		
 	}
 
-//	@Override
-//	protected Task<Boolean> createTask() {
-//		return new Task<Boolean>() {
-//
-//			@Override
-//			protected Boolean call() throws Exception {
-//				Stage stage = new Stage();
-//				try {
-//					Parent root1 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("fxml/aguarde.fxml"));
-//					stage = new Stage();
-//					stage.setScene(new Scene(root1));
-//					stage.show();
-//					checaLogin(usuario);
-//					stage.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}		
-//				return checaLogin(usuario);
-//			}
-//		};
-//	}
 
 	@Override
-	public Integer call() throws Exception {
-		Thread.sleep(2000);
-		checaLogin(usuario);
-		return 10056;
+	public Boolean call() throws Exception {
+		return checaLogin(usuario);
 	}
+
 }

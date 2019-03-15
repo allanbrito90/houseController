@@ -1,0 +1,27 @@
+#bpPrincipal{
+	-fx-background-color: transparent;
+}
+
+#vbLateral{
+	-fx-background-radius: 30 0 0 30;
+	-fx-background-color: #ABE7F5;
+}
+
+#apPrincipal{
+	-fx-background-color: #F8F7FC; 
+	-fx-background-radius: 0 30 30 0;
+}
+
+#apTela{
+	-fx-background-color: #F2F3F7; 
+}
+
+.botoesMenu:hover{
+	-fx-background-color: #3751FF; 
+	-fx-effect: dropshadow(three-pass-box, #0F29F6, 10, 0, 0, 0);
+	-fx-text-fill: white;
+}
+
+.altoRelevo{
+	-fx-effect: dropshadow(three-pass-box, #CDCDCD, 20, 0, 0, 0);
+}

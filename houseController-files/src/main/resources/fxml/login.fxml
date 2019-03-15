@@ -9,7 +9,7 @@
 
 <BorderPane fx:id="bpLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.LoginController">
    <center>
-      <AnchorPane prefHeight="227.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="apTelaCentro" prefHeight="227.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <JFXTextField fx:id="jtfLogin" layoutX="33.0" layoutY="109.0" promptText="Login" />
             <JFXPasswordField fx:id="jpfSenha" layoutX="33.0" layoutY="153.0" promptText="Senha" />

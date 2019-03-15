@@ -2,9 +2,13 @@ package br.com.houseController.controllers.dialogs;
 
 import java.io.IOException;
 
+import com.jfoenix.controls.JFXSpinner;
+
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -14,6 +18,8 @@ import javafx.stage.Stage;
 public class Aguarde 
 {
 	private Stage stage;
+	
+	private AnchorPane apTeste;
 	
     public void mostrarJanelaAguarde(){
 		try {
@@ -29,6 +35,23 @@ public class Aguarde
     
     public void finalizarJanelaAguarde(){
     	stage.close();
+    }
+    
+    public void teste(AnchorPane n){
+		JFXSpinner jSpinner = new JFXSpinner();
+		jSpinner.setPrefSize(30, 30);
+		
+		apTeste = new AnchorPane(jSpinner);
+		apTeste.setManaged(false);
+		apTeste.setLayoutX(n.getWidth()/2);
+		apTeste.setLayoutY(n.getHeight()/2);
+		n.getChildren().add(apTeste);
+		apTeste.toFront();
+    }
+    
+    public void teste2(){
+    	apTeste.setManaged(false);
+    	apTeste.setVisible(false);
     }
     
 }
