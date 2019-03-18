@@ -11,7 +11,7 @@
 		<module>houseController-service</module>
 		<module>houseController-persistence</module>
 		<module>houseController-files</module>
-    <module>houseController-controllers</module>
+    	<module>houseController-controllers</module>
   </modules>
 
 	<properties>
