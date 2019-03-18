@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.allanbrito</groupId>
 	<artifactId>houseController</artifactId>
@@ -11,8 +12,8 @@
 		<module>houseController-service</module>
 		<module>houseController-persistence</module>
 		<module>houseController-files</module>
-    	<module>houseController-controllers</module>
-  </modules>
+		<module>houseController-controllers</module>
+	</modules>
 
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -58,6 +59,13 @@
 			<groupId>com.github.gwenn</groupId>
 			<artifactId>sqlite-dialect</artifactId>
 			<version>0.1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.typhon0</groupId>
+			<artifactId>AnimateFX</artifactId>
+			<version>1.2.1</version>
+			<type>pom</type>
 		</dependency>
 
 	</dependencies>

@@ -3,25 +3,33 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="bpLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.LoginController">
-   <center>
-      <AnchorPane fx:id="apTelaCentro" prefHeight="227.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <JFXTextField fx:id="jtfLogin" layoutX="33.0" layoutY="109.0" promptText="Login" />
-            <JFXPasswordField fx:id="jpfSenha" layoutX="33.0" layoutY="153.0" promptText="Senha" />
-         </children>
-      </AnchorPane>
-   </center>
+<BorderPane fx:id="bpLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.LoginController">
    <bottom>
-      <HBox prefHeight="40.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
+      <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="348.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
             <JFXButton fx:id="jbLogin" buttonType="RAISED" ripplerFill="#0d00ff" text="Login" />
             <JFXButton fx:id="jbSair" buttonType="RAISED" onAction="#sair" ripplerFill="RED" text="Sair" />
          </children>
       </HBox>
    </bottom>
+   <right>
+      <AnchorPane fx:id="apTelaCentro" prefHeight="210.0" prefWidth="179.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXTextField fx:id="jtfLogin" layoutX="22.0" layoutY="29.0" promptText="Login" />
+            <JFXPasswordField fx:id="jpfSenha" layoutX="22.0" layoutY="73.0" promptText="Senha" />
+         </children>
+      </AnchorPane>
+   </right>
+   <top>
+      <AnchorPane prefHeight="32.0" prefWidth="348.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="jlBemVindo" layoutX="14.0" layoutY="6.0" text="Bem-Vindo" />
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

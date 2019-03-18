@@ -14,6 +14,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import animatefx.animation.Bounce;
+import animatefx.animation.FadeIn;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
@@ -24,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -46,6 +49,9 @@ public class LoginController implements Initializable {
 	
 	@FXML
 	AnchorPane apTelaCentro;
+	
+	@FXML
+	Label jlBemVindo;
 		
 	Stage stage;
 	
@@ -61,6 +67,8 @@ public class LoginController implements Initializable {
 				usuario.setLogin(jtfLogin.getText());
 				usuario.setSenha(jpfSenha.getText());
 				
+//				new Bounce(tstLabel).play();
+				new FadeIn(jlBemVindo).setCycleCount(5).setCycleDuration(2).play();;
 				
 				UsuarioService usuarioService = new UsuarioService(usuario);				
 				
@@ -78,13 +86,15 @@ public class LoginController implements Initializable {
 				System.out.println("Retorno: " + retornoLogin);	
 				
 				if(retornoLogin){
-					Stage stage = (Stage) jtfLogin.getScene().getWindow();
-					stage.close();
-					
-					abreTelaPrincipal();
-					
+					fechaTelaLogin();					
+					abreTelaPrincipal();					
 				}
 				
+			}
+
+			private void fechaTelaLogin() {
+				Stage stage = (Stage) jtfLogin.getScene().getWindow();
+				stage.close();
 			}
 
 			private void abreTelaPrincipal() {

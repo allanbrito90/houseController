@@ -61,7 +61,7 @@ public class App extends Application{
 			
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
 		stage.setTitle("Login");
-		stage.setScene(new Scene(root,200,250));
+		stage.setScene(new Scene(root,350,180));
 		stage.show();
 		}catch (Exception e) {
 			e.printStackTrace();

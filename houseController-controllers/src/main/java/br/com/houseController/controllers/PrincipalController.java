@@ -1,8 +1,14 @@
 package br.com.houseController.controllers;
 
+import java.awt.Desktop.Action;
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import animatefx.animation.Bounce;
+import animatefx.animation.BounceIn;
+import animatefx.animation.FadeIn;
+import animatefx.animation.FadeOut;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -27,9 +33,11 @@ public class PrincipalController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		botoesJanela();
-		
+//		new Bounce(ivMinimizar).PlayOnFinished(new BounceIn(ivMinimizar)).play();
+		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
 		
 	}
+	
 
 	private void botoesJanela() {
 		ivMinimizar.setOnMouseClicked(new EventHandler<Event>() {
