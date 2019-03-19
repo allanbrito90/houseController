@@ -1,5 +1,6 @@
 package br.com.houseController.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,8 +15,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
-import animatefx.animation.Bounce;
-import animatefx.animation.FadeIn;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
@@ -30,6 +29,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -58,9 +58,13 @@ public class LoginController implements Initializable {
 	Boolean retornoLogin;
 
 	public void initialize(URL location, ResourceBundle resources) {
+		Font.loadFont(LoginController.class.getResource("Lato.ttf").toExternalForm(), 10);
+		jtfLogin.setStyle("-fx-font-family: 'Lato';");
+		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
+
 				String encriptado = DigestUtils.md5Hex(jpfSenha.getText());
 				
 				Usuario usuario = new Usuario();
@@ -68,7 +72,7 @@ public class LoginController implements Initializable {
 				usuario.setSenha(jpfSenha.getText());
 				
 //				new Bounce(tstLabel).play();
-				new FadeIn(jlBemVindo).setCycleCount(5).setCycleDuration(2).play();;
+//				new FadeIn(jlBemVindo).setCycleCount(5).setCycleDuration(2).play();;
 				
 				UsuarioService usuarioService = new UsuarioService(usuario);				
 				

@@ -1,27 +1,12 @@
 package br.com.houseController.main;
 
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-import br.com.houseController.model.Enums.EnumContaAtiva;
-import br.com.houseController.model.categoria.Categoria;
-import br.com.houseController.model.despesas.DespesaVariavel;
-import br.com.houseController.model.receita.Receita;
-import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
-import br.com.houseController.service.Categoria.CategoriaService;
-import br.com.houseController.service.Despesa.DespesaVariavelService;
-import br.com.houseController.service.Receita.ReceitaService;
-import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * Classe principal do programa

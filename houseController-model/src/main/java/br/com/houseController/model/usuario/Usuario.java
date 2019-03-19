@@ -39,6 +39,9 @@ public class Usuario{
 	@Column
 	private String email;
 	
+	@Column
+	private Boolean ativo;
+	
 
 	public int getId() {
 		return id;
@@ -69,8 +72,13 @@ public class Usuario{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}	
+	public Boolean getAtivo() {
+		return ativo;
 	}
-	
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
 	// No-arg Constructor
 	public Usuario() {
 	}
@@ -83,13 +91,14 @@ public class Usuario{
 	 * @param nome
 	 * @param email
 	 */
-	public Usuario(int id, String login, String senha, String nome, String email) {
+	public Usuario(int id, String login, String senha, String nome, String email, Boolean ativo) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.senha = senha;
 		this.nome = nome;
 		this.email = email;
+		this.ativo = ativo;
 	}
 	
 	/**
@@ -99,17 +108,18 @@ public class Usuario{
 	 * @param nome
 	 * @param email
 	 */
-	public Usuario(String login, String senha, String nome, String email) {
+	public Usuario(String login, String senha, String nome, String email, Boolean ativo) {
 		super();
 		this.login = login;
 		this.senha = senha;
 		this.nome = nome;
 		this.email = email;
+		this.ativo = ativo;
 	}
 	
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", nome=" + nome + ", email=" + email + "]";
+		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", nome=" + nome + ", email=" + email + ", ativo=" + ativo + "]";
 	}
    
 	

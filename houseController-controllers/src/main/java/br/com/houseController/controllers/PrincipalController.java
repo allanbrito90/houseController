@@ -2,19 +2,23 @@ package br.com.houseController.controllers;
 
 import java.awt.Desktop.Action;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import animatefx.animation.Bounce;
-import animatefx.animation.BounceIn;
-import animatefx.animation.FadeIn;
-import animatefx.animation.FadeOut;
+import com.jfoenix.controls.JFXButton;
+
+import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -28,13 +32,20 @@ public class PrincipalController implements Initializable{
 	
 	@FXML
 	ImageView ivFechar;
+	
+	@FXML
+	JFXButton jbUsuarios;
+	
+	@FXML
+	AnchorPane apTela;
+	
+	ScrollPane sp;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		botoesJanela();
-//		new Bounce(ivMinimizar).PlayOnFinished(new BounceIn(ivMinimizar)).play();
-		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
+//		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
 		
 	}
 	
@@ -58,7 +69,15 @@ public class PrincipalController implements Initializable{
 				
 			}
 		});
-	}
+		
+		jbUsuarios.setOnMouseClicked(new EventHandler<Event>() {
 
+			@Override
+			public void handle(Event event) {
+				ScreenUtils su = new ScreenUtils();
+				su.abrirScrollAnchor(sp, apTela, "fxml/subMenuUsuario.fxml");
+			}
+		});
+	}
 	
 }

@@ -26,6 +26,9 @@
                   <Insets top="100.0" />
                </VBox.margin></JFXButton>
             <JFXButton styleClass="botoesMenu" text="Receitas" />
+            <JFXButton styleClass="botoesMenu" text="Compras" />
+            <JFXButton styleClass="botoesMenu" text="Metas" />
+            <JFXButton fx:id="jbUsuarios" styleClass="botoesMenu" text="Usuários" />
          </children></VBox>
    </left>
    <center>

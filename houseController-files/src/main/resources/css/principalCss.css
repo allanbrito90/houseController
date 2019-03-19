@@ -25,3 +25,11 @@
 .altoRelevo{
 	-fx-effect: dropshadow(three-pass-box, #CDCDCD, 20, 0, 0, 0);
 }
+
+.fundoBotaoSubMenu{
+	-fx-background-color: #646EF8;	 
+}
+
+.cabecalhos{
+	-fx-background-color: #ABE7F5;
+}
