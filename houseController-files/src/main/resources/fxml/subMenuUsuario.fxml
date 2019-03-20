@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.SubMenuUsuarios">
    <content>
       <VBox prefHeight="500.0" prefWidth="845.0" spacing="10.0">
          <children>
@@ -18,7 +18,7 @@
             </AnchorPane>
             <HBox prefHeight="250.0" prefWidth="867.0" spacing="5.0">
                <children>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu">
+                <AnchorPane fx:id="jbNovoUsuario" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

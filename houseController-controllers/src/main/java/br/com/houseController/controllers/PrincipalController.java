@@ -1,9 +1,5 @@
 package br.com.houseController.controllers;
 
-import java.awt.Desktop.Action;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,7 +10,6 @@ import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -28,10 +23,19 @@ public class PrincipalController implements Initializable{
 	BorderPane bpPrincipal;
 	
 	@FXML
+	ImageView ivVoltar;
+	
+	@FXML
+	ImageView ivAvancar;
+	
+	@FXML
 	ImageView ivMinimizar;
 	
 	@FXML
 	ImageView ivFechar;
+	
+	@FXML
+	JFXButton jbHome;
 	
 	@FXML
 	JFXButton jbUsuarios;
@@ -45,12 +49,33 @@ public class PrincipalController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		botoesJanela();
+		
+		ScreenUtils su = new ScreenUtils(sp, apTela);
+		ScreenUtils.setChaveFxmlAtual(0);
+		ScreenUtils.getSequenciaJanelas().put(0,"fxml/home.fxml");
+		ScreenUtils.abrirScrollAnchor("fxml/home.fxml");
 //		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
 		
 	}
 	
 
 	private void botoesJanela() {
+		ivVoltar.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				ScreenUtils.voltarJanela();
+			}
+		});
+		
+		ivAvancar.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				ScreenUtils.avancarJanela();
+			}
+		});
+		
 		ivMinimizar.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
@@ -70,14 +95,22 @@ public class PrincipalController implements Initializable{
 			}
 		});
 		
+		jbHome.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela("fxml/home.fxml");
+			}
+		});
+		
 		jbUsuarios.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
-			public void handle(Event event) {
-				ScreenUtils su = new ScreenUtils();
-				su.abrirScrollAnchor(sp, apTela, "fxml/subMenuUsuario.fxml");
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela("fxml/subMenuUsuario.fxml");
 			}
 		});
+		
 	}
 	
 }

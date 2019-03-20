@@ -1,3 +1,11 @@
+/*
+ * --------------------------------------------------------------------------------------------
+ * ----------------------------TELA PRINCIPAL--------------------------------------------------
+ * --------------------------------------------------------------------------------------------
+ */
+/*
+ * Campos relativos a tela principal
+ */
 #bpPrincipal{
 	-fx-background-color: transparent;
 }
@@ -16,22 +24,84 @@
 	-fx-background-color: #F2F3F7; 
 }
 
+/*
+ * Efeito do mouse passando por cima do botão selecionado
+ */
 .botoesMenu:hover{
 	-fx-background-color: #3751FF; 
 	-fx-effect: dropshadow(three-pass-box, #0F29F6, 10, 0, 0, 0);
 	-fx-text-fill: white;
 }
 
+
+/*
+ * Efeito de sombra na tela principal
+ */
 .altoRelevo{
 	-fx-effect: dropshadow(three-pass-box, #CDCDCD, 20, 0, 0, 0);
 }
 
+/*
+ * --------------------------------------------------------------------------------------------
+ * -------------------------------EFEITOS DE SUB MENUS-----------------------------------------
+ * --------------------------------------------------------------------------------------------
+ */
+/*
+ * Efeito dos botões grandes do SubMenu
+ */
 .fundoBotaoSubMenu{
 	-fx-background-color: #646EF8;	 
 }
 
+/*
+ * --------------------------------------------------------------------------------------------
+ * ---------------------------TELAS EM GERAL---------------------------------------------------
+ * --------------------------------------------------------------------------------------------
+ */
+/*
+ * Cabeçalhos de todas as telas
+ */
 .cabecalhos{
 	-fx-background-color: #ABE7F5;
 	-fx-font-family: 'Lato';
 	-fx-font-size:24pt;
+}
+
+/*
+ * Espaçamento do canto esquerdo
+ */
+.campoTextoEsquerdo{
+	-fx-padding: 0px 0px 0px 50px;
+}
+
+/*
+ * --------------------------------------------------------------------------------------------
+ * -----------------------------------BOTÕES---------------------------------------------------
+ * --------------------------------------------------------------------------------------------
+ */
+/*
+ * Botão de Confirmação
+ * 
+ */
+.botaoConfirmacao{
+	-fx-background-color: #20A01E; 
+	-fx-background-radius: 30;
+}
+
+.botaoConfirmacao:hover{
+	-fx-background-color: #3BDA38; 
+	-fx-background-radius: 30;
+}
+
+/*
+ * Botão para Limpar Campos
+ */
+.botaoLimpar{
+	-fx-background-color: #F6EC20;
+	-fx-background-radius: 30;
+}
+
+.botaoLimpar:hover{
+	-fx-background-color: #FAF374;
+	-fx-background-radius: 30;
 }
