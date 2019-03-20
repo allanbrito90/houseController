@@ -58,8 +58,8 @@ public class LoginController implements Initializable {
 	Boolean retornoLogin;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		Font.loadFont(LoginController.class.getResource("Lato.ttf").toExternalForm(), 10);
-		jtfLogin.setStyle("-fx-font-family: 'Lato';");
+		Font.loadFont(LoginController.class.getClassLoader().getResource("fonts/Lato-Bold.ttf").toExternalForm(), 10);
+		//jtfLogin.setStyle("-fx-font-family: 'Lato';");
 		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 

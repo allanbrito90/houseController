@@ -32,4 +32,6 @@
 
 .cabecalhos{
 	-fx-background-color: #ABE7F5;
+	-fx-font-family: 'Lato';
+	-fx-font-size:24pt;
 }
