@@ -17,7 +17,7 @@ public class ProdutoService implements InterfaceService<Produto> {
 	public Integer insert(Produto obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

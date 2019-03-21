@@ -16,7 +16,7 @@ public class ComprasService implements InterfaceService<Compras> {
 	public Integer insert(Compras obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

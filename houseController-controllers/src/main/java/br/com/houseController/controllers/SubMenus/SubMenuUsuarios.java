@@ -15,6 +15,9 @@ public class SubMenuUsuarios implements Initializable {
 	@FXML
 	AnchorPane jbNovoUsuario;
 	
+	@FXML
+	AnchorPane jbAlterarUsuario;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -24,6 +27,14 @@ public class SubMenuUsuarios implements Initializable {
 			@Override
 			public void handle(Event event) {
 				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml");
+			}
+		});
+		
+		jbAlterarUsuario.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				ScreenUtils.abrirNovaJanela("fxml/Usuario/AlterarUsuario.fxml");
 			}
 		});
 	}

@@ -1,12 +1,18 @@
 package br.com.houseController.controllers.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.jfoenix.controls.base.IFXLabelFloatControl;
+
+import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.AnchorPane;
 
 public class ScreenUtils {
@@ -16,6 +22,9 @@ public class ScreenUtils {
 	static Integer chaveFxmlAtual;
 	static Map<Integer,String> sequenciaJanelas;
 	
+//	-------------------------------------------------------------------------------
+//	---------------------------GETTERS E SETTERS-----------------------------------
+//	-------------------------------------------------------------------------------
 	public static Map<Integer, String> getSequenciaJanelas() {
 		return sequenciaJanelas;
 	}
@@ -32,6 +41,9 @@ public class ScreenUtils {
 		ScreenUtils.chaveFxmlAtual = chaveFxmlAtual;
 	}
 
+//	-------------------------------------------------------------------------------
+//	--------------------------------MÉTODOS----------------------------------------
+//	-------------------------------------------------------------------------------
 	public ScreenUtils(ScrollPane scroll, AnchorPane ap){
 		ScreenUtils.sequenciaJanelas = new HashMap<Integer,String>();
 		ScreenUtils.scroll = scroll;
@@ -43,6 +55,29 @@ public class ScreenUtils {
 		abrirScrollAnchor(caminho);
 	}
 	
+	public static void abrirNovaJanela(String caminho, Class Controller, Object... objs){
+		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
+		abrirScrollAnchorcomParametros(caminho,Controller,objs);
+
+	}
+	
+	private static void abrirScrollAnchorcomParametros(String caminho, Class controller, Object... objs) {
+		try {
+			FXMLLoader fxml = new FXMLLoader();
+			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
+			scroll = fxml.load();			
+			ap.getChildren().add(scroll);
+			ParametrosObjetos po = fxml.getController();
+			List<Object> objetos = new ArrayList<Object>();
+			for(Object obj : objs){
+				objetos.add(obj);
+			}			
+			po.setObjetos(objetos);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void voltarJanela(){
 		if (chaveFxmlAtual - 1 >= 0) {
 			String fxmlAnterior = sequenciaJanelas.get(--chaveFxmlAtual);
@@ -64,6 +99,12 @@ public class ScreenUtils {
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void limparCampos(IFXLabelFloatControl... nodes){
+		for(IFXLabelFloatControl node : nodes){
+			((TextInputControl) node).clear();
 		}
 	}
 	

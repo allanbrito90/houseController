@@ -33,7 +33,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class LoginController implements Initializable {
+public class LoginController extends ParametrosObjetos implements Initializable {
 
 	@FXML
 	JFXTextField jtfLogin;

@@ -26,7 +26,7 @@
                         <Label layoutX="94.0" layoutY="188.0" text="Novo Usuário" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu" />
+                  <AnchorPane fx:id="jbAlterarUsuario" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu" />
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu" />
                </children>
                <VBox.margin>

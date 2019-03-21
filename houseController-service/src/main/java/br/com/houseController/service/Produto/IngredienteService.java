@@ -17,7 +17,7 @@ public class IngredienteService implements InterfaceService<Ingrediente> {
 	public Integer insert(Ingrediente obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

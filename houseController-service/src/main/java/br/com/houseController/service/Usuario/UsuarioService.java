@@ -25,7 +25,7 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Boole
 	public Integer insert(Usuario obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();
@@ -66,6 +66,21 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Boole
 	public boolean checaLogin(Usuario usuario){
 		Session session = ConnectionFactory.obterNovaSessao();
 		Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
+		query.setParameter("login", usuario.getLogin());
+		query.setParameter("senha", usuario.getSenha());		
+		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+
+		if(list.size()>0){
+			return true;
+		}
+		return false;		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public boolean checaLoginExistente(Usuario usuario){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from Usuario where login = :login and ativo = 1");
 		query.setParameter("login", usuario.getLogin());
 		query.setParameter("senha", usuario.getSenha());		
 		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();

@@ -17,7 +17,7 @@ public class CategoriaService implements InterfaceService<Categoria> {
 	public Integer insert(Categoria obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

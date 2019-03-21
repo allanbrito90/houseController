@@ -17,7 +17,7 @@ public class DespesaFixaService implements InterfaceService<DespesaFixa> {
 	public Integer insert(DespesaFixa obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

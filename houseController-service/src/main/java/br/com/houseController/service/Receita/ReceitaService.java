@@ -8,7 +8,6 @@ import org.hibernate.Session;
 
 import br.com.houseController.model.Interfaces.InterfaceService;
 import br.com.houseController.model.receita.Receita;
-import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 
 public class ReceitaService implements InterfaceService<Receita>{
@@ -17,7 +16,7 @@ public class ReceitaService implements InterfaceService<Receita>{
 	public Integer insert(Receita obj) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		session.save(obj);
+		session.saveOrUpdate(obj);
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return obj.getId();

@@ -18,7 +18,7 @@
          <children>
           <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                <children>
-                  <Label layoutX="14.0" layoutY="7.0" text="Novo Usuário" />
+                  <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Novo Usuário" />
                </children>
             </AnchorPane>
             <AnchorPane maxWidth="830.0" prefHeight="411.0" prefWidth="830.0">
@@ -82,14 +82,14 @@
                </children></AnchorPane>
             <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <AnchorPane onMouseClicked="#handleSalvar" prefHeight="0.0" prefWidth="154.0" styleClass="botaoConfirmacao">
+                  <AnchorPane onMouseClicked="#handleSalvar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao">
                      <children>
                         <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/baseline_done_black_18dp.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="76.0" layoutY="15.0" text="Salvar">
+                        <Label layoutX="45.0" layoutY="15.0" text="Salvar">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -99,14 +99,14 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <AnchorPane prefHeight="0.0" prefWidth="154.0" styleClass="botaoLimpar">
+                  <AnchorPane onMouseClicked="#handleLimpar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
                      <children>
                         <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/baseline_clear_black_24dp.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="76.0" layoutY="15.0" text="Limpar">
+                        <Label layoutX="45.0" layoutY="15.0" text="Limpar">
                            <font>
                               <Font size="14.0" />
                            </font>
