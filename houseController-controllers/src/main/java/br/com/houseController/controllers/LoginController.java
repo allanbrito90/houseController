@@ -3,21 +3,28 @@ package br.com.houseController.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
+import javax.persistence.Query;
+
 import org.apache.commons.codec.digest.DigestUtils;
+import org.hibernate.Session;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.controllers.dialogs.Aguarde2;
+import br.com.houseController.controllers.task.TaskJanelaAguarde;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -55,11 +62,13 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 		
 	Stage stage;
 	
-	Boolean retornoLogin;
+	Boolean retornoLogin = false;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		Font.loadFont(LoginController.class.getClassLoader().getResource("fonts/Lato-Bold.ttf").toExternalForm(), 10);
 		//jtfLogin.setStyle("-fx-font-family: 'Lato';");
+		
+
 		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -71,28 +80,69 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				usuario.setLogin(jtfLogin.getText());
 				usuario.setSenha(jpfSenha.getText());
 				
-//				new Bounce(tstLabel).play();
-//				new FadeIn(jlBemVindo).setCycleCount(5).setCycleDuration(2).play();;
-				
 				UsuarioService usuarioService = new UsuarioService(usuario);				
 				
-				try {					
-				ExecutorService e = Executors.newSingleThreadExecutor();
+//				try {					
+//				ExecutorService e = Executors.newSingleThreadExecutor();
+//				
+//				FutureTask<Boolean> tarefa = new FutureTask<Boolean>(usuarioService);
+//				e.execute(tarefa);
+//				
+//				retornoLogin = tarefa.get();
+//				
+//				
+//				} catch (InterruptedException | ExecutionException e1) {
+//					e1.printStackTrace();
+//				}		
 				
-				FutureTask<Boolean> tarefa = new FutureTask<Boolean>(usuarioService);
-				e.execute(tarefa);
 				
-				retornoLogin = tarefa.get();
-				} catch (InterruptedException | ExecutionException e1) {
-					e1.printStackTrace();
-				}		
 				
-				System.out.println("Retorno: " + retornoLogin);	
+//				System.out.println("Retorno: " + retornoLogin);	
 				
-				if(retornoLogin){
-					fechaTelaLogin();					
-					abreTelaPrincipal();					
-				}
+				Task<Boolean> task = new Task<Boolean>(){
+
+					@Override
+					protected Boolean call() throws Exception {
+						Session session = ConnectionFactory.obterNovaSessao();
+						Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
+						query.setParameter("login", usuario.getLogin());
+						query.setParameter("senha", usuario.getSenha());		
+						ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
+						ConnectionFactory.fecharSessao(session);
+
+						if(list.size()>0){
+							return true;
+						}
+						return false;		
+					}
+					
+				};
+				
+			
+				task.setOnRunning(e -> Aguarde2.mostrarJanelaAguarde());
+				task.setOnSucceeded(e -> {
+						Aguarde2.finalizarJanelaAguarde();		
+						try {
+							retornoLogin = task.get();
+							if(retornoLogin){
+								System.out.println("Login OK");
+								fechaTelaLogin();					
+								abreTelaPrincipal();					
+							}else{
+								System.out.println("Login Não");
+							}
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+				});
+				task.setOnFailed(e -> System.out.println("Deu ruim"));
+				
+			new Thread(task).start();			
+				
+				
+
 				
 			}
 
@@ -118,6 +168,7 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 			}
 		});
 	}
+	
 	
 	@FXML
 	public void sair(){

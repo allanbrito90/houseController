@@ -25,7 +25,6 @@ public class Aguarde
 		try {
 			stage = new Stage();
 			Parent root1 = (Parent) FXMLLoader.load(getClass().getClassLoader().getResource("fxml/aguarde.fxml"));
-//			Stage stage = new Stage();
 			stage.setScene(new Scene(root1));
 			stage.show();
 		} catch (IOException e) {

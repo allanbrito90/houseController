@@ -6,14 +6,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 public class ScreenUtils {
 	
@@ -55,13 +62,13 @@ public class ScreenUtils {
 		abrirScrollAnchor(caminho);
 	}
 	
-	public static void abrirNovaJanela(String caminho, Class Controller, Object... objs){
+	public static void abrirNovaJanela(String caminho, Class<?> Controller, Object... objs){
 		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
 		abrirScrollAnchorcomParametros(caminho,Controller,objs);
 
 	}
 	
-	private static void abrirScrollAnchorcomParametros(String caminho, Class controller, Object... objs) {
+	private static void abrirScrollAnchorcomParametros(String caminho, Class<?> controller, Object... objs) {
 		try {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
@@ -106,6 +113,37 @@ public class ScreenUtils {
 		for(IFXLabelFloatControl node : nodes){
 			((TextInputControl) node).clear();
 		}
+	}
+	
+	public static Boolean checarCamposVazios(IFXLabelFloatControl... nodes){
+		for(IFXLabelFloatControl node : nodes){
+			if(((TextInputControl) node).getText().equals("")){
+				System.out.println("Campo vazio");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void janelaInformação(StackPane spDialog, String titulo, String conteudo, String nomeBotao) {
+		JFXDialogLayout dialogContent = new JFXDialogLayout();
+		dialogContent.setHeading(new Text(titulo));
+		dialogContent.setBody(new Text(conteudo));
+		JFXButton fechar = new JFXButton(nomeBotao);
+		fechar.setButtonType(JFXButton.ButtonType.RAISED);
+		fechar.setStyle("-fx-background-color: #00bfff;");
+		
+		dialogContent.setActions(fechar);
+		
+		JFXDialog dialog = new JFXDialog(spDialog, dialogContent, JFXDialog.DialogTransition.BOTTOM);
+		fechar.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				dialog.close();				
+			}
+		});
+		dialog.show();
 	}
 	
 }
