@@ -9,6 +9,7 @@ import java.util.Map;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
 import br.com.houseController.controllers.ParametrosObjetos;
@@ -28,6 +29,7 @@ public class ScreenUtils {
 	static AnchorPane ap;
 	static Integer chaveFxmlAtual;
 	static Map<Integer,String> sequenciaJanelas;
+	static JFXDialog dialog;
 	
 //	-------------------------------------------------------------------------------
 //	---------------------------GETTERS E SETTERS-----------------------------------
@@ -144,6 +146,19 @@ public class ScreenUtils {
 			}
 		});
 		dialog.show();
+	}
+	
+	public static void janelaAguarde(StackPane spDialog) {
+		JFXDialogLayout dialogContent = new JFXDialogLayout();
+		dialogContent.setHeading(new Text("Aguarde"));
+		dialogContent.setBody(new Text("Aguarde"));		
+		dialog = new JFXDialog(spDialog, dialogContent, JFXDialog.DialogTransition.BOTTOM);
+		dialog.show();
+	}
+	
+	public static void janelaAguardeFinalizar(){
+		dialog.close();
+		dialog = null;
 	}
 	
 }

@@ -40,6 +40,7 @@ public class Aguarde2
 	
     public static void finalizarJanelaAguarde(){
     	stage.close();
+    	stage = null;
     }
     
 }

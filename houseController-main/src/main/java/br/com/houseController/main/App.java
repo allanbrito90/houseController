@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Classe principal do programa
@@ -46,6 +47,7 @@ public class App extends Application{
 			
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
 		stage.setTitle("Login");
+		stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(new Scene(root,350,180));
 		stage.show();
 		}catch (Exception e) {

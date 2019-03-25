@@ -20,7 +20,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.controllers.dialogs.Aguarde2;
-import br.com.houseController.controllers.task.TaskJanelaAguarde;
+import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
@@ -36,6 +36,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -57,6 +58,9 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 	
 	@FXML
 	AnchorPane apTelaCentro;
+	
+	@FXML
+	StackPane spStatus;
 	
 	@FXML
 	Label jlBemVindo;
@@ -95,108 +99,37 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 //				} catch (InterruptedException | ExecutionException e1) {
 //					e1.printStackTrace();
 //				}		
-				
-				
-				
-//				System.out.println("Retorno: " + retornoLogin);	
-				
-
-				Service service = new Service() {
-
-					@Override
-					protected Task createTask() {
-						return new Task<Boolean>() {
-
-							@Override
-							protected Boolean call() throws Exception {
-								Session session = ConnectionFactory.obterNovaSessao();
-								Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
-								query.setParameter("login", usuario.getLogin());
-								query.setParameter("senha", usuario.getSenha());		
-								ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
-								ConnectionFactory.fecharSessao(session);
-
-								if(list.size()>0){
-									return true;
-								}
-								return false;	
-							}
-						};
-					}
-					
+								
+				Task<Boolean> task = new Task<Boolean>() {
+				    @Override 
+				    public Boolean call() {					    	
+				    		return usuarioService.checaLogin(usuario);
+				    }
 				};
-				
-				service.restart();
-				
-				service.setOnRunning(e -> Aguarde2.mostrarJanelaAguarde());
-				service.setOnSucceeded(e -> {
-						Aguarde2.finalizarJanelaAguarde();		
-						try {
-							retornoLogin = (Boolean) service.getValue();
-							if(retornoLogin){
-								System.out.println("Login OK");
-								fechaTelaLogin();					
-								abreTelaPrincipal();					
+
+				task.setOnRunning((e) -> Aguarde2.mostrarJanelaAguarde());
+				task.setOnSucceeded((e) -> {
+				    Aguarde2.finalizarJanelaAguarde();
+				    try {
+						if(task.get()){
+							fechaTelaLogin();					
+							abreTelaPrincipal();					
+						}else{
+							if(ScreenUtils.checarCamposVazios(jtfLogin,jpfSenha)){
+								ScreenUtils.janelaInformação(spStatus, "Erro", "Usuário e/ou Senha Incorreta", "Entendi");
 							}else{
-								System.out.println("Login Não");
+								ScreenUtils.janelaInformação(spStatus, "Erro", "Há campos não preenchidos", "Entendi");
 							}
-						} catch (Exception e1) {
-							e1.printStackTrace();
 						}
-						
-				});
-				
-				/*Task<Boolean> task = new Task<Boolean>(){
-
-					@Override
-					protected Boolean call() throws Exception {
-						Session session = ConnectionFactory.obterNovaSessao();
-						Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
-						query.setParameter("login", usuario.getLogin());
-						query.setParameter("senha", usuario.getSenha());		
-						ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
-						ConnectionFactory.fecharSessao(session);
-
-						if(list.size()>0){
-							return true;
-						}
-						return false;		
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
-					
-				};
-				
-			
-				task.setOnRunning(e -> Aguarde2.mostrarJanelaAguarde());
-				task.setOnSucceeded(e -> {
-						Aguarde2.finalizarJanelaAguarde();		
-						try {
-							retornoLogin = task.get();
-							if(retornoLogin){
-								System.out.println("Login OK");
-								fechaTelaLogin();					
-								abreTelaPrincipal();					
-							}else{
-								System.out.println("Login Não");
-							}
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-						
 				});
-				task.setOnFailed(e -> System.out.println("Deu ruim"));
-				
-			new Thread(task).start();			
-			*/	
-				
-				
-				
-
-				
-			}
-			
-			
-
-			
+				task.setOnFailed((e) -> {
+					System.out.println("Problema");
+				});
+				new Thread(task).start();				
+			}			
 
 			private void fechaTelaLogin() {
 				Stage stage = (Stage) jtfLogin.getScene().getWindow();
