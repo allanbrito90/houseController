@@ -24,6 +24,7 @@ import br.com.houseController.controllers.task.TaskJanelaAguarde;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -99,7 +100,53 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				
 //				System.out.println("Retorno: " + retornoLogin);	
 				
-				Task<Boolean> task = new Task<Boolean>(){
+
+				Service service = new Service() {
+
+					@Override
+					protected Task createTask() {
+						return new Task<Boolean>() {
+
+							@Override
+							protected Boolean call() throws Exception {
+								Session session = ConnectionFactory.obterNovaSessao();
+								Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
+								query.setParameter("login", usuario.getLogin());
+								query.setParameter("senha", usuario.getSenha());		
+								ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
+								ConnectionFactory.fecharSessao(session);
+
+								if(list.size()>0){
+									return true;
+								}
+								return false;	
+							}
+						};
+					}
+					
+				};
+				
+				service.restart();
+				
+				service.setOnRunning(e -> Aguarde2.mostrarJanelaAguarde());
+				service.setOnSucceeded(e -> {
+						Aguarde2.finalizarJanelaAguarde();		
+						try {
+							retornoLogin = (Boolean) service.getValue();
+							if(retornoLogin){
+								System.out.println("Login OK");
+								fechaTelaLogin();					
+								abreTelaPrincipal();					
+							}else{
+								System.out.println("Login Não");
+							}
+						} catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						
+				});
+				
+				/*Task<Boolean> task = new Task<Boolean>(){
 
 					@Override
 					protected Boolean call() throws Exception {
@@ -132,7 +179,6 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 								System.out.println("Login Não");
 							}
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						
@@ -140,11 +186,17 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				task.setOnFailed(e -> System.out.println("Deu ruim"));
 				
 			new Thread(task).start();			
+			*/	
+				
 				
 				
 
 				
 			}
+			
+			
+
+			
 
 			private void fechaTelaLogin() {
 				Stage stage = (Stage) jtfLogin.getScene().getWindow();

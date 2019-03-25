@@ -23,16 +23,16 @@ public class Aguarde2
 	
     public static void mostrarJanelaAguarde(){
 		try {
-			if(stage == null){
+			/*if(stage == null){*/
 				stage = new Stage();
 				Parent root1 = (Parent) FXMLLoader.load(PrincipalController.class.getClassLoader().getResource("fxml/aguarde.fxml"));
 				Scene scene = new Scene(root1);
 				stage.setScene(scene);
 				stage.initStyle(StageStyle.TRANSPARENT);
 				stage.show();
-			}else{
+			/*}else{
 				stage.show();
-			}
+			}*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
