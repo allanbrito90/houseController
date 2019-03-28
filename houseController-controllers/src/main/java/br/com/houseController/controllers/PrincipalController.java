@@ -15,9 +15,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class PrincipalController implements Initializable{
+	
+	@FXML
+	StackPane spPrincipal;
 	
 	@FXML
 	BorderPane bpPrincipal;
@@ -89,8 +93,7 @@ public class PrincipalController implements Initializable{
 
 			@Override
 			public void handle(Event event) {
-				ConnectionFactory.fecharConexao();
-				System.exit(0);
+				ScreenUtils.janelaFechar(spPrincipal);
 				
 			}
 		});
