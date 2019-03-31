@@ -20,6 +20,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.controllers.dialogs.Aguarde2;
+import br.com.houseController.controllers.utils.Fonts;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -70,9 +71,10 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 	Boolean retornoLogin = false;
 
 	public void initialize(URL location, ResourceBundle resources) {
-		Font.loadFont(LoginController.class.getClassLoader().getResource("fonts/Lato-Bold.ttf").toExternalForm(), 10);
+		//Font.loadFont(LoginController.class.getClassLoader().getResource("fonts/Lato-Bold.ttf").toExternalForm(), 10);
 		//jtfLogin.setStyle("-fx-font-family: 'Lato';");
-		
+		//Fonts.addFont(new Fonts("Lato-Bold.ttf"));
+		//jbLogin.setFont(new Font("Lato", 15));
 
 		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {

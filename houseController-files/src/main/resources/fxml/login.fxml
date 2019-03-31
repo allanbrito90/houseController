@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="spStatus" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.LoginController">
    <children>
       <BorderPane fx:id="bpLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="350.0" stylesheets="@../css/principalCss.css">
          <bottom>
             <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="348.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <JFXButton fx:id="jbLogin" buttonType="RAISED" ripplerFill="#0d00ff" text="Login" />
+                  <JFXButton fx:id="jbLogin" buttonType="RAISED" ripplerFill="#0d00ff" styleClass="botaoTeste" text="Login" />
                   <JFXButton fx:id="jbSair" buttonType="RAISED" onAction="#sair" ripplerFill="RED" text="Sair" />
                </children>
             </HBox>

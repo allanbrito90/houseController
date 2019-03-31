@@ -1,6 +1,7 @@
 package br.com.houseController.main;
 
 
+import br.com.houseController.controllers.utils.Fonts;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -60,5 +61,9 @@ public class App extends Application{
 	public void stop() throws Exception{
 		System.out.println("Conexão Fechada");
 		ConnectionFactory.fecharConexao();
+	}
+	
+	public static void loadFonts() {
+		Fonts.addFont(new Fonts("LATO-REGULAR.TTF"));
 	}
 }

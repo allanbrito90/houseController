@@ -1,3 +1,6 @@
+@font-face{
+	src: url("Lato-BlackItalic.ttf");
+}
 /*
  * --------------------------------------------------------------------------------------------
  * ----------------------------TELA PRINCIPAL--------------------------------------------------
@@ -104,4 +107,8 @@
 .botaoLimpar:hover{
 	-fx-background-color: #FAF374;
 	-fx-background-radius: 30;
+}
+
+.botaoTeste:hover{
+	-fx-font-family: "Lato Black";
 }
