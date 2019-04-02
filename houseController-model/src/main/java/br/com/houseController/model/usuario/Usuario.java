@@ -117,6 +117,11 @@ public class Usuario{
 		this.ativo = ativo;
 	}
 	
+	public Usuario(int id) {
+		super();
+		this.id = id;
+	}
+	
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", nome=" + nome + ", email=" + email + ", ativo=" + ativo + "]";

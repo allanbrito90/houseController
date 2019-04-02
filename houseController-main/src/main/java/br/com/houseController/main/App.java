@@ -1,12 +1,12 @@
 package br.com.houseController.main;
 
 
-import br.com.houseController.controllers.utils.Fonts;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -49,7 +49,8 @@ public class App extends Application{
 		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/login.fxml"));
 		stage.setTitle("Login");
 		stage.initStyle(StageStyle.UNDECORATED);
-		stage.setScene(new Scene(root,350,180));
+		Scene scene = new Scene(root,350,180);
+		stage.setScene(scene);
 		stage.show();
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -63,7 +64,4 @@ public class App extends Application{
 		ConnectionFactory.fecharConexao();
 	}
 	
-	public static void loadFonts() {
-		Fonts.addFont(new Fonts("LATO-REGULAR.TTF"));
-	}
 }

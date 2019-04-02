@@ -1,31 +1,20 @@
 package br.com.houseController.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-
-import javax.persistence.Query;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.hibernate.Session;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.controllers.dialogs.Aguarde2;
-import br.com.houseController.controllers.utils.Fonts;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,7 +28,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -75,7 +63,7 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 		//jtfLogin.setStyle("-fx-font-family: 'Lato';");
 		//Fonts.addFont(new Fonts("Lato-Bold.ttf"));
 		//jbLogin.setFont(new Font("Lato", 15));
-
+		
 		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -154,6 +142,8 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				}
 			}
 		});
+		
+		jtfLogin.requestFocus();
 	}
 	
 	

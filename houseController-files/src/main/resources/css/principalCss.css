@@ -1,5 +1,5 @@
 @font-face{
-	src: url("Lato-BlackItalic.ttf");
+	src: url(Lato-Regular.ttf);
 }
 /*
  * --------------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@
  */
 .cabecalhos{
 	-fx-background-color: #ABE7F5;
-	-fx-font-family: 'Lato';
+	-fx-font-family: "Lato";
 	-fx-font-size:24pt;
 }
 
@@ -110,5 +110,15 @@
 }
 
 .botaoTeste:hover{
-	-fx-font-family: "Lato Black";
+	-fx-font-family: "Lato";
+}
+
+.botaoExcluir{
+	-fx-background-color: #F74039;
+	-fx-background-radius: 30;
+}
+
+.botaoExcluir:hover{
+	-fx-background-color: #DD1109;
+	-fx-background-radius: 30;
 }
