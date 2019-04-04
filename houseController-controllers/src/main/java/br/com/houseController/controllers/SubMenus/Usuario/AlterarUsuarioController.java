@@ -39,6 +39,8 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 	
 	UsuarioService usuarioService;
 	
+	ObservableList<Usuario> usuarios;
+	
 	@FXML
 	public void Alterar(){
 		UsuarioService us = new UsuarioService();
@@ -58,7 +60,7 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 	private ObservableList<Usuario> preencheTabela() {
 		UsuarioService usuarioService = new UsuarioService();
 		List<Usuario> listaUsuarios = usuarioService.findAll();
-		ObservableList<Usuario> usuarios = FXCollections.observableArrayList();
+		usuarios = FXCollections.observableArrayList();
 		for(Usuario usuario : listaUsuarios){
 			usuarios.add(usuario);
 		}
@@ -85,9 +87,15 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 		if(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex()) != null){
 			usuarioService = new UsuarioService();
 			usuarioService.delete(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex()));
+			atualizarTable();
 		}else{
 			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 		}
+	}
+
+	private void atualizarTable() {
+		usuarios.clear();
+		jtvUsuarioTable.setItems(preencheTabela());
 	}
 	
 

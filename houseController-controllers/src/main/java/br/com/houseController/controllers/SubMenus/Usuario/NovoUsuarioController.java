@@ -84,10 +84,16 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 		if (ScreenUtils.checarCamposVazios(jtfLogin, jpfSenha, jtfNome, jtfEmail)) {
 			usuario.setAtivo(true);
 			UsuarioService usuarioService = new UsuarioService();
-			if (!usuarioService.checaLogin(usuario)) {
+			if (!jlTitulo.getText().equals("Editar Usuário")) {
+				if (!usuarioService.checaLogin(usuario)) {
+					usuarioService.insert(usuario);
+				} else {
+					ScreenUtils.janelaInformação(spDialog, "Atenção", "Usuário já cadastrado", "Ok");
+				} 
+			}else{
 				usuarioService.insert(usuario);
-			} else {
-				ScreenUtils.janelaInformação(spDialog, "Atenção", "Usuário já cadastrado", "Ok");
+				ScreenUtils.janelaInformação(spDialog, "Informação", "Usuário alterado com sucesso", "Obrigado!");
+//				ScreenUtils.abrirNovaJanela("fxml/Usuario/AlterarUsuario.fxml");
 			}
 		}else{
 			ScreenUtils.janelaInformação(spDialog, "Atenção", "Há campos não preenchidos", "Entendi");

@@ -9,7 +9,6 @@ import java.util.Map;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
 import br.com.houseController.controllers.ParametrosObjetos;

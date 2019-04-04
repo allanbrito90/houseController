@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -24,24 +26,28 @@
                      </HBox.margin>
                      <children>
                         <Label layoutX="94.0" layoutY="188.0" text="Novo Usuário" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/baseline_person_add_black_48dp.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="jbAlterarUsuario" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu" />
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu" />
+                  <AnchorPane fx:id="jbAlterarUsuario" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu">
+                     <children>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/baseline_person_black_48dp.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="90.0" layoutY="189.0" text="Alterar Usuário" />
+                     </children></AnchorPane>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="250.0" prefWidth="867.0" spacing="5.0">
-               <children>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="260.0" styleClass="fundoBotaoSubMenu">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </AnchorPane>
-               </children>
-            </HBox>
+            <HBox prefHeight="250.0" prefWidth="867.0" spacing="5.0" />
          </children>
       </VBox>
    </content>
