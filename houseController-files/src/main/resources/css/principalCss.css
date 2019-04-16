@@ -31,7 +31,7 @@
  * Efeito do mouse passando por cima do botão selecionado
  */
 .botoesMenu:hover{
-	-fx-background-color: #3751FF; 
+	-fx-background-color: #F4F4F4; 
 	-fx-effect: dropshadow(three-pass-box, #0F29F6, 10, 0, 0, 0);
 	-fx-text-fill: white;
 }

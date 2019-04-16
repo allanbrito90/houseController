@@ -30,6 +30,7 @@
 		<mapping class="br.com.houseController.model.despesas.DespesaFixa" />
 		<mapping class="br.com.houseController.model.produto.Produto" />
 		<mapping class="br.com.houseController.model.produto.Ingrediente" />
+		<mapping class="br.com.houseController.model.produto.UnidadeMedida" />
 		<mapping class="br.com.houseController.model.despesas.Compras" />
 	</session-factory>
 </hibernate-configuration>

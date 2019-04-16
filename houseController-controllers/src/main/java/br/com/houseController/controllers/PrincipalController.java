@@ -39,10 +39,10 @@ public class PrincipalController implements Initializable{
 	ImageView ivFechar;
 	
 	@FXML
-	JFXButton jbHome;
+	AnchorPane jbHome;
 	
 	@FXML
-	JFXButton jbUsuarios;
+	AnchorPane jbUsuarios;
 	
 	@FXML
 	AnchorPane apTela;

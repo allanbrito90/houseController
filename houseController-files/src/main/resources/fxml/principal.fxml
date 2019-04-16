@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,29 +10,52 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-
 <StackPane fx:id="spPrincipal" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.PrincipalController">
    <children>
       <BorderPane fx:id="bpPrincipal" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../css/principalCss.css">
          <left>
-            <VBox fx:id="vbLateral" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="60.0" spacing="20.0" styleClass="vbLateral" BorderPane.alignment="CENTER">
+            <VBox fx:id="vbLateral" alignment="TOP_CENTER" prefHeight="600.0" prefWidth="60.0" styleClass="vbLateral" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="66.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/baseline_account_balance_black_36dp.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="85.0" top="15.0" />
+                        <Insets bottom="80.0" top="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <VBox spacing="30.0">
+                  <VBox>
                      <children>
-                        <JFXButton fx:id="jbHome" styleClass="botoesMenu" text="Home" />
-                        <JFXButton styleClass="botoesMenu" text="Despesas" />
-                        <JFXButton styleClass="botoesMenu" text="Receitas" />
-                        <JFXButton styleClass="botoesMenu" text="Compras" />
-                        <JFXButton styleClass="botoesMenu" text="Metas" />
-                        <JFXButton fx:id="jbUsuarios" styleClass="botoesMenu" text="Usuários" />
+                        <AnchorPane fx:id="jbHome" prefHeight="50.0" prefWidth="66.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="17.0" layoutY="17.0" text="Home" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="66.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="8.0" layoutY="17.0" text="Despesas" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="40.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="11.0" layoutY="17.0" text="Receitas" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="70.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="9.0" layoutY="17.0" text="Compras" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="100.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="17.0" layoutY="17.0" text="Metas" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="jbUsuarios" layoutX="10.0" layoutY="130.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
+                           <children>
+                              <Label layoutX="10.0" layoutY="17.0" text="Usuários" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </VBox>
                </children>

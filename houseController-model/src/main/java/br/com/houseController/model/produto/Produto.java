@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity(name="produto")
@@ -26,7 +27,8 @@ public class Produto {
 	private BigDecimal valor;
 	
 	@Column
-	Integer quantidade;
+	private Integer quantidade;
+
 	
 	
 	public int getId() {
@@ -52,8 +54,7 @@ public class Produto {
 	}
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
-	}
-	
+	}	
 	
 	
 }

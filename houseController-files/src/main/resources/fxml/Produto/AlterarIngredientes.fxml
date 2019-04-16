@@ -10,27 +10,30 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Usuario.AlterarUsuarioController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
   <content>
-      <StackPane fx:id="spDialog">
+      <StackPane prefHeight="520.0" prefWidth="830.0">
          <children>
             <VBox>
                <children>
-                <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#Alterar" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
+                <AnchorPane maxWidth="830.0" minHeight="60.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label layoutX="14.0" layoutY="7.0" text="Alterar Usuário" />
+                        <Label layoutX="14.0" layoutY="10.0" text="Ingredientes" />
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="jtvUsuarioTable" prefHeight="408.0" prefWidth="830.0">
+                  <TableView maxWidth="830.0" prefHeight="408.0" prefWidth="830.0">
                     <columns>
-                      <TableColumn fx:id="colID" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="colNome" prefWidth="75.0" text="Nome" />
-                        <TableColumn fx:id="colLogin" prefWidth="75.0" text="Login" />
-                        <TableColumn fx:id="colEmail" prefWidth="75.0" text="Email" />
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                   </TableView>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="830.0" spacing="10.0">
+                  <HBox alignment="CENTER_RIGHT" maxWidth="830.0" prefHeight="44.0" prefWidth="830.0" spacing="10.0">
                      <children>
+                        <AnchorPane onMouseClicked="#handleEditar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao">
+                           <children>
+                              <Label layoutX="50.0" layoutY="14.0" text="Incluir" />
+                           </children>
+                        </AnchorPane>
                         <AnchorPane onMouseClicked="#handleEditar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
                            <children>
                               <Label layoutX="50.0" layoutY="14.0" text="Editar" />
@@ -47,9 +50,6 @@
                      </VBox.margin>
                   </HBox>
                </children>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
             </VBox>
          </children>
       </StackPane>
