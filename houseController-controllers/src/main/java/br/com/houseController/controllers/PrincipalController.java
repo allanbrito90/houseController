@@ -21,33 +21,36 @@ import javafx.stage.Stage;
 public class PrincipalController implements Initializable{
 	
 	@FXML
-	StackPane spPrincipal;
+	private StackPane spPrincipal;
 	
 	@FXML
-	BorderPane bpPrincipal;
+	private BorderPane bpPrincipal;
 	
 	@FXML
-	ImageView ivVoltar;
+	private ImageView ivVoltar;
 	
 	@FXML
-	ImageView ivAvancar;
+	private ImageView ivAvancar;
 	
 	@FXML
-	ImageView ivMinimizar;
+	private ImageView ivMinimizar;
 	
 	@FXML
-	ImageView ivFechar;
+	private ImageView ivFechar;
 	
 	@FXML
-	AnchorPane jbHome;
+	private AnchorPane jbHome;
 	
 	@FXML
-	AnchorPane jbUsuarios;
+	private AnchorPane jbUsuarios;
 	
 	@FXML
-	AnchorPane apTela;
+	private AnchorPane jbCompras;
 	
-	ScrollPane sp;
+	@FXML
+	private AnchorPane apTela;
+	
+	private ScrollPane sp;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -111,6 +114,14 @@ public class PrincipalController implements Initializable{
 			@Override
 			public void handle(Event event) {				
 				ScreenUtils.abrirNovaJanela("fxml/subMenuUsuario.fxml");
+			}
+		});
+		
+		jbCompras.setOnMouseClicked(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela("fxml/subMenuCompras.fxml");
 			}
 		});
 		
