@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <VBox fx:id="vbMenu" prefHeight="900.0" prefWidth="847.0" spacing="10.0">
+         <children>
+            <AnchorPane prefHeight="49.0" prefWidth="845.0" styleClass="cabecalhos">
+               <children>
+                  <Label fx:id="jlTitulo" layoutX="14.0" layoutY="8.0" text="Título" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>

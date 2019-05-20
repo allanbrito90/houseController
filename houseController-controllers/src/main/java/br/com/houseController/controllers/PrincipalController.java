@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
@@ -113,7 +114,8 @@ public class PrincipalController implements Initializable{
 
 			@Override
 			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuUsuario.fxml");
+				//ScreenUtils.abrirNovaJanela("fxml/subMenuUsuario.fxml");
+				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml", SubMenuUsuarios.class, null);
 			}
 		});
 		

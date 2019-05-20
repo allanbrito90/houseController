@@ -74,14 +74,19 @@ public class ScreenUtils {
 		try {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
+			if(controller!=null) {
+				fxml.setController(controller);
+			}
 			scroll = fxml.load();			
 			ap.getChildren().add(scroll);
-			ParametrosObjetos po = fxml.getController();
-			List<Object> objetos = new ArrayList<Object>();
-			for(Object obj : objs){
-				objetos.add(obj);
-			}			
-			po.setObjetos(objetos);
+			if (objs != null) {
+				ParametrosObjetos po = fxml.getController();
+				List<Object> objetos = new ArrayList<Object>();
+				for (Object obj : objs) {
+					objetos.add(obj);
+				}
+				po.setObjetos(objetos);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
