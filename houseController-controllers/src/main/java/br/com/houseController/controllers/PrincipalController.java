@@ -115,7 +115,8 @@ public class PrincipalController implements Initializable{
 			@Override
 			public void handle(Event event) {				
 				//ScreenUtils.abrirNovaJanela("fxml/subMenuUsuario.fxml");
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml", SubMenuUsuarios.class, null);
+				SubMenuUsuarios smu = new SubMenuUsuarios();
+				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",smu, null);
 			}
 		});
 		

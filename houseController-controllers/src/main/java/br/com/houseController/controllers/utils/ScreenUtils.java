@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
+import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -64,19 +65,42 @@ public class ScreenUtils {
 		abrirScrollAnchor(caminho);
 	}
 	
-	public static void abrirNovaJanela(String caminho, Class<?> Controller, Object... objs){
+	public static void abrirNovaJanela(String caminho, Object... objs){
 		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
-		abrirScrollAnchorcomParametros(caminho,Controller,objs);
+		abrirScrollAnchorcomParametros(caminho,objs);
 
 	}
 	
-	private static void abrirScrollAnchorcomParametros(String caminho, Class<?> controller, Object... objs) {
+	public static void abrirNovaJanela(String caminho, Controller controller, Object... objs){
+		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
+		abrirScrollAnchorcomParametros(caminho,controller,objs);
+
+	}
+	
+	private static void abrirScrollAnchorcomParametros(String caminho, Object... objs) {
 		try {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
-			if(controller!=null) {
-				fxml.setController(controller);
+			scroll = fxml.load();			
+			ap.getChildren().add(scroll);
+			if (objs != null) {
+				ParametrosObjetos po = fxml.getController();
+				List<Object> objetos = new ArrayList<Object>();
+				for (Object obj : objs) {
+					objetos.add(obj);
+				}
+				po.setObjetos(objetos);
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void abrirScrollAnchorcomParametros(String caminho, Controller controller, Object... objs) {
+		try {
+			FXMLLoader fxml = new FXMLLoader();
+			fxml.setController(controller);
+			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
 			scroll = fxml.load();			
 			ap.getChildren().add(scroll);
 			if (objs != null) {

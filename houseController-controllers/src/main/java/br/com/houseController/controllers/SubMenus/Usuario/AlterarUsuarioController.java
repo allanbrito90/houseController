@@ -44,7 +44,7 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 	@FXML
 	public void Alterar(){
 		UsuarioService us = new UsuarioService();
-		ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", NovoUsuarioController.class, us.findOne(new Usuario(14,"","","","",true)));
+		ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", us.findOne(new Usuario(14,"","","","",true)));
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 			if(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex()) != null){
 				usuarioService = new UsuarioService();
 				Usuario usuario = usuarioService.findOne(new Usuario(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex())));
-				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", NovoUsuarioController.class, usuario);
+				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", usuario);
 			}else{
 				ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 			}
