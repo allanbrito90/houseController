@@ -35,31 +35,17 @@ public class SubMenuUsuarios extends Controller implements Initializable{
 				titulo("Usuários");
 				
 //				Criando os Blocos nos HBoxes
-				List<HBox> hBoxes = criaBlocosSubMenus(new BlocoSubMenu("Novo Usuário", null, "fxml/Usuario/NovoUsuario.fxml"),
+				List<HBox> hBoxes = criaBlocosSubMenus(
+						new BlocoSubMenu("Novo Usuário", null, "fxml/Usuario/NovoUsuario.fxml"),
 						new BlocoSubMenu("Alterar Usuário", null, "fxml/Usuario/AlterarUsuario.fxml"));
-//				Adicionando os HBoxes prontos no VBox
 				
+//				Adicionando os HBoxes prontos no VBox				
 				for(HBox hBox : hBoxes){
 					vbMenu.getChildren().add(hBox);
 				}
 			}
 		});
 		
-		/*jbNovoUsuario.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml");
-			}
-		});
-		
-		jbAlterarUsuario.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				ScreenUtils.abrirNovaJanela("fxml/Usuario/AlterarUsuario.fxml");
-			}
-		});*/
 	}
 
 }
