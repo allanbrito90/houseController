@@ -53,8 +53,6 @@ public class Controller{
 		label.setText(blocoSubMenu.getNomeMenu());
 		label.setAlignment(Pos.CENTER);
 		anchorPane.getChildren().add(label);
-//		label.layoutXProperty().bind(anchorPane.widthProperty().subtract(anchorPane.widthProperty()).divide(2));
-//		label.layoutYProperty().bind(anchorPane.heightProperty().subtract(anchorPane.heightProperty()).divide(2));
 		anchorPane.setOnMouseClicked(new EventHandler<Event>() {
 
 			@Override
