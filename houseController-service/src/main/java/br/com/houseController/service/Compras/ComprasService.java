@@ -1,4 +1,4 @@
-package br.com.houseController.service.Despesa;
+package br.com.houseController.service.Compras;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,7 @@ public class ComprasService implements InterfaceService<Compras> {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Compras> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();

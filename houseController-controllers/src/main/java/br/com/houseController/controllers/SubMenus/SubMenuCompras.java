@@ -1,59 +1,46 @@
 package br.com.houseController.controllers.SubMenus;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import br.com.houseController.controllers.utils.ScreenUtils;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
+import br.com.houseController.controllers.Controller;
+import br.com.houseController.model.SubMenu.BlocoSubMenu;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 
-public class SubMenuCompras implements Initializable {
-
-	@FXML
-	AnchorPane jbNovaCompra;
-	
-	@FXML
-	AnchorPane jbAlterarCompra;
-	
-	@FXML
-	AnchorPane jbNovoProduto;
-	
-	@FXML
-	AnchorPane jbAlterarProduto;
-	
-	@FXML
-	AnchorPane jbNovoIngrediente;
-	
-	@FXML
-	AnchorPane jbAlterarIngrediente;
-	
-	@FXML
-	AnchorPane jbNovaUnidadeMedida;
-	
-	@FXML
-	AnchorPane jbAlterarUnidadeMedida;	
+public class SubMenuCompras extends Controller implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		/*jbNovoUsuario.setOnMouseClicked(new EventHandler<Event>() {
+
+		Platform.runLater(new Runnable() {
 
 			@Override
-			public void handle(Event event) {
-				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml");
+			public void run() {
+				// Setando título
+				titulo("Usuários");
+
+				// Criando os Blocos nos HBoxes
+				List<HBox> hBoxes = criaBlocosSubMenus(
+						new BlocoSubMenu("Nova Compra", null, "fxml/Usuario/NovoUsuario.fxml"), 
+						new BlocoSubMenu("Alterar Compra", null, "fxml/Usuario/AlterarUsuario.fxml"),
+						new BlocoSubMenu("Novo Produto", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Alterar Produto", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Novo Ingrediente", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Alterar Ingrediente", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Nova Unidade de Medida", null, "fxml/Compras/NovaUnidadeMedida.fxml"),
+						new BlocoSubMenu("Alterar Unidade de Medida", null, "fxml/Usuario/NovoUsuario.fxml")
+						);
+
+				// Adicionando os HBoxes prontos no VBox
+				for (HBox hBox : hBoxes) {
+					vbMenu.getChildren().add(hBox);
+				}
 			}
 		});
-		
-		jbAlterarUsuario.setOnMouseClicked(new EventHandler<Event>() {
 
-			@Override
-			public void handle(Event event) {
-				ScreenUtils.abrirNovaJanela("fxml/Usuario/AlterarUsuario.fxml");
-			}
-		});*/
 	}
 
 }
