@@ -47,7 +47,6 @@ public class ConnectionFactory
     	
     	factory = new Configuration()
     			.configure("hibernate/hibernate.cfg.xml")
-//    			.addAnnotatedClass(Usuario.class)
     			.buildSessionFactory();
    	}
 	

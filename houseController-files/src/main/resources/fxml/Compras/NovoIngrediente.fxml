@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Compras.NovoIngredienteController">
+  <content>
+      <StackPane fx:id="spDialog">
+         <children>
+            <VBox prefHeight="555.0" prefWidth="830.0">
+               <children>
+                <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
+                     <children>
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Novo Ingrediente" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane maxWidth="830.0" prefHeight="411.0" prefWidth="830.0">
+                     <children>
+                        <HBox prefHeight="435.0" prefWidth="830.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox prefHeight="200.0" prefWidth="415.0" spacing="20.0">
+                                 <children>
+                                    <Label text="Por favor, preencha todos os Campos">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Nome">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextField fx:id="jtfNome" styleClass="campoTextoEsquerdo">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </JFXTextField>
+                                    <Label text="Unidade de Medida">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXComboBox fx:id="jcbUnidadeMedida" prefHeight="25.0" prefWidth="382.0">
+                                       <VBox.margin>
+                                          <Insets left="30.0" />
+                                       </VBox.margin>
+                                    </JFXComboBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <AnchorPane onMouseClicked="#handleSalvar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/baseline_done_black_18dp.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <AnchorPane onMouseClicked="#handleLimpar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/baseline_clear_black_24dp.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+  </content>
+</ScrollPane>

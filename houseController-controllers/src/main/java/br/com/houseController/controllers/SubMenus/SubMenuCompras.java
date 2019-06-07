@@ -28,10 +28,10 @@ public class SubMenuCompras extends Controller implements Initializable {
 						new BlocoSubMenu("Alterar Compra", null, "fxml/Usuario/AlterarUsuario.fxml"),
 						new BlocoSubMenu("Novo Produto", null, "fxml/Usuario/NovoUsuario.fxml"),
 						new BlocoSubMenu("Alterar Produto", null, "fxml/Usuario/NovoUsuario.fxml"),
-						new BlocoSubMenu("Novo Ingrediente", null, "fxml/Usuario/NovoUsuario.fxml"),
-						new BlocoSubMenu("Alterar Ingrediente", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Novo Ingrediente", null, "fxml/Compras/NovoIngrediente.fxml"),
+						new BlocoSubMenu("Alterar Ingrediente", null, "fxml/Compras/AlterarIngrediente.fxml"),
 						new BlocoSubMenu("Nova Unidade de Medida", null, "fxml/Compras/NovaUnidadeMedida.fxml"),
-						new BlocoSubMenu("Alterar Unidade de Medida", null, "fxml/Usuario/NovoUsuario.fxml")
+						new BlocoSubMenu("Alterar Unidade de Medida", null, "fxml/Compras/AlterarUnidadeMedida.fxml")
 						);
 
 				// Adicionando os HBoxes prontos no VBox

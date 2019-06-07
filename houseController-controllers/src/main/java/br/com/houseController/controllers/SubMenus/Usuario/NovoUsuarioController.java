@@ -84,7 +84,7 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 		if (ScreenUtils.checarCamposVazios(jtfLogin, jpfSenha, jtfNome, jtfEmail)) {
 			usuario.setAtivo(true);
 			UsuarioService usuarioService = new UsuarioService();
-			if (!jlTitulo.getText().equals("Editar Usuário")) {
+			if (!jlTitulo.getText().contains("Editar")) {
 				if (!usuarioService.checaLogin(usuario)) {
 					usuarioService.insert(usuario);
 				} else {

@@ -8,7 +8,6 @@ import org.hibernate.Session;
 
 import br.com.houseController.model.Interfaces.InterfaceService;
 import br.com.houseController.model.produto.Ingrediente;
-import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 
 public class IngredienteService implements InterfaceService<Ingrediente> {
@@ -29,6 +28,7 @@ public class IngredienteService implements InterfaceService<Ingrediente> {
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Ingrediente> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();

@@ -24,15 +24,25 @@ public class UnidadeMedidaService implements InterfaceService<UnidadeMedida> {
 
 	@Override
 	public UnidadeMedida findOne(UnidadeMedida obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = ConnectionFactory.obterNovaSessao();
+		UnidadeMedida unidadeMedida = session.get(UnidadeMedida.class, obj.getId());
+		ConnectionFactory.fecharSessao(session);
+		return unidadeMedida;
+	}
+	
+	public UnidadeMedida findByNome(UnidadeMedida obj) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from unidadeMedida where descricao = :descricao");
+		query.setParameter("descricao", obj.getDescricao());
+		ArrayList<UnidadeMedida> list = (ArrayList<UnidadeMedida>) query.getResultList();
+		return list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<UnidadeMedida> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from unidade_medida");
+		Query query = session.createQuery("from unidadeMedida");
 		ArrayList<UnidadeMedida> list = (ArrayList<UnidadeMedida>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
@@ -42,7 +52,7 @@ public class UnidadeMedidaService implements InterfaceService<UnidadeMedida> {
 	public Integer delete(int id) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		Query query = session.createQuery("delete from unidade_medida where id = :id");
+		Query query = session.createQuery("delete from unidadeMedida where id = :id");
 		query.setParameter("id", id);
 		Integer retorno = query.executeUpdate();
 		session.getTransaction().commit();

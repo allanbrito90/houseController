@@ -18,6 +18,7 @@ import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.AnchorPane;
@@ -142,7 +143,11 @@ public class ScreenUtils {
 	
 	public static void limparCampos(IFXLabelFloatControl... nodes){
 		for(IFXLabelFloatControl node : nodes){
-			((TextInputControl) node).clear();
+			if (node instanceof TextInputControl) {
+				((TextInputControl) node).clear();
+			}else if (node instanceof ComboBox){
+				((ComboBox<?>) node).getSelectionModel().select(0);
+			}
 		}
 	}
 	

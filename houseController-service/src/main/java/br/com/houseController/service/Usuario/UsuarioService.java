@@ -98,6 +98,7 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Boole
 		return checaLogin(usuario);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Boolean metodoTeste(Usuario usuario){
 		Session session = ConnectionFactory.obterNovaSessao();
 		Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
