@@ -35,6 +35,12 @@
 			<artifactId>houseController-model</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>br.com.allanbrito</groupId>
+			<artifactId>houseController-components</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>io.github.typhon0</groupId>

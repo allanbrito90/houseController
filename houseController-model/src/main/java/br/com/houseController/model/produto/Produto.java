@@ -1,6 +1,7 @@
 package br.com.houseController.model.produto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -20,28 +21,46 @@ public class Produto {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@OneToMany
-	private List<Ingrediente> ingredientes;
+	@OneToOne
+	private Ingrediente ingrediente;
 	
 	@Column
 	private BigDecimal valor;
 	
 	@Column
 	private Integer quantidade;
+	
+	@Column
+	private LocalDateTime periodoReferencia;
+	
+	@Column
+	private Boolean comprado;
 
 	
 	
+	public LocalDateTime getPeriodoReferencia() {
+		return periodoReferencia;
+	}
+	public void setPeriodoReferencia(LocalDateTime periodoReferencia) {
+		this.periodoReferencia = periodoReferencia;
+	}
+	public Boolean getComprado() {
+		return comprado;
+	}
+	public void setComprado(Boolean comprado) {
+		this.comprado = comprado;
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<Ingrediente> getIngredientes() {
-		return ingredientes;
+	public Ingrediente getIngrediente() {
+		return ingrediente;
 	}
-	public void setIngredientes(List<Ingrediente> ingredientes) {
-		this.ingredientes = ingredientes;
+	public void setIngrediente(Ingrediente ingrediente) {
+		this.ingrediente = ingrediente;
 	}
 	public BigDecimal getValor() {
 		return valor;

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,12 +25,28 @@
                         <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Novo Produto" />
                      </children>
                   </AnchorPane>
-                  <Label text="Clique em + para adicionar um novo Produto">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ScrollPane>
+                  <HBox prefHeight="32.0" prefWidth="830.0" spacing="15.0">
+                     <children>
+                        <Label text="Clique em + para adicionar um novo Produto">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane fx:id="jbAdd" onMouseClicked="#handleAdicionar" prefHeight="32.0" prefWidth="46.0" styleClass="botaoConfirmacao">
+                           <children>
+                              <Label layoutX="17.0" layoutY="1.0" text="+">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <JFXComboBox prefHeight="25.0" prefWidth="121.0" />
+                        <Spinner prefHeight="25.0" prefWidth="96.0" />
+                        <JFXButton text="Pesquisar" />
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="374.0" prefWidth="830.0">
                      <content>
                         <VBox fx:id="vbProdutos" prefHeight="409.0" prefWidth="819.0" spacing="20.0" />
                      </content>
@@ -50,20 +69,6 @@
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
-                        </AnchorPane>
-                        <AnchorPane onMouseClicked="#handleLimpar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
-                           <children>
-                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../images/baseline_clear_black_24dp.png" />
-                                 </image>
-                              </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
                         </AnchorPane>
                      </children>
                   </HBox>

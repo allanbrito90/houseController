@@ -64,6 +64,8 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 					jlTitulo.setText("Editar Ingrediente");
 					jtfNome.setText(ingrediente.getDescricaoIngrediente());
 					jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
+				}else{
+					ingrediente = new Ingrediente();
 				}
 			}
 		});
