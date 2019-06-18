@@ -1,21 +1,28 @@
 package br.com.houseController.controllers.SubMenus.Compras;
 
+import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import javax.swing.JSpinner;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.produto.Ingrediente;
+import br.com.houseController.model.produto.Produto;
+import br.com.houseController.model.produto.ProdutoItem;
 import br.com.houseController.service.Produto.IngredienteService;
+import br.com.houseController.service.Produto.ProdutoService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -40,26 +47,55 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	@FXML
 	private AnchorPane jbAdd;
 	
+	@FXML
+	private JFXComboBox<String> jcbMes;
+	
+	@FXML
+	private Spinner<Integer> jsAno;
+	
+	final static int MINANO = 2000;
+	final static int MAXANO = 3000;
+	
+	SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO, MINANO);
+	
 	ObservableList<String> ingredientes;
+	
+	ProdutoService produtoService = new ProdutoService();
+	IngredienteService ingredienteService = new IngredienteService();
+	
+	HashMap<Integer, ProdutoItem> mapProduto = new HashMap<>();
+	
+	int indice = 0;
 	
 	
 	@FXML
 	public void handleSalvar(){
-		
+		for(int i = 0 ; i < indice ; i++){
+			if (mapProduto.get(i) != null) {
+				if(mapProduto.get(i).getNomeProduto() != null && mapProduto.get(i).getQuantidade().compareTo(BigDecimal.ZERO) == 0 && mapProduto.get(i).getValor() != null){
+					System.out.println("Nome: " + mapProduto.get(i).getNomeProduto() + " Qtde: " + mapProduto.get(i).getQuantidade() + " Valor: " + mapProduto.get(i).getValor());
+					Ingrediente ingrediente = ingredienteService.findOne(new Ingrediente(mapProduto.get(i).getNomeProduto()));
+					Produto produto = new Produto();
+					produto.setIngrediente(ingrediente);
+					produto.setQuantidade(mapProduto.get(i).getQuantidade().intValue());
+					produto.setValor(mapProduto.get(i).getValor());
+					produto.setComprado(false);
+					produtoService.insert(produto);
+				}else{
+					ScreenUtils.janelaInformação(spDialog, "Campos Vazios", "Há campos não preenchidos", "Tá bom!");
+				}
+			}
+		}
 	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		jsAno.setValueFactory(anoSpinner);
+		jsAno.getValueFactory().setValue(LocalDate.now().getYear());
 		
-		criarProduto();
-		
-		Platform.runLater(new Runnable() {
-
-			@Override
-			public void run() {
-				if (getObjetos() != null) {
-					
-				}
+		Platform.runLater(() -> {
+			if (getObjetos() != null) {
+				
 			}
 		});		
 	}
@@ -74,7 +110,10 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		return ingredientes;
 	}
 
-	private void criarProduto() {
+	private void criarProduto(int indice) {
+		ProdutoItem produtoItem = new ProdutoItem(); 
+		mapProduto.put(indice, produtoItem);		
+		
 		HBox hbProduto = new HBox();
 		vbProdutos.getChildren().add(hbProduto);
 		hbProduto.setSpacing(10);
@@ -96,19 +135,27 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jntfValor);		
 		hbProduto.getChildren().add(jbApagar);
 		
-		jbApagar.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {
-				System.out.println(jcbProduto.getSelectionModel().getSelectedItem());
-				vbProdutos.getChildren().remove(hbProduto);
-			}
+		jcbProduto.setOnAction((event)->{
+			produtoItem.setNomeProduto(jcbProduto.getSelectionModel().getSelectedItem());			
+		});
+		
+		jsQtde.valueProperty().addListener((obs, oldV, newV) -> {
+			produtoItem.setQuantidade(BigDecimal.valueOf(newV));
+		});
+		
+		jntfValor.setOnKeyReleased((event)->{
+			produtoItem.setValor(BigDecimal.valueOf(Float.valueOf(jntfValor.getText())));
+		});
+		
+		jbApagar.setOnMouseClicked((event)->{
+			vbProdutos.getChildren().remove(hbProduto);
+			mapProduto.remove(indice);			
 		});
 	}
 	
 	@FXML
 	public void handleAdicionar(){
-		criarProduto();
+		criarProduto(indice++);
 	}
 
 }

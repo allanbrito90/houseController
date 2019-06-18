@@ -22,10 +22,15 @@ public class IngredienteService implements InterfaceService<Ingrediente> {
 		return obj.getId();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Ingrediente findOne(Ingrediente obj) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from ingrediente where descricaoIngrediente = :descricaoIngrediente");
+		query.setParameter("descricaoIngrediente", obj.getDescricaoIngrediente());
+		ArrayList<Ingrediente> list = (ArrayList<Ingrediente>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")

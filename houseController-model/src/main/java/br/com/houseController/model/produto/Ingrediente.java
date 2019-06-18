@@ -35,6 +35,11 @@ public class Ingrediente {
 		this.descricaoIngrediente = descricaoIngrediente;
 		this.unidadeMedida = unidadeMedida;
 	}
+	
+	public Ingrediente(String descricaoIngrediente) {
+		super();
+		this.descricaoIngrediente = descricaoIngrediente;
+	}
 
 	public Ingrediente() {	}
 

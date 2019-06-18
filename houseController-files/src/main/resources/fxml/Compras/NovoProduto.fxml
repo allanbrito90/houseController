@@ -41,8 +41,8 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <JFXComboBox prefHeight="25.0" prefWidth="121.0" />
-                        <Spinner prefHeight="25.0" prefWidth="96.0" />
+                        <JFXComboBox fx:id="jcbMes" prefHeight="25.0" prefWidth="121.0" />
+                        <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
                         <JFXButton text="Pesquisar" />
                      </children>
                   </HBox>
