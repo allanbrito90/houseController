@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.swing.JSpinner;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
@@ -17,7 +15,6 @@ import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.Produto;
-import br.com.houseController.model.produto.ProdutoItem;
 import br.com.houseController.service.Produto.IngredienteService;
 import br.com.houseController.service.Produto.ProdutoService;
 import javafx.application.Platform;
@@ -48,14 +45,17 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	private AnchorPane jbAdd;
 	
 	@FXML
-	private JFXComboBox<String> jcbMes;
+	private Spinner<Integer> jsMes;
 	
 	@FXML
 	private Spinner<Integer> jsAno;
 	
 	final static int MINANO = 2000;
 	final static int MAXANO = 3000;
+	final static int MINMES = 1;
+	final static int MAXMES = 12;
 	
+	SpinnerValueFactory<Integer> mesSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINMES, MAXMES, MINMES);
 	SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO, MINANO);
 	
 	ObservableList<String> ingredientes;
@@ -63,7 +63,8 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	ProdutoService produtoService = new ProdutoService();
 	IngredienteService ingredienteService = new IngredienteService();
 	
-	HashMap<Integer, ProdutoItem> mapProduto = new HashMap<>();
+	HashMap<Integer, Produto> mapProduto = new HashMap<>();
+	HashMap<String,Ingrediente> mapIngrediente = new HashMap<>();
 	
 	int indice = 0;
 	
@@ -72,15 +73,10 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	public void handleSalvar(){
 		for(int i = 0 ; i < indice ; i++){
 			if (mapProduto.get(i) != null) {
-				if(mapProduto.get(i).getNomeProduto() != null && mapProduto.get(i).getQuantidade().compareTo(BigDecimal.ZERO) == 0 && mapProduto.get(i).getValor() != null){
-					System.out.println("Nome: " + mapProduto.get(i).getNomeProduto() + " Qtde: " + mapProduto.get(i).getQuantidade() + " Valor: " + mapProduto.get(i).getValor());
-					Ingrediente ingrediente = ingredienteService.findOne(new Ingrediente(mapProduto.get(i).getNomeProduto()));
-					Produto produto = new Produto();
-					produto.setIngrediente(ingrediente);
-					produto.setQuantidade(mapProduto.get(i).getQuantidade().intValue());
-					produto.setValor(mapProduto.get(i).getValor());
-					produto.setComprado(false);
-					produtoService.insert(produto);
+				if(mapProduto.get(i).getIngrediente() != null && mapProduto.get(i).getQuantidade() != null && mapProduto.get(i).getValor() != null){
+					mapProduto.get(i).setComprado(false);
+					mapProduto.get(i).setPeriodoReferencia(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
+					produtoService.insert(mapProduto.get(i));
 				}else{
 					ScreenUtils.janelaInformação(spDialog, "Campos Vazios", "Há campos não preenchidos", "Tá bom!");
 				}
@@ -90,8 +86,14 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		jsMes.setValueFactory(mesSpinner);
 		jsAno.setValueFactory(anoSpinner);
+		jsMes.getValueFactory().setValue(LocalDate.now().getMonthValue());
 		jsAno.getValueFactory().setValue(LocalDate.now().getYear());
+		
+		for (Ingrediente ingrediente : ingredienteService.findAll()) {
+			mapIngrediente.put(ingrediente.getDescricaoIngrediente(), ingrediente);
+		}		
 		
 		Platform.runLater(() -> {
 			if (getObjetos() != null) {
@@ -111,8 +113,8 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	}
 
 	private void criarProduto(int indice) {
-		ProdutoItem produtoItem = new ProdutoItem(); 
-		mapProduto.put(indice, produtoItem);		
+		Produto produto = new Produto(); 
+		mapProduto.put(indice, produto);		
 		
 		HBox hbProduto = new HBox();
 		vbProdutos.getChildren().add(hbProduto);
@@ -136,15 +138,15 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jbApagar);
 		
 		jcbProduto.setOnAction((event)->{
-			produtoItem.setNomeProduto(jcbProduto.getSelectionModel().getSelectedItem());			
+			produto.setIngrediente(mapIngrediente.get(jcbProduto.getSelectionModel().getSelectedItem()));			
 		});
 		
 		jsQtde.valueProperty().addListener((obs, oldV, newV) -> {
-			produtoItem.setQuantidade(BigDecimal.valueOf(newV));
+			produto.setQuantidade(Integer.valueOf(newV));
 		});
 		
 		jntfValor.setOnKeyReleased((event)->{
-			produtoItem.setValor(BigDecimal.valueOf(Float.valueOf(jntfValor.getText())));
+			produto.setValor(BigDecimal.valueOf(Float.valueOf(jntfValor.getText())));
 		});
 		
 		jbApagar.setOnMouseClicked((event)->{

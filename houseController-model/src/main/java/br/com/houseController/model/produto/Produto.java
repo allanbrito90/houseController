@@ -1,7 +1,7 @@
 package br.com.houseController.model.produto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,17 +29,17 @@ public class Produto {
 	private Integer quantidade;
 	
 	@Column
-	private LocalDateTime periodoReferencia;
+	private LocalDate periodoReferencia;
 	
 	@Column
 	private Boolean comprado;
 
 	
 	
-	public LocalDateTime getPeriodoReferencia() {
+	public LocalDate getPeriodoReferencia() {
 		return periodoReferencia;
 	}
-	public void setPeriodoReferencia(LocalDateTime periodoReferencia) {
+	public void setPeriodoReferencia(LocalDate periodoReferencia) {
 		this.periodoReferencia = periodoReferencia;
 	}
 	public Boolean getComprado() {

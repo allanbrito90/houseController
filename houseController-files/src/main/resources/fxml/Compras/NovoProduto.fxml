@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -41,7 +40,9 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <JFXComboBox fx:id="jcbMes" prefHeight="25.0" prefWidth="121.0" />
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
+                        <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
+                        <Label text="/" />
                         <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
                         <JFXButton text="Pesquisar" />
                      </children>
