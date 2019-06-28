@@ -44,7 +44,7 @@
                         <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
                         <Label text="/" />
                         <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
-                        <JFXButton text="Pesquisar" />
+                        <JFXButton onAction="#handlePesquisar" text="Pesquisar" />
                      </children>
                   </HBox>
                   <ScrollPane prefHeight="374.0" prefWidth="830.0">

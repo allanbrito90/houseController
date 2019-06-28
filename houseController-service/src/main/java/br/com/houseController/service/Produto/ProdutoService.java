@@ -1,6 +1,8 @@
 package br.com.houseController.service.Produto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Query;
 
@@ -44,6 +46,27 @@ public class ProdutoService implements InterfaceService<Produto> {
 		session.beginTransaction();
 		Query query = session.createQuery("delete from produto where id = :id");
 		query.setParameter("id", id);
+		Integer retorno = query.executeUpdate();
+		session.getTransaction().commit();
+		ConnectionFactory.fecharSessao(session);
+		return retorno;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Produto> produtosPorMes(LocalDate periodo){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from produto where periodoReferencia = :periodoReferencia");
+		query.setParameter("periodoReferencia", periodo);
+		List<Produto> list = (ArrayList<Produto>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list;
+	}
+	
+	public Integer deleteProdutosPorMes(LocalDate periodo){
+		Session session = ConnectionFactory.obterNovaSessao();
+		session.beginTransaction();
+		Query query = session.createQuery("delete from produto where periodoReferencia = :periodoReferencia");
+		query.setParameter("periodoReferencia", periodo);
 		Integer retorno = query.executeUpdate();
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);

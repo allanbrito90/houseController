@@ -64,6 +64,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	IngredienteService ingredienteService = new IngredienteService();
 	
 	HashMap<Integer, Produto> mapProduto = new HashMap<>();
+	HashMap<Integer, Produto> mapProdutoFixo = new HashMap<>();
 	HashMap<String,Ingrediente> mapIngrediente = new HashMap<>();
 	
 	int indice = 0;
@@ -73,6 +74,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	public void handleSalvar(){
 		for(int i = 0 ; i < indice ; i++){
 			if (mapProduto.get(i) != null) {
+//				produtoService.deleteProdutosPorMes(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
 				if(mapProduto.get(i).getIngrediente() != null && mapProduto.get(i).getQuantidade() != null && mapProduto.get(i).getValor() != null){
 					mapProduto.get(i).setComprado(false);
 					mapProduto.get(i).setPeriodoReferencia(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
@@ -80,6 +82,17 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 				}else{
 					ScreenUtils.janelaInformação(spDialog, "Campos Vazios", "Há campos não preenchidos", "Tá bom!");
 				}
+			}
+		}
+		for(int i=0; i < mapProdutoFixo.size(); i++){
+			try{
+				if(mapProduto.get(i) == null){
+					produtoService.delete(mapProdutoFixo.get(i).getId());
+				}
+			}catch(NullPointerException npe){
+				npe.printStackTrace();
+			}catch(Exception e){
+				e.printStackTrace();
 			}
 		}
 	}
@@ -98,8 +111,19 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		Platform.runLater(() -> {
 			if (getObjetos() != null) {
 				
+			}else{
+				carregaListaProdutos(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
 			}
 		});		
+	}
+
+	private void carregaListaProdutos(LocalDate periodo) {
+		List<Produto> produtos = produtoService.produtosPorMes(periodo);
+		mapProdutoFixo.clear();
+		for (Produto produto : produtos) {
+			criarProduto(indice++,produto);
+			mapProdutoFixo.put(indice, produto);
+		}
 	}
 	
 	private ObservableList<String> carregaListaIngredientes(){
@@ -112,8 +136,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		return ingredientes;
 	}
 
-	private void criarProduto(int indice) {
-		Produto produto = new Produto(); 
+	private void criarProduto(int indice, Produto produto) {
 		mapProduto.put(indice, produto);		
 		
 		HBox hbProduto = new HBox();
@@ -137,6 +160,18 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jntfValor);		
 		hbProduto.getChildren().add(jbApagar);
 		
+		if(produto.getIngrediente() != null){
+			jcbProduto.getSelectionModel().select(produto.getIngrediente().getDescricaoIngrediente());
+		}
+		
+		if(produto.getQuantidade() != null){
+			jsQtde.getValueFactory().setValue(produto.getQuantidade());
+		}
+		
+		if(produto.getValor() != null){
+			jntfValor.setText(produto.getValor().toString());
+		}
+		
 		jcbProduto.setOnAction((event)->{
 			produto.setIngrediente(mapIngrediente.get(jcbProduto.getSelectionModel().getSelectedItem()));			
 		});
@@ -157,7 +192,13 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	public void handleAdicionar(){
-		criarProduto(indice++);
+		criarProduto(indice++,new Produto());
+	}
+	
+	@FXML
+	public void handlePesquisar(){
+		vbProdutos.getChildren().clear();
+		carregaListaProdutos(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
 	}
 
 }
