@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -13,15 +16,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Compras.NovaUnidadeMedidaController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Meta.NovaMetaController">
   <content>
-      <StackPane>
+      <StackPane fx:id="spDialog">
          <children>
             <VBox prefHeight="555.0" prefWidth="830.0">
                <children>
-                  <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
+                <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Nova Unidade de Medida" />
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Nova Meta" />
                      </children>
                   </AnchorPane>
                   <AnchorPane maxWidth="830.0" prefHeight="411.0" prefWidth="830.0">
@@ -30,17 +33,38 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="415.0" spacing="20.0">
                                  <children>
-                                    <Label text="Nome">
+                                    <Label text="Por favor, preencha todos os Campos">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label text="Título">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="jtfNome" styleClass="campoTextoEsquerdo">
+                                    <JFXTextField fx:id="jtfTitulo" styleClass="campoTextoEsquerdo">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <JFXCheckBox fx:id="jcbFracionado" text="Unidade de Medida Fracionada" />
+                                    <Label text="Descrição">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXTextArea fx:id="jtaDescricao" labelFloat="true" prefHeight="94.0" prefWidth="415.0" promptText="Descreva em detalhes sua meta" wrapText="true" />
+                                    <Label text="Data de Conclusão">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <JFXDatePicker fx:id="jdpData" />
+                                    <JFXCheckBox fx:id="jcbConcluido" text="Concluído" />
+                                    <JFXComboBox fx:id="jcbUsuario" prefHeight="25.0" prefWidth="284.0" promptText="Atribuído a" />
                                  </children>
                               </VBox>
                            </children>

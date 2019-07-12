@@ -32,5 +32,6 @@
 		<mapping class="br.com.houseController.model.produto.Ingrediente" />
 		<mapping class="br.com.houseController.model.produto.UnidadeMedida" />
 		<mapping class="br.com.houseController.model.despesas.Compras" />
+		<mapping class="br.com.houseController.model.meta.Meta" />
 	</session-factory>
 </hibernate-configuration>

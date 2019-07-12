@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import br.com.houseController.controllers.SubMenus.SubMenuCompras;
+import br.com.houseController.controllers.SubMenus.SubMenuMetaController;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -45,6 +46,9 @@ public class PrincipalController implements Initializable{
 	
 	@FXML
 	private AnchorPane jbUsuarios;
+	
+	@FXML
+	private AnchorPane jbMetas;
 	
 	@FXML
 	private AnchorPane jbCompras;
@@ -124,6 +128,14 @@ public class PrincipalController implements Initializable{
 			@Override
 			public void handle(Event event) {				
 				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuCompras(), null);
+			}
+		});
+		
+		jbMetas.setOnMouseClicked(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela("fxml/subMenuMeta.fxml");
 			}
 		});
 		

@@ -54,21 +54,31 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		Platform.runLater(new Runnable() {
 
-			@Override
-			public void run() {
-				if (getObjetos() != null) {
-					ingrediente = (Ingrediente) getObjetos().get(0);
-					jlTitulo.setText("Editar Ingrediente");
-					jtfNome.setText(ingrediente.getDescricaoIngrediente());
-					jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
-				}else{
-					ingrediente = new Ingrediente();
-				}
-			}
-		});
+		if (getObjetos() != null) {
+			ingrediente = (Ingrediente) getObjetos().get(0);
+			jlTitulo.setText("Editar Ingrediente");
+			jtfNome.setText(ingrediente.getDescricaoIngrediente());
+			jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
+		}else{
+			ingrediente = new Ingrediente();
+		}
+	
+		
+//		Platform.runLater(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				if (getObjetos() != null) {
+//					ingrediente = (Ingrediente) getObjetos().get(0);
+//					jlTitulo.setText("Editar Ingrediente");
+//					jtfNome.setText(ingrediente.getDescricaoIngrediente());
+//					jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
+//				}else{
+//					ingrediente = new Ingrediente();
+//				}
+//			}
+//		});
 		
 		jtfNome.textProperty().addListener((obs, oldT, newT) -> {
 			ingrediente.setDescricaoIngrediente(newT);

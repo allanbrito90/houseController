@@ -2,6 +2,7 @@ package br.com.houseController.service.Produto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -73,4 +74,16 @@ public class ProdutoService implements InterfaceService<Produto> {
 		return retorno;
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<Produto> produtosPorAno(Integer ano){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from produto where periodoReferencia between :periodoReferenciaInicial and :periodoReferenciaFinal");
+		query.setParameter("periodoReferenciaInicial", LocalDate.of(ano, 1, 1));
+		query.setParameter("periodoReferenciaFinal", LocalDate.of(ano, 12, 1));
+		List<Produto> list = (ArrayList<Produto>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list;
+	}
+	
 }

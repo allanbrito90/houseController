@@ -23,8 +23,8 @@
          <right>
             <AnchorPane fx:id="apTelaCentro" prefHeight="210.0" prefWidth="179.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXTextField fx:id="jtfLogin" layoutX="22.0" layoutY="29.0" promptText="Login" />
-                  <JFXPasswordField fx:id="jpfSenha" layoutX="22.0" layoutY="73.0" promptText="Senha" />
+                  <JFXTextField fx:id="jtfLogin" labelFloat="true" layoutX="22.0" layoutY="29.0" promptText="Login" />
+                  <JFXPasswordField fx:id="jpfSenha" labelFloat="true" layoutX="22.0" layoutY="73.0" promptText="Senha" />
                </children>
             </AnchorPane>
          </right>

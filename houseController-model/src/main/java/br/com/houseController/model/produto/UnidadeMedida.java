@@ -17,11 +17,16 @@ public class UnidadeMedida {
 	
 	@Column
 	private String descricao;
+	
+	@Column
+	private Boolean fracionado;
 
-	public UnidadeMedida(int id, String descricao) {
+
+	public UnidadeMedida(int id, String descricao, Boolean fracionado) {
 		super();
 		this.id = id;
 		this.descricao = descricao;
+		this.fracionado = false;
 	}
 
 	public UnidadeMedida(String descricao) {
@@ -29,7 +34,9 @@ public class UnidadeMedida {
 		this.descricao = descricao;
 	}
 
-	public UnidadeMedida() {}
+	public UnidadeMedida() {
+		this.fracionado = false;
+	}
 
 	public int getId() {
 		return id;
@@ -46,8 +53,12 @@ public class UnidadeMedida {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+		
+	public Boolean getFracionado() {
+		return fracionado;
+	}
 	
-	
-	
-	
+	public void setFracionado(Boolean fracionado) {
+		this.fracionado = fracionado;
+	}
 }

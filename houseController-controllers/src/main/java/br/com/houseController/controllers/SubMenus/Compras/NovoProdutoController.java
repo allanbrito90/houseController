@@ -74,7 +74,6 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	public void handleSalvar(){
 		for(int i = 0 ; i < indice ; i++){
 			if (mapProduto.get(i) != null) {
-//				produtoService.deleteProdutosPorMes(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
 				if(mapProduto.get(i).getIngrediente() != null && mapProduto.get(i).getQuantidade() != null && mapProduto.get(i).getValor() != null){
 					mapProduto.get(i).setComprado(false);
 					mapProduto.get(i).setPeriodoReferencia(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
@@ -95,6 +94,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 				e.printStackTrace();
 			}
 		}
+		carregaListaProdutos(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
 	}
 	
 	@Override
@@ -118,11 +118,14 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	}
 
 	private void carregaListaProdutos(LocalDate periodo) {
+		indice=-1;
+		vbProdutos.getChildren().clear();
 		List<Produto> produtos = produtoService.produtosPorMes(periodo);
 		mapProdutoFixo.clear();
 		for (Produto produto : produtos) {
-			criarProduto(indice++,produto);
+			indice++;
 			mapProdutoFixo.put(indice, produto);
+			criarProduto(indice,produto);
 		}
 	}
 	
@@ -149,8 +152,9 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jcbProduto);
 		
 		Spinner<Integer> jsQtde = new Spinner<>();
-		SpinnerValueFactory<Integer> valorSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0);
-		jsQtde.setValueFactory(valorSpinner);
+		SpinnerValueFactory<Integer> valorSpinnerInt = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0);
+		jsQtde.setValueFactory(valorSpinnerInt);//Por enquanto sertá usado Integer para ambos os casos
+//		SpinnerValueFactory<Double> valorSpinnerDoub = new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 255, 0);
 		hbProduto.getChildren().add(jsQtde);
 		
 		NumberTextField jntfValor = new NumberTextField();
@@ -162,6 +166,11 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		
 		if(produto.getIngrediente() != null){
 			jcbProduto.getSelectionModel().select(produto.getIngrediente().getDescricaoIngrediente());
+			if(produto.getIngrediente().getUnidadeMedida().getFracionado()){
+				jsQtde.setValueFactory(valorSpinnerInt);//Por enquanto sertá usado Integer para ambos os casos
+			}else{
+				jsQtde.setValueFactory(valorSpinnerInt);//Por enquanto sertá usado Integer para ambos os casos
+			}
 		}
 		
 		if(produto.getQuantidade() != null){
@@ -197,7 +206,6 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	public void handlePesquisar(){
-		vbProdutos.getChildren().clear();
 		carregaListaProdutos(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
 	}
 

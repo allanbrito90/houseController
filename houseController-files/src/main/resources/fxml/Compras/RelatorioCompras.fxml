@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Compras.RelatorioComprasController">
+   <content>
+      <StackPane fx:id="spDialog">
+         <children>
+            <VBox prefHeight="513.0" prefWidth="830.0">
+               <children>
+                  <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
+                     <children>
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Relatório de Compras" />
+                     </children>
+                  </AnchorPane>
+                  <HBox prefHeight="32.0" prefWidth="830.0" spacing="15.0">
+                     <children>
+                        <Label text="Selecione o ano:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="393.0" prefWidth="830.0">
+                     <content>
+                        <AnchorPane>
+                           <children>
+                              <VBox fx:id="vbProdutos" prefHeight="390.0" prefWidth="151.0" spacing="5.0">
+                                 <children>
+                                    <TableView fx:id="jtvTotalCompras" prefHeight="316.0" prefWidth="151.0">
+                                      <columns>
+                                        <TableColumn fx:id="colMes" prefWidth="75.0" text="Mês" />
+                                        <TableColumn fx:id="colValor" prefWidth="75.0" text="Valor(R$)" />
+                                      </columns>
+                                    </TableView>
+                                    <Label prefHeight="32.0" prefWidth="149.0" text="Total">
+                                       <font>
+                                          <Font name="System Bold Italic" size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="jlTotal" alignment="CENTER_RIGHT" prefHeight="45.0" prefWidth="150.0" text="Label">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </content>
+</ScrollPane>

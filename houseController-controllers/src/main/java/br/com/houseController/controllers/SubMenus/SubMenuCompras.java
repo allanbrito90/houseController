@@ -20,14 +20,12 @@ public class SubMenuCompras extends Controller implements Initializable {
 			@Override
 			public void run() {
 				// Setando título
-				titulo("Usuários");
+				titulo("Compras");
 
 				// Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Nova Compra", null, "fxml/Usuario/NovoUsuario.fxml"), 
-						new BlocoSubMenu("Alterar Compra", null, "fxml/Usuario/AlterarUsuario.fxml"),
-						new BlocoSubMenu("Novo Produto", null, "fxml/Compras/NovoProduto.fxml"),
-						new BlocoSubMenu("Alterar Produto", null, "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Relatório de Compras", null, "fxml/Compras/RelatorioCompras.fxml"), 
+						new BlocoSubMenu("Compras", null, "fxml/Compras/NovoProduto.fxml"),
 						new BlocoSubMenu("Novo Ingrediente", null, "fxml/Compras/NovoIngrediente.fxml"),
 						new BlocoSubMenu("Alterar Ingrediente", null, "fxml/Compras/AlterarIngrediente.fxml"),
 						new BlocoSubMenu("Nova Unidade de Medida", null, "fxml/Compras/NovaUnidadeMedida.fxml"),

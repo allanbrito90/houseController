@@ -21,7 +21,7 @@
                <children>
                 <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Novo Produto" />
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Compras" />
                      </children>
                   </AnchorPane>
                   <HBox prefHeight="32.0" prefWidth="830.0" spacing="15.0">

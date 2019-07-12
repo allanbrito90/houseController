@@ -46,7 +46,7 @@
                               <Label layoutX="9.0" layoutY="17.0" text="Compras" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="100.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
+                        <AnchorPane fx:id="jbMetas" layoutX="10.0" layoutY="100.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
                            <children>
                               <Label layoutX="17.0" layoutY="17.0" text="Metas" />
                            </children>

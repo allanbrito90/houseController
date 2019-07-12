@@ -3,6 +3,7 @@ package br.com.houseController.controllers.SubMenus.Compras;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.controllers.ParametrosObjetos;
@@ -22,6 +23,9 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 	
 	@FXML
 	private JFXTextField jtfNome;
+	
+	@FXML
+	private JFXCheckBox jcbFracionado;
 	
 	@FXML
 	private Label jlTitulo;
@@ -49,6 +53,10 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 			unidadeMedida.setDescricao(newT);
 		});
 		
+		jcbFracionado.selectedProperty().addListener((obs,oldValue,newValue) -> {
+			unidadeMedida.setFracionado(newValue);
+		});
+		
 		Platform.runLater(new Runnable() {
 
 			@Override
@@ -57,6 +65,7 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 					unidadeMedida = (UnidadeMedida) getObjetos().get(0);
 					jlTitulo.setText("Editar Usuário");
 					jtfNome.setText(unidadeMedida.getDescricao());
+					jcbFracionado.selectedProperty().setValue(unidadeMedida.getFracionado());
 				}
 			}
 		});

@@ -57,7 +57,7 @@ public class AlterarIngredienteController implements Initializable{
 	public void handleExcluir(MouseEvent event) {
 		if(colNome.getCellData(jtvIngredienteTable.getSelectionModel().getSelectedIndex()) != null){
 			ingredienteService = new IngredienteService();
-			Ingrediente ingrediente = jtvIngredienteTable.getSelectionModel().getSelectedItem();;
+			Ingrediente ingrediente = jtvIngredienteTable.getSelectionModel().getSelectedItem();
 			ingredienteService.delete(ingrediente.getId());
 			atualizarTable();
 		}else{
