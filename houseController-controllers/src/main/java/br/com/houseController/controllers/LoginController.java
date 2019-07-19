@@ -2,6 +2,7 @@ package br.com.houseController.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.usuario.Usuario;
+import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.concurrent.Task;
@@ -75,7 +77,8 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				usuario.setLogin(jtfLogin.getText());
 				usuario.setSenha(jpfSenha.getText());
 				
-				UsuarioService usuarioService = new UsuarioService(usuario);				
+				UsuarioService usuarioService = new UsuarioService(usuario);
+				
 				
 //				try {					
 //				ExecutorService e = Executors.newSingleThreadExecutor();
@@ -102,7 +105,10 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				    Aguarde2.finalizarJanelaAguarde();
 				    try {
 						if(task.get()){
-							fechaTelaLogin();					
+							fechaTelaLogin();
+							UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
+							usuarioLogado.setUsuario(usuarioService.findOneByLoginAndSenha(usuario));
+							usuarioLogado.setDtLogin(LocalDate.now());
 							abreTelaPrincipal();					
 						}else{
 							if(ScreenUtils.checarCamposVazios(jtfLogin,jpfSenha)){

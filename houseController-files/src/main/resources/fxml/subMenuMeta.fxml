@@ -22,10 +22,10 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <TableView prefHeight="105.0" prefWidth="845.0">
+            <TableView fx:id="jtvMetas" prefHeight="105.0" prefWidth="845.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="colMeta" prefWidth="655.0" text="Meta" />
+                <TableColumn fx:id="colData" minWidth="0.0" prefWidth="187.0" text="Data" />
               </columns>
             </TableView>
          </children>

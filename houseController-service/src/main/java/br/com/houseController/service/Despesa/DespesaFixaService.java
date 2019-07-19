@@ -25,7 +25,6 @@ public class DespesaFixaService implements InterfaceService<DespesaFixa> {
 
 	@Override
 	public DespesaFixa findOne(DespesaFixa obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

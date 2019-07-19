@@ -25,7 +25,6 @@ public class CategoriaService implements InterfaceService<Categoria> {
 
 	@Override
 	public Categoria findOne(Categoria obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -40,7 +39,6 @@ public class CategoriaService implements InterfaceService<Categoria> {
 
 	@Override
 	public Integer delete(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

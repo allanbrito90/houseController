@@ -54,7 +54,7 @@ public class NovaMetaController extends ParametrosObjetos implements Initializab
 				meta = (Meta) getObjetos().get(0);
 				jlTitulo.setText("Editar Meta");
 				jtfTitulo.setText(meta.getTitulo());
-				jtaDescricao.setText(jtaDescricao.getText());
+				jtaDescricao.setText(meta.getDescMeta());
 				jdpData.setValue(meta.getDtConclusao());
 				jcbConcluido.selectedProperty().set(meta.isCumprido());
 				jcbUsuario.getSelectionModel().select(meta.getUsuario().getNome());

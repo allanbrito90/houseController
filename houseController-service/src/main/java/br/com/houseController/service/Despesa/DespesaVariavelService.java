@@ -25,7 +25,6 @@ public class DespesaVariavelService implements InterfaceService<DespesaVariavel>
 
 	@Override
 	public DespesaVariavel findOne(DespesaVariavel obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

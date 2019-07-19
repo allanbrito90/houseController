@@ -98,19 +98,16 @@ public class UsuarioService implements InterfaceService<Usuario>, Callable<Boole
 		return checaLogin(usuario);
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	public Boolean metodoTeste(Usuario usuario){
+	public Usuario findOneByLoginAndSenha(Usuario usuario){
 		Session session = ConnectionFactory.obterNovaSessao();
 		Query query = session.createQuery("from Usuario where login = :login and senha = :senha and ativo = 1");
 		query.setParameter("login", usuario.getLogin());
 		query.setParameter("senha", usuario.getSenha());		
 		ArrayList<Usuario> list = (ArrayList<Usuario>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
-
-		if(list.size()>0){
-			return true;
-		}
-		return false;	
+		return list.get(0);
 	}
 
 }

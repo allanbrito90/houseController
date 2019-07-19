@@ -29,12 +29,10 @@ public class DespesaVariavel extends AbstractDespesa implements Serializable{
 
 	public DespesaVariavel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public DespesaVariavel(Integer id, Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
 		super(id, pago, categoria, contaAtiva, descricaoDespesa, valorDespesa, receitaUtilizada);
-		// TODO Auto-generated constructor stub
 	}
 	
 	

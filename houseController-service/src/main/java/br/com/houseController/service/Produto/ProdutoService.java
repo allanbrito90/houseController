@@ -27,7 +27,6 @@ public class ProdutoService implements InterfaceService<Produto> {
 
 	@Override
 	public Produto findOne(Produto obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

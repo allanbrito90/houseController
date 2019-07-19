@@ -3,12 +3,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.HomeController">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="451.0" prefWidth="753.0">
          <children>
             <Label layoutX="297.0" layoutY="217.0" text="Tela Home" />
+            <Label fx:id="jlSaudacao" layoutX="14.0" layoutY="14.0" text="Bem Vindo, User">
+               <font>
+                  <Font name="System Bold Italic" size="36.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
   </content>
 </ScrollPane>

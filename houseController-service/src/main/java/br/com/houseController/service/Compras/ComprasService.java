@@ -24,7 +24,6 @@ public class ComprasService implements InterfaceService<Compras> {
 
 	@Override
 	public Compras findOne(Compras obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

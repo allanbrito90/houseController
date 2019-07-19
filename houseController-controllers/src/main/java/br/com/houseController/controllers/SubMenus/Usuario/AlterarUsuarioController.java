@@ -41,11 +41,11 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 	
 	ObservableList<Usuario> usuarios;
 	
-	@FXML
-	public void Alterar(){
-		UsuarioService us = new UsuarioService();
-		ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", us.findOne(new Usuario(14,"","","","",true)));
-	}
+//	@FXML
+//	public void Alterar(){
+//		UsuarioService us = new UsuarioService();
+//		ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", us.findOne(new Usuario(14,"","","","",true)));
+//	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

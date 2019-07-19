@@ -24,7 +24,6 @@ public class ReceitaService implements InterfaceService<Receita>{
 
 	@Override
 	public Receita findOne(Receita obj) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
