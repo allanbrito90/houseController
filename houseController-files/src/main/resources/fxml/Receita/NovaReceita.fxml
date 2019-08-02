@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXPasswordField?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.Usuario.NovoUsuarioController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Receita.NovaReceitaController">
   <content>
       <StackPane fx:id="spDialog">
          <children>
@@ -21,14 +22,14 @@
                <children>
                 <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Novo Usuário" />
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Nova Receita" />
                      </children>
                   </AnchorPane>
                   <AnchorPane maxWidth="830.0" prefHeight="411.0" prefWidth="830.0">
                      <children>
                         <HBox prefHeight="435.0" prefWidth="830.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox prefHeight="200.0" prefWidth="415.0" spacing="20.0">
+                              <VBox fx:id="vbCampos" prefHeight="200.0" prefWidth="415.0" spacing="20.0">
                                  <children>
                                     <Label text="Por favor, preencha todos os Campos">
                                        <font>
@@ -38,46 +39,29 @@
                                           <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Nome">
+                                    <Label text="Data da Receita">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="jtfNome" styleClass="campoTextoEsquerdo">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </JFXTextField>
-                                    <Label text="Login">
+                                    <JFXDatePicker fx:id="jdpData" />
+                                    <Label text="Descrição">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="jtfLogin" styleClass="campoTextoEsquerdo">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </JFXTextField>
-                                    <Label text="Senha">
+                                    <JFXTextArea fx:id="jtaDescricao" labelFloat="true" prefHeight="94.0" prefWidth="415.0" promptText="Descrição da Receita" wrapText="true" />
+                                    <Label text="Usuário">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXPasswordField fx:id="jpfSenha" styleClass="campoTextoEsquerdo">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </JFXPasswordField>
-                                    <Label text="Email">
+                                    <JFXComboBox fx:id="jcbUsuario" prefHeight="25.0" prefWidth="241.0" />
+                                    <Label text="Valor">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <JFXTextField fx:id="jtfEmail" styleClass="campoTextoEsquerdo">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </JFXTextField>
                                  </children>
                               </VBox>
                            </children>

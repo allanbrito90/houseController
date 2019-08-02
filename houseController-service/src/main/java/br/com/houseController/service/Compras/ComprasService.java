@@ -1,5 +1,6 @@
 package br.com.houseController.service.Compras;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.persistence.Query;
@@ -48,5 +49,18 @@ public class ComprasService implements InterfaceService<Compras> {
 		ConnectionFactory.fecharSessao(session);
 		return retorno;
 	}
+
+	@SuppressWarnings("unchecked")
+	public Compras findOneByMonthAndYear(Integer mes, Integer ano) {
+			Session session = ConnectionFactory.obterNovaSessao();
+			Query query = session.createQuery("from compras where periodoReferencia = :periodoReferencia");
+			query.setParameter("periodoReferencia", LocalDate.of(ano, mes, 1));
+			ArrayList<Compras> list = (ArrayList<Compras>) query.getResultList();
+			ConnectionFactory.fecharSessao(session);
+			if(list.size()==0){
+				return null;
+			}
+			return list.get(0);
+		}
 
 }

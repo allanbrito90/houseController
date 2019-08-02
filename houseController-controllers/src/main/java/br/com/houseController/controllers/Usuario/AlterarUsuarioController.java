@@ -1,4 +1,4 @@
-package br.com.houseController.controllers.SubMenus.Usuario;
+package br.com.houseController.controllers.Usuario;
 
 import java.net.URL;
 import java.util.List;

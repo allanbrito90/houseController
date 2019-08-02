@@ -1,14 +1,11 @@
 package br.com.houseController.model.despesas;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import br.com.houseController.model.produto.Produto;
 
 @Entity(name="compras")
 @Table(name="compras")
@@ -20,15 +17,19 @@ public class Compras extends DespesaVariavel {
 	private static final long serialVersionUID = 1L;
 
 	@Column
-	private LocalDateTime periodoReferencia;
+	private LocalDate periodoReferencia;
 	
-	@OneToMany
-	private List<Produto> produtos;
+	@Column
+	private BigDecimal totalProdutos;
 	
-	public Compras(LocalDateTime periodoReferencia, List<Produto> produtos) {
+//	@OneToMany
+//	private List<Produto> produtos;
+	
+	public Compras(LocalDate periodoReferencia, BigDecimal valor/* List<Produto> produtos*/) {
 		super();
 		this.periodoReferencia = periodoReferencia;
-		this.produtos = produtos;
+		this.totalProdutos = valor;
+//		this.produtos = produtos;
 	}
 
 
@@ -37,24 +38,30 @@ public class Compras extends DespesaVariavel {
 
 
 
-	public LocalDateTime getPeriodoReferencia() {
+	public LocalDate getPeriodoReferencia() {
 		return periodoReferencia;
 	}
-	public void setPeriodoReferencia(LocalDateTime periodoReferencia) {
+	public void setPeriodoReferencia(LocalDate periodoReferencia) {
 		this.periodoReferencia = periodoReferencia;
 	}
-
-
-
-	public List<Produto> getProdutos() {
-		return produtos;
+	public BigDecimal getValor() {
+		return totalProdutos;
 	}
-
-
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setValor(BigDecimal valor) {
+		this.totalProdutos = valor;
 	}
+	
+
+
+//	public List<Produto> getProdutos() {
+//		return produtos;
+//	}
+//
+//
+//
+//	public void setProdutos(List<Produto> produtos) {
+//		this.produtos = produtos;
+//	}
 
 	
 	

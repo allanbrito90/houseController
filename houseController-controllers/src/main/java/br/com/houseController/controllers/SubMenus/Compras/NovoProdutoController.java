@@ -3,6 +3,7 @@ package br.com.houseController.controllers.SubMenus.Compras;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,8 +14,10 @@ import com.jfoenix.controls.JFXComboBox;
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.Produto;
+import br.com.houseController.service.Compras.ComprasService;
 import br.com.houseController.service.Produto.IngredienteService;
 import br.com.houseController.service.Produto.ProdutoService;
 import javafx.application.Platform;
@@ -65,6 +68,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	HashMap<Integer, Produto> mapProduto = new HashMap<>();
 	HashMap<Integer, Produto> mapProdutoFixo = new HashMap<>();
+	ArrayList<Produto> listProdutos = new ArrayList<>();
 	HashMap<String,Ingrediente> mapIngrediente = new HashMap<>();
 	
 	int indice = 0;
@@ -72,20 +76,22 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	public void handleSalvar(){
-		for(int i = 0 ; i < indice ; i++){
+		for(int i = 0 ; i <= indice ; i++){
 			if (mapProduto.get(i) != null) {
 				if(mapProduto.get(i).getIngrediente() != null && mapProduto.get(i).getQuantidade() != null && mapProduto.get(i).getValor() != null){
 					mapProduto.get(i).setComprado(false);
 					mapProduto.get(i).setPeriodoReferencia(LocalDate.of(jsAno.getValue(),jsMes.getValue(),1));
+					listProdutos.add(mapProduto.get(i));
 					produtoService.insert(mapProduto.get(i));
 				}else{
 					ScreenUtils.janelaInformação(spDialog, "Campos Vazios", "Há campos não preenchidos", "Tá bom!");
 				}
 			}
 		}
-		for(int i=0; i < mapProdutoFixo.size(); i++){
+		for(int i=0; i <= mapProdutoFixo.size(); i++){
 			try{
 				if(mapProduto.get(i) == null){
+					listProdutos.remove(mapProduto.get(i));
 					produtoService.delete(mapProdutoFixo.get(i).getId());
 				}
 			}catch(NullPointerException npe){
@@ -94,9 +100,26 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 				e.printStackTrace();
 			}
 		}
+		armazenaTabelaCompras(jsMes.getValue(),jsAno.getValue());
 		carregaListaProdutos(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
 	}
 	
+	private void armazenaTabelaCompras(int mes, int ano) {
+		ComprasService comprasService = new ComprasService();
+		
+		BigDecimal totalMes = BigDecimal.ZERO;
+		for(Produto produto : listProdutos){
+			totalMes = totalMes.add(produto.getValor());
+		}
+		Compras compras = comprasService.findOneByMonthAndYear(jsMes.getValue(), jsAno.getValue());
+		if(compras == null){
+			compras = new Compras();
+			compras.setPeriodoReferencia(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
+		}
+		compras.setValor(totalMes);
+		comprasService.insert(compras);
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		jsMes.setValueFactory(mesSpinner);
@@ -109,19 +132,17 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		}		
 		
 		Platform.runLater(() -> {
-			if (getObjetos() != null) {
-				
-			}else{
 				carregaListaProdutos(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
-			}
 		});		
 	}
 
 	private void carregaListaProdutos(LocalDate periodo) {
+		listProdutos.clear();
 		indice=-1;
 		vbProdutos.getChildren().clear();
 		List<Produto> produtos = produtoService.produtosPorMes(periodo);
 		mapProdutoFixo.clear();
+		mapProduto.clear();
 		for (Produto produto : produtos) {
 			indice++;
 			mapProdutoFixo.put(indice, produto);
@@ -201,7 +222,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	public void handleAdicionar(){
-		criarProduto(indice++,new Produto());
+		criarProduto(++indice,new Produto());
 	}
 	
 	@FXML

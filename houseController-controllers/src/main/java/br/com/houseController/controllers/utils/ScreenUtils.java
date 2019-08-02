@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
+import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
@@ -143,11 +144,13 @@ public class ScreenUtils {
 	
 	public static void limparCampos(IFXLabelFloatControl... nodes){
 		for(IFXLabelFloatControl node : nodes){
-			if (node instanceof TextInputControl) {
+			if(node instanceof NumberTextField){
+				((NumberTextField) node).setText("0.00");
+			}else if (node instanceof TextInputControl) {
 				((TextInputControl) node).clear();
 			}else if (node instanceof ComboBox){
 				((ComboBox<?>) node).getSelectionModel().select(0);
-			}
+			} 
 		}
 	}
 	

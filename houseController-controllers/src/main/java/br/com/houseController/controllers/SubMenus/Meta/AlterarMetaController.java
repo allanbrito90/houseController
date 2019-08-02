@@ -67,16 +67,24 @@ public class AlterarMetaController implements Initializable{
 
 	@FXML
 	private void handleExcluir(){
-		
+		if(colMeta.getCellData(jtvMetas.getSelectionModel().getSelectedIndex()) != null){
+			MetaTempo metaTempo = jtvMetas.getSelectionModel().getSelectedItem();
+			metaService.delete(metaTempo.getId());
+			atualizaTabela();
+		}else{
+			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+		}
+	}
+
+	private void atualizaTabela() {
+		jtvMetas.getItems().removeAll();
+		preencheTabela();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		ArrayList<MetaTempo> metas = metaService.findAllMetaTempo();
-		for (MetaTempo metaTempo : metas) {
-			jtvMetas.getItems().add(metaTempo);
-		}	
+		preencheTabela();	
 		colMeta.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 		colUsuario.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MetaTempo,String>, ObservableValue<String>>() {
 			
@@ -106,6 +114,13 @@ public class AlterarMetaController implements Initializable{
 			}
 		});
 		
+	}
+
+	private void preencheTabela() {
+		ArrayList<MetaTempo> metas = metaService.findAllMetaTempo();
+		for (MetaTempo metaTempo : metas) {
+			jtvMetas.getItems().add(metaTempo);
+		}
 	}	
 
 }

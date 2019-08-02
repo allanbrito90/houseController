@@ -6,7 +6,9 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import br.com.houseController.controllers.SubMenus.SubMenuCompras;
+import br.com.houseController.controllers.SubMenus.SubMenuDespesas;
 import br.com.houseController.controllers.SubMenus.SubMenuMetaController;
+import br.com.houseController.controllers.SubMenus.SubMenuReceitas;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -46,6 +48,12 @@ public class PrincipalController implements Initializable{
 	
 	@FXML
 	private AnchorPane jbUsuarios;
+
+	@FXML
+	private AnchorPane jbDespesas;
+	
+	@FXML
+	private AnchorPane jbReceitas;
 	
 	@FXML
 	private AnchorPane jbMetas;
@@ -115,11 +123,20 @@ public class PrincipalController implements Initializable{
 			}
 		});
 		
-		jbUsuarios.setOnMouseClicked(new EventHandler<Event>() {
-
+		
+		jbDespesas.setOnMouseClicked(new EventHandler<Event>() {
+			
 			@Override
 			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuUsuarios(), null);
+				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuDespesas(), null);
+			}
+		});
+		
+		jbReceitas.setOnMouseClicked(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuReceitas(), null);
 			}
 		});
 		
@@ -139,6 +156,26 @@ public class PrincipalController implements Initializable{
 			}
 		});
 		
+		jbUsuarios.setOnMouseClicked(new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {				
+//				abrirSubMenu("fxml/subMenuGeral.fxml", new SubMenuUsuarios(), null);
+				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuUsuarios(), null);
+			}
+		});
+		
+	}
+
+
+	private EventHandler<Event> abrirSubMenu(String local, Controller controller, Object obj) {
+		return new EventHandler<Event>() {
+			
+			@Override
+			public void handle(Event event) {				
+				ScreenUtils.abrirNovaJanela(local,controller, obj);
+			}
+		};
 	}
 	
 }

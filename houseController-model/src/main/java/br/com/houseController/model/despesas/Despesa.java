@@ -11,14 +11,15 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import br.com.houseController.model.Abstracts.AbstractDespesa;
+import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.receita.Receita;
 
-@Entity(name="despesaVariavel")
-@Table(name="despesa_variavel")
+@Entity(name="despesa")
+@Table(name="despesa")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class DespesaVariavel extends AbstractDespesa implements Serializable{
+public class Despesa extends AbstractDespesa implements Serializable{
 	
 	/**
 	 * 
@@ -27,17 +28,17 @@ public class DespesaVariavel extends AbstractDespesa implements Serializable{
 	
 	
 
-	public DespesaVariavel() {
+	public Despesa() {
 		super();
 	}
 
-//	public DespesaVariavel(Integer id, Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
-//		super(id, pago, categoria, contaAtiva, descricaoDespesa, valorDespesa, receitaUtilizada);
-//	}
+	public Despesa(Integer id, Boolean pago, EnumCategoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
+		super(id, pago, categoria, contaAtiva, descricaoDespesa, valorDespesa, receitaUtilizada);
+	}
 	
 	
 	
-	public DespesaVariavel(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada,LocalDateTime dtPagamento) {
+	public Despesa(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada,LocalDateTime dtPagamento) {
 		super();
 		
 		this.dtPagamento = dtPagamento;
@@ -47,6 +48,10 @@ public class DespesaVariavel extends AbstractDespesa implements Serializable{
 
 	@Column
 	private LocalDateTime dtPagamento;
+	
+	@Column
+	private LocalDateTime dtVencimento;
+
 
 	public LocalDateTime getDtPagamento() {
 		return dtPagamento;
@@ -55,5 +60,12 @@ public class DespesaVariavel extends AbstractDespesa implements Serializable{
 	public void setDtPagamento(LocalDateTime dtPagamento) {
 		this.dtPagamento = dtPagamento;
 	}	
+	public LocalDateTime getDtVencimento() {
+		return dtVencimento;
+	}
+	
+	public void setDtVencimento(LocalDateTime dtVencimento) {
+		this.dtVencimento = dtVencimento;
+	}
 	
 }

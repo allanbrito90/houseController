@@ -22,11 +22,19 @@ public class ReceitaService implements InterfaceService<Receita>{
 		return obj.getId();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Receita findOne(Receita obj) {
-		return null;
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from receita where dtPagamento = :dtPagamento and descricaoPagamento = :descricaoPagamento");
+		query.setParameter("dtPagamento", obj.getDtPagamento());
+		query.setParameter("descricaoPagamento", obj.getDescricaoPagamento());
+		ArrayList<Receita> list = (ArrayList<Receita>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list.get(0);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Receita> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
@@ -40,7 +48,7 @@ public class ReceitaService implements InterfaceService<Receita>{
 	public Integer delete(int id) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		Query query = session.createQuery("delete from Receita where id = :id");
+		Query query = session.createQuery("delete from receita where id = :id");
 		query.setParameter("id", id);
 		Integer retorno = query.executeUpdate();
 		session.getTransaction().commit();

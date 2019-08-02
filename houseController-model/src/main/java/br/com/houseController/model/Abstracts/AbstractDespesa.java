@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.receita.Receita;
@@ -19,13 +20,15 @@ public abstract class AbstractDespesa{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	protected
 	Integer id;
 	
 	@Column
 	Boolean pago;
 	
-	@ManyToOne
-	Categoria categoria;
+//	@ManyToOne
+	@Column
+	EnumCategoria categoria;
 	
 	@Column
 	EnumContaAtiva contaAtiva;
@@ -36,6 +39,7 @@ public abstract class AbstractDespesa{
 	@Column
 	BigDecimal valorDespesa;
 	
+
 	//@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@ManyToOne
 	Receita receitaUtilizada;
@@ -47,7 +51,7 @@ public abstract class AbstractDespesa{
 
 
 
-	public AbstractDespesa(Integer id, Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
+	public AbstractDespesa(Integer id, Boolean pago, EnumCategoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
 		super();
 		this.id = id;
 		this.pago = pago;
@@ -58,7 +62,7 @@ public abstract class AbstractDespesa{
 		this.receitaUtilizada = receitaUtilizada;
 	}
 	
-	public AbstractDespesa(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
+	public AbstractDespesa(Boolean pago, EnumCategoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada) {
 		super();
 		this.pago = pago;
 		this.categoria = categoria;
@@ -94,13 +98,13 @@ public abstract class AbstractDespesa{
 
 
 
-	public Categoria getCategoria() {
+	public EnumCategoria getCategoria() {
 		return categoria;
 	}
 
 
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(EnumCategoria categoria) {
 		this.categoria = categoria;
 	}
 
@@ -152,6 +156,7 @@ public abstract class AbstractDespesa{
 		this.receitaUtilizada = receitaUtilizada;
 	}
 	
+
 	
 	
 

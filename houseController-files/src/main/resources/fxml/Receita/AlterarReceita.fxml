@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.Usuario.AlterarUsuarioController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Receita.AlterarReceitaController">
   <content>
       <StackPane fx:id="spDialog">
          <children>
@@ -18,15 +18,14 @@
                <children>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label layoutX="14.0" layoutY="7.0" text="Alterar Usuário" />
+                        <Label layoutX="14.0" layoutY="7.0" text="Alterar Receita" />
                      </children>
                   </AnchorPane>
-                  <TableView fx:id="jtvUsuarioTable" prefHeight="408.0" prefWidth="830.0">
+                  <TableView fx:id="jtvReceitaTable" prefHeight="408.0" prefWidth="830.0">
                     <columns>
-                      <TableColumn fx:id="colID" prefWidth="75.0" text="ID" />
-                      <TableColumn fx:id="colNome" prefWidth="75.0" text="Nome" />
-                        <TableColumn fx:id="colLogin" prefWidth="75.0" text="Login" />
-                        <TableColumn fx:id="colEmail" prefWidth="75.0" text="Email" />
+                      <TableColumn fx:id="colData" prefWidth="75.0" text="Data" />
+                        <TableColumn fx:id="colValor" prefWidth="141.0" text="Valor" />
+                        <TableColumn fx:id="colDescricao" minWidth="9.0" prefWidth="613.0" text="Descrição" />
                     </columns>
                   </TableView>
                   <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="830.0" spacing="10.0">

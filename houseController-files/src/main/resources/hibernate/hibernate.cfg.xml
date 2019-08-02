@@ -26,6 +26,7 @@
 		<mapping class="br.com.houseController.model.categoria.Categoria" />
 		<mapping class="br.com.houseController.model.Abstracts.AbstractDespesa" />
 		<mapping class="br.com.houseController.model.receita.Receita" />
+		<mapping class="br.com.houseController.model.despesas.Despesa" />
 		<mapping class="br.com.houseController.model.despesas.DespesaVariavel" />
 		<mapping class="br.com.houseController.model.despesas.DespesaFixa" />
 		<mapping class="br.com.houseController.model.produto.Produto" />
