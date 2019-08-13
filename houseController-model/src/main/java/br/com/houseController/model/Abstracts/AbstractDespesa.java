@@ -8,11 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.Enums.EnumContaAtiva;
-import br.com.houseController.model.categoria.Categoria;
 import br.com.houseController.model.receita.Receita;
+import br.com.houseController.model.usuario.Usuario;
 
 @MappedSuperclass
 //@Inheritance(strategy = InheritanceType.JOINED)
@@ -38,6 +39,9 @@ public abstract class AbstractDespesa{
 	
 	@Column
 	BigDecimal valorDespesa;
+	
+	@OneToOne
+	Usuario usuario;
 	
 
 	//@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
@@ -154,6 +158,18 @@ public abstract class AbstractDespesa{
 
 	public void setReceitaUtilizada(Receita receitaUtilizada) {
 		this.receitaUtilizada = receitaUtilizada;
+	}
+
+
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 

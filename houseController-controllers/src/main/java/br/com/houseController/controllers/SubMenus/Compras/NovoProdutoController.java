@@ -53,6 +53,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	@FXML
 	private Spinner<Integer> jsAno;
 	
+//	TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
 	final static int MAXANO = 3000;
 	final static int MINMES = 1;

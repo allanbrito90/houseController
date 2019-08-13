@@ -2,7 +2,7 @@ package br.com.houseController.model.despesas;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +38,7 @@ public class Despesa extends AbstractDespesa implements Serializable{
 	
 	
 	
-	public Despesa(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada,LocalDateTime dtPagamento) {
+	public Despesa(Boolean pago, Categoria categoria, EnumContaAtiva contaAtiva, String descricaoDespesa, BigDecimal valorDespesa, Receita receitaUtilizada,LocalDate dtPagamento) {
 		super();
 		
 		this.dtPagamento = dtPagamento;
@@ -47,24 +47,24 @@ public class Despesa extends AbstractDespesa implements Serializable{
 
 
 	@Column
-	private LocalDateTime dtPagamento;
+	private LocalDate dtPagamento;
 	
 	@Column
-	private LocalDateTime dtVencimento;
+	private LocalDate dtVencimento;
 
 
-	public LocalDateTime getDtPagamento() {
+	public LocalDate getDtPagamento() {
 		return dtPagamento;
 	}
 
-	public void setDtPagamento(LocalDateTime dtPagamento) {
+	public void setDtPagamento(LocalDate dtPagamento) {
 		this.dtPagamento = dtPagamento;
 	}	
-	public LocalDateTime getDtVencimento() {
+	public LocalDate getDtVencimento() {
 		return dtVencimento;
 	}
 	
-	public void setDtVencimento(LocalDateTime dtVencimento) {
+	public void setDtVencimento(LocalDate dtVencimento) {
 		this.dtVencimento = dtVencimento;
 	}
 	

@@ -7,10 +7,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -28,7 +30,7 @@
                   </AnchorPane>
                   <AnchorPane maxWidth="830.0" prefHeight="455.0" prefWidth="830.0">
                      <children>
-                        <HBox prefHeight="435.0" prefWidth="830.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox prefHeight="435.0" prefWidth="830.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <VBox fx:id="vbCampos" prefHeight="200.0" prefWidth="415.0" spacing="20.0">
                                  <children>
@@ -61,7 +63,7 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <JFXCheckBox text="Pago" />
+                                    <JFXCheckBox fx:id="jcbPago" text="Pago" />
                                     <Label text="Usuário">
                                        <font>
                                           <Font size="18.0" />
@@ -70,15 +72,17 @@
                                     <JFXComboBox fx:id="jcbUsuario" prefHeight="25.0" prefWidth="241.0" />
                                  </children>
                               </VBox>
-                              <VBox prefHeight="435.0" prefWidth="413.0">
+                              <VBox prefHeight="435.0" prefWidth="413.0" spacing="5.0">
                                  <children>
+                                    <Pane prefHeight="120.0" prefWidth="413.0" />
+                                    <JFXComboBox fx:id="jcbReceita" labelFloat="true" prefHeight="25.0" prefWidth="235.0" promptText="Receita Utilizada" />
                                     <Label text="Data Pagamento">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
                                     <JFXDatePicker fx:id="jdpDtPagamento" />
-                                    <VBox fx:id="vbVariavel" prefHeight="435.0" prefWidth="413.0" visible="false">
+                                    <VBox fx:id="vbVariavel" prefHeight="435.0" prefWidth="413.0" spacing="15.0" visible="false">
                                        <children>
                                           <Label text="Data de Vencimento">
                                              <font>
@@ -86,6 +90,15 @@
                                              </font>
                                           </Label>
                                           <JFXDatePicker fx:id="jdpDtVencimento" />
+                                          <JFXCheckBox fx:id="jcbRepetirConta" text="Repetir" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                                             <children>
+                                                <Label text="Mês" />
+                                                <Spinner fx:id="jsRepetirMes" />
+                                                <Label text="Ano" />
+                                                <Spinner fx:id="jsRepetirAno" />
+                                             </children>
+                                          </HBox>
                                        </children>
                                     </VBox>
                                  </children>
