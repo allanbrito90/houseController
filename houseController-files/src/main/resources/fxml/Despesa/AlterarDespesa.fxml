@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Despesa.AlterarDespesaController">
+  <content>
+      <StackPane fx:id="spDialog">
+         <children>
+            <VBox>
+               <children>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
+                     <children>
+                        <Label layoutX="14.0" layoutY="7.0" text="Alterar Despesa" />
+                     </children>
+                  </AnchorPane>
+                  <HBox prefHeight="29.0" prefWidth="830.0" spacing="5.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
+                        <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
+                        <Label text="/" />
+                        <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
+                        <JFXButton onAction="#handlePesquisar" text="Pesquisar" />
+                     </children>
+                  </HBox>
+                  <TableView fx:id="jtvDespesas" prefHeight="408.0" prefWidth="830.0">
+                    <columns>
+                      <TableColumn fx:id="colDesc" prefWidth="282.0" text="Descrição" />
+                        <TableColumn fx:id="colValor" prefWidth="154.0" text="Valor" />
+                        <TableColumn fx:id="colDtPagamento" prefWidth="175.0" text="Data Pagamento" />
+                        <TableColumn fx:id="colDtVencimento" prefWidth="218.0" text="Data Vencimento" />
+                    </columns>
+                  </TableView>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="830.0" spacing="10.0">
+                     <children>
+                        <AnchorPane onMouseClicked="#handleEditar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
+                           <children>
+                              <Label layoutX="50.0" layoutY="14.0" text="Editar" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane onMouseClicked="#handleExcluir" prefHeight="50.0" prefWidth="100.0" styleClass="botaoExcluir">
+                           <children>
+                              <Label layoutX="50.0" layoutY="14.0" text="Excluir" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </VBox>
+         </children>
+      </StackPane>
+  </content>
+</ScrollPane>

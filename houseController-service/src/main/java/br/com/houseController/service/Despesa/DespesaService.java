@@ -1,5 +1,7 @@
 package br.com.houseController.service.Despesa;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
 import java.util.ArrayList;
 
 import javax.persistence.Query;
@@ -11,6 +13,7 @@ import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.DespesaFixa;
 import br.com.houseController.model.despesas.DespesaVariavel;
 import br.com.houseController.persistence.ConnectionFactory;
+import static java.time.temporal.TemporalAdjusters.*;
 
 public class DespesaService implements InterfaceService<Despesa> {
 
@@ -48,6 +51,21 @@ public class DespesaService implements InterfaceService<Despesa> {
 		session.getTransaction().commit();
 		ConnectionFactory.fecharSessao(session);
 		return retorno;
+	}
+
+	public ArrayList<Despesa> findAllByMes(int mes, int ano) {
+		//Obtendo LocalDate
+		LocalDate localDateFinal = LocalDate.of(ano,mes,1).with(lastDayOfMonth());
+		//Obtendo primeiro e último dia do mes
+		
+		
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from despesa where dtVencimento between :dtInicial and :dtFinal or dtPagamento between :dtInicial and :dtFinal or dtPagamento IS NULL");
+		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
+		query.setParameter("dtFinal", localDateFinal);
+		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list;
 	}
 
 }
