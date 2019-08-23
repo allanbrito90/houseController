@@ -25,6 +25,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
 public class AlterarDespesaController implements Initializable{
 	
@@ -52,6 +53,9 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private Spinner<Integer> jsAno;
 	
+	@FXML 
+	private Label jlTitulo;
+	
 	DespesaService despesaService = new DespesaService();
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
@@ -62,44 +66,47 @@ public class AlterarDespesaController implements Initializable{
 		
 		SpinnerValueFactory<Integer> mesSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINMES, MAXMES, MINMES);
 		SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO, MINANO);
+
+		
 	
 	@FXML
 	private void handleEditar(){
-//		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
-//			MetaTempo metaTempo = jtvDespesas.getSelectionModel().getSelectedItem();
-//			ScreenUtils.abrirNovaJanela("fxml/Meta/NovaMeta.fxml", converteMeta(metaTempo));
-//		}else{
-//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
-//		}
+		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
+			Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
+			ScreenUtils.abrirNovaJanela("fxml/Despesa/NovaDespesa.fxml", despesa);
+		}else{
+			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+		}
 	}
 	
 
 
 	@FXML
 	private void handleExcluir(){
-//		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
-//			MetaTempo metaTempo = jtvDespesas.getSelectionModel().getSelectedItem();
-//			metaService.delete(metaTempo.getId());
-//			atualizaTabela();
-//		}else{
-//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
-//		}
+		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
+			Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
+			despesaService.delete(despesa.getId());
+			atualizaTabela();
+		}else{
+			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+		}
 	}
 	
 	@FXML
 	private void handlePesquisar(){
-		
+		atualizaTabela();
 	}
 
 	private void atualizaTabela() {
 		jtvDespesas.getItems().removeAll();
-		preencheTabela();
+		jtvDespesas.getItems().clear();
+		preencheTabela(jsMes.getValue(), jsAno.getValue());
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//Pega dados e coloca na tabela
-		preencheTabela();	
+		preencheTabela(LocalDate.now().getMonthValue(),LocalDate.now().getYear());	
 		
 		//Inicializa Listeners
 		jsMes.setValueFactory(mesSpinner);
@@ -144,8 +151,8 @@ public class AlterarDespesaController implements Initializable{
 		});
 	}
 
-	private void preencheTabela() {
-		ArrayList<Despesa> despesas = despesaService.findAllByMes(LocalDate.now().getMonthValue(),LocalDate.now().getYear());
+	private void preencheTabela(int mes, int ano) {
+		ArrayList<Despesa> despesas = despesaService.findAllByMes(mes, ano);
 		for (Despesa despesa : despesas) {
 			jtvDespesas.getItems().add(despesa);
 		}

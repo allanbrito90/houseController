@@ -14,10 +14,14 @@ import com.jfoenix.controls.JFXComboBox;
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.model.Enums.EnumCategoria;
+import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.despesas.Compras;
+import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.Produto;
 import br.com.houseController.service.Compras.ComprasService;
+import br.com.houseController.service.Despesa.DespesaService;
 import br.com.houseController.service.Produto.IngredienteService;
 import br.com.houseController.service.Produto.ProdutoService;
 import javafx.application.Platform;
@@ -110,16 +114,42 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		
 		BigDecimal totalMes = BigDecimal.ZERO;
 		for(Produto produto : listProdutos){
-			totalMes = totalMes.add(produto.getValor());
+			totalMes = totalMes.add(produto.getValor().multiply(new BigDecimal(produto.getQuantidade())));
 		}
 		Compras compras = comprasService.findOneByMonthAndYear(jsMes.getValue(), jsAno.getValue());
 		if(compras == null){
 			compras = new Compras();
 			compras.setPeriodoReferencia(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
 		}
-		compras.setValor(totalMes);
+		compras.setValorDespesa(totalMes);
 		comprasService.insert(compras);
-	}
+		
+		//Cria instância de despesaService e despesa
+		DespesaService despesaService = new DespesaService();
+		Despesa despesa = new Despesa();
+		
+		//Coloca valores de descrição e data na despesa
+		despesa.setDescricaoDespesa("Compras");
+		despesa.setDtPagamento(compras.getPeriodoReferencia());
+		
+		//Verifica se há despesa com este mês
+		despesa = despesaService.findOne(despesa);
+		
+		//Caso não haja, cria uma despesa com o mês vigente
+		if(despesa == null){
+			despesa = new Despesa();
+			despesa.setDescricaoDespesa("Compras");
+			despesa.setDtPagamento(compras.getPeriodoReferencia());
+			despesa.setCategoria(EnumCategoria.VARIAVEL);
+			despesa.setContaAtiva(EnumContaAtiva.ATIVO);
+		}
+		
+		//Atualiza o valor
+		despesa.setValorDespesa(compras.getValorDespesa());
+		
+		//Armazena na tabela de despesas como Despesa variável
+		despesaService.insert(despesa);
+	}	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

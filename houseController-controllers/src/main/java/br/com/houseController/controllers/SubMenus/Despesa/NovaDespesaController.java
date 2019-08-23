@@ -25,6 +25,7 @@ import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
@@ -70,6 +71,9 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	@FXML
 	private Spinner<Integer> jsRepetirAno;
 	
+	@FXML 
+	private Label jlTitulo;
+	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
 	final static int MAXANO = 3000;
@@ -87,8 +91,21 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	private void handleSalvar(){
+		//Verifica se a categoria for variável para não gravar erroneamente o valor de uma data de vencimento
+		if(despesa.getCategoria().name() == EnumCategoria.VARIAVEL.name()){
+			despesa.setDtVencimento(null);
+		}
+		
+		//Verifica se caso estes campos não tiverem sido alterados o sistema seta o valor que estiver no ComboBox no momento
+		if(despesa.getUsuario() == null){
+			despesa.setUsuario(mapUsuario.get(0));
+		}
+		
+		//Salva a instância
 		DespesaService despesaService = new DespesaService();
 		despesaService.insert(despesa);
+		
+		//Verifica se há receita cadastrada para atualização
 		
 		//Verifica se precisa repetir conta
 		if(jcbRepetirConta.isSelected()){
@@ -151,14 +168,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		jdpDtPagamento.setValue(LocalDate.now());
 		jdpDtVencimento.setValue(LocalDate.now());
 		
-		jcbCategoria.valueProperty().addListener((obs,oldV,newV)->{
-			if(newV.toUpperCase().equals(EnumCategoria.FIXA.name())){
-				vbVariavel.setVisible(true);
-			}else{
-				vbVariavel.setVisible(false);				
-			}
-		});
-		
 		jsRepetirMes.setValueFactory(mesSpinner);
 		jsRepetirAno.setValueFactory(anoSpinner);
 		jsRepetirMes.getValueFactory().setValue(LocalDate.now().getMonthValue());
@@ -166,9 +175,38 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		
 		Platform.runLater(()->{
 			if(getObjetos() != null){
-				
+				jlTitulo.setText("Editar Despesa");
+				despesa = (Despesa) getObjetos().get(0);
+//				jcbCategoria.getSelectionModel().select(despesa.getCategoria().name());
+				if(despesa.getCategoria().name().toUpperCase() == EnumCategoria.FIXA.name()){
+					jcbCategoria.getSelectionModel().select(1);
+				}else{
+					jcbCategoria.getSelectionModel().select(0);
+				}
+				jntfValor.setText(despesa.getValorDespesa().toString());
+				jcbPago.setSelected(despesa.getPago() != null ? despesa.getPago() : false);
+				if(despesa.getUsuario() != null){
+					jcbUsuario.getSelectionModel().select(despesa.getUsuario().getNome());
+				}
+				jtaDescricao.setText(despesa.getDescricaoDespesa());
+				if(jtaDescricao.getText().equals("Compras")){
+					jtaDescricao.setDisable(true);
+					jcbCategoria.setDisable(true);
+				}
+				if (despesa.getDtVencimento() != null) {
+					jdpDtPagamento.setValue(despesa.getDtPagamento());
+				}
+				if (despesa.getDtVencimento() != null) {
+					jdpDtVencimento.setValue(despesa.getDtVencimento());
+				}
 			}else{
 				despesa = new Despesa();
+				despesa.setCategoria(EnumCategoria.VARIAVEL);
+				despesa.setDescricaoDespesa("");
+				despesa.setDtPagamento(LocalDate.now());
+				despesa.setDtVencimento(LocalDate.now());
+				despesa.setPago(false);
+				despesa.setValorDespesa(BigDecimal.ZERO);
 			}
 		});
 		
@@ -185,10 +223,10 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		jcbCategoria.valueProperty().addListener((obs,oldV,newV)->{
 			if(newV.toUpperCase().equals(EnumCategoria.FIXA.name())){
 				vbVariavel.setVisible(true);
-				despesa.setCategoria(EnumCategoria.VARIAVEL);
+				despesa.setCategoria(EnumCategoria.FIXA);
 			}else{
 				vbVariavel.setVisible(false);			
-				despesa.setCategoria(EnumCategoria.FIXA);
+				despesa.setCategoria(EnumCategoria.VARIAVEL);
 			}
 		});
 		jcbReceita.setCellFactory(new Callback<ListView<Receita>, ListCell<Receita>>() {

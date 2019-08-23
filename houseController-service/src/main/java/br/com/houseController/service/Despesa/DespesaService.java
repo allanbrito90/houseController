@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 
 import br.com.houseController.model.Interfaces.InterfaceService;
+import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.DespesaFixa;
 import br.com.houseController.model.despesas.DespesaVariavel;
@@ -29,6 +30,29 @@ public class DespesaService implements InterfaceService<Despesa> {
 
 	@Override
 	public Despesa findOne(Despesa obj) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from despesa where descricaoDespesa = :descricaoDespesa and dtPagamento = :dtPagamento");
+		query.setParameter("descricaoDespesa", obj.getDescricaoDespesa());
+		query.setParameter("dtPagamento", obj.getDtPagamento());
+		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		if(list.size()>0){
+			return list.get(0);
+		}
+		return list.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Despesa findOneCompras(Compras obj) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from despesa where descricaoDespesa = :descricaoDespesa and dtPagamento = :dtPagamento");
+		query.setParameter("descricaoDespesa", obj.getDescricaoDespesa());
+		query.setParameter("dtPagamento", obj.getPeriodoReferencia());
+		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		if(list.size()>0){
+			return list.get(0);
+		}
 		return null;
 	}
 
@@ -60,7 +84,7 @@ public class DespesaService implements InterfaceService<Despesa> {
 		
 		
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from despesa where dtVencimento between :dtInicial and :dtFinal or dtPagamento between :dtInicial and :dtFinal or dtPagamento IS NULL");
+		Query query = session.createQuery("from despesa where dtVencimento between :dtInicial and :dtFinal or dtPagamento between :dtInicial and :dtFinal");
 		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
 		query.setParameter("dtFinal", localDateFinal);
 		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();

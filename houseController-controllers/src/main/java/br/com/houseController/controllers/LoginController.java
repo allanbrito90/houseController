@@ -17,6 +17,7 @@ import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -65,7 +66,6 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 		//jtfLogin.setStyle("-fx-font-family: 'Lato';");
 		//Fonts.addFont(new Fonts("Lato-Bold.ttf"));
 		//jbLogin.setFont(new Font("Lato", 15));
-		
 		
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -149,7 +149,9 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 			}
 		});
 		
-		jtfLogin.requestFocus();
+		Platform.runLater(()->{
+			jtfLogin.requestFocus();			
+		});
 	}
 	
 	

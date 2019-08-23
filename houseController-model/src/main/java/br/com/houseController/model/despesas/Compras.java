@@ -7,9 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import br.com.houseController.model.Abstracts.AbstractDespesa;
+
 @Entity(name="compras")
 @Table(name="compras")
-public class Compras extends DespesaVariavel {
+//public class Compras extends DespesaVariavel {
+public class Compras extends AbstractDespesa {
 	
 	/**
 	 * 
@@ -19,8 +22,8 @@ public class Compras extends DespesaVariavel {
 	@Column
 	private LocalDate periodoReferencia;
 	
-	@Column
-	private BigDecimal totalProdutos;
+//	@Column
+//	private BigDecimal totalProdutos;
 	
 //	@OneToMany
 //	private List<Produto> produtos;
@@ -28,7 +31,7 @@ public class Compras extends DespesaVariavel {
 	public Compras(LocalDate periodoReferencia, BigDecimal valor/* List<Produto> produtos*/) {
 		super();
 		this.periodoReferencia = periodoReferencia;
-		this.totalProdutos = valor;
+		this.setValorDespesa(valor); 
 //		this.produtos = produtos;
 	}
 
@@ -44,12 +47,12 @@ public class Compras extends DespesaVariavel {
 	public void setPeriodoReferencia(LocalDate periodoReferencia) {
 		this.periodoReferencia = periodoReferencia;
 	}
-	public BigDecimal getValor() {
-		return totalProdutos;
-	}
-	public void setValor(BigDecimal valor) {
-		this.totalProdutos = valor;
-	}
+//	public BigDecimal getValor() {
+//		return totalProdutos;
+//	}
+//	public void setValor(BigDecimal valor) {
+//		this.totalProdutos = valor;
+//	}
 	
 
 
