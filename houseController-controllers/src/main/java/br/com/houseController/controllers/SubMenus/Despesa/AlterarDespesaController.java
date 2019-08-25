@@ -71,12 +71,15 @@ public class AlterarDespesaController implements Initializable{
 	
 	@FXML
 	private void handleEditar(){
-		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
-			Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
-			ScreenUtils.abrirNovaJanela("fxml/Despesa/NovaDespesa.fxml", despesa);
-		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
-		}
+			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null) {
+				if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals("Compras")) {
+					ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode alterar compras!", "Fechado");
+					return;
+				}
+				Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
+				ScreenUtils.abrirNovaJanela("fxml/Despesa/NovaDespesa.fxml", despesa);
+			} else {
+			} 
 	}
 	
 
@@ -84,6 +87,10 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private void handleExcluir(){
 		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
+			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals("Compras")) {
+				ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode excluir compras!", "Fechado");
+				return;
+			}
 			Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
 			despesaService.delete(despesa.getId());
 			atualizaTabela();

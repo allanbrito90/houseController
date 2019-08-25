@@ -39,7 +39,7 @@ public class DespesaService implements InterfaceService<Despesa> {
 		if(list.size()>0){
 			return list.get(0);
 		}
-		return list.get(0);
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -88,10 +88,12 @@ public class RelatorioComprasController implements Initializable{
 		BigDecimal total = BigDecimal.ZERO;
 		for(int i=1; i<=12; i++){
 			BigDecimal totalMes = BigDecimal.ZERO;
+			BigDecimal quantidade = BigDecimal.ZERO;
 			for(Produto produto : listaProdutos){
 				if(produto.getPeriodoReferencia().getMonthValue() == i){
-					totalMes = totalMes.add(produto.getValor());
-					total = total.add(produto.getValor());
+					quantidade = new BigDecimal(produto.getQuantidade());
+					totalMes = totalMes.add(produto.getValor().multiply(quantidade));
+					total = total.add(produto.getValor().multiply(quantidade));
 				}
 			}
 			produtos.add(new RelatorioCompras(LocalDate.of(jsAno.getValue(), i, 1),totalMes.setScale(2, RoundingMode.HALF_EVEN)));

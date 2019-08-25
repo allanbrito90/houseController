@@ -189,10 +189,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 					jcbUsuario.getSelectionModel().select(despesa.getUsuario().getNome());
 				}
 				jtaDescricao.setText(despesa.getDescricaoDespesa());
-				if(jtaDescricao.getText().equals("Compras")){
-					jtaDescricao.setDisable(true);
-					jcbCategoria.setDisable(true);
-				}
 				if (despesa.getDtVencimento() != null) {
 					jdpDtPagamento.setValue(despesa.getDtPagamento());
 				}

@@ -62,7 +62,9 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 		List<Usuario> listaUsuarios = usuarioService.findAll();
 		usuarios = FXCollections.observableArrayList();
 		for(Usuario usuario : listaUsuarios){
-			usuarios.add(usuario);
+			if(!usuario.getNome().equals("Admin")) {
+				usuarios.add(usuario);
+			}
 		}
 		return usuarios;
 	}

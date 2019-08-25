@@ -1,7 +1,9 @@
 package br.com.houseController.main;
 
 
+import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
+import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +21,14 @@ public class App extends Application{
 
     public static void main( String[] args )
     {
-    	ConnectionFactory.criarConexao();    		
+    	ConnectionFactory.criarConexao();
+    	
+    	//Verifica se há algum usuário chamado admin
+    	UsuarioService usuarioService = new UsuarioService();
+    	Usuario usuario = new Usuario("admin", "1234", "Admin", "admin@admin.com", true);
+    	if(!usuarioService.checaLogin(usuario)) {
+    		usuarioService.insert(usuario);
+    	}
     	
 //    	ReceitaService receitaService = new ReceitaService();
 //    	ArrayList<Receita> receitas = receitaService.findAll();
