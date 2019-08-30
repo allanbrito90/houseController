@@ -15,6 +15,8 @@ import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
+import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
+import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -231,5 +233,13 @@ public class ScreenUtils {
 		dialog.show();
 	}
 	
+	public static boolean verificaAcessoAdmin(StackPane sp, Controller controller, Usuario usuario){
+		if(!(controller instanceof SubMenuUsuarios) && usuario.getLogin().equals("admin")){
+			ScreenUtils.janelaInformação(sp, "Acesso Negado", "Você não tem acesso com este usuário", "Tudo bem então!");
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 }

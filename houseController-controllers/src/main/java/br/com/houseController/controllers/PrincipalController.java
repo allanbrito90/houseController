@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.javafx.tk.ScreenConfigurationAccessor;
 
 import br.com.houseController.controllers.SubMenus.SubMenuCompras;
 import br.com.houseController.controllers.SubMenus.SubMenuDespesas;
@@ -11,6 +12,7 @@ import br.com.houseController.controllers.SubMenus.SubMenuMetaController;
 import br.com.houseController.controllers.SubMenus.SubMenuReceitas;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -65,6 +67,8 @@ public class PrincipalController implements Initializable{
 	private AnchorPane apTela;
 	
 	private ScrollPane sp;
+	
+	private UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -123,57 +127,31 @@ public class PrincipalController implements Initializable{
 			}
 		});
 		
-		
-		jbDespesas.setOnMouseClicked(new EventHandler<Event>() {
-			
-			@Override
-			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuDespesas(), null);
-			}
-		});
-		
-		jbReceitas.setOnMouseClicked(new EventHandler<Event>() {
-			
-			@Override
-			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuReceitas(), null);
-			}
-		});
-		
-		jbCompras.setOnMouseClicked(new EventHandler<Event>() {
-
-			@Override
-			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuCompras(), null);
-			}
-		});
-		
 		jbMetas.setOnMouseClicked(new EventHandler<Event>() {
 			
 			@Override
 			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela("fxml/subMenuMeta.fxml");
+				if (ScreenUtils.verificaAcessoAdmin(spPrincipal, new SubMenuMetaController(), usuarioLogado.getUsuario())) {
+					ScreenUtils.abrirNovaJanela("fxml/subMenuMeta.fxml");
+				}
 			}
 		});
 		
-		jbUsuarios.setOnMouseClicked(new EventHandler<Event>() {
-			
-			@Override
-			public void handle(Event event) {				
-//				abrirSubMenu("fxml/subMenuGeral.fxml", new SubMenuUsuarios(), null);
-				ScreenUtils.abrirNovaJanela("fxml/subMenuGeral.fxml",new SubMenuUsuarios(), null);
-			}
-		});
-		
+		jbDespesas.setOnMouseClicked(abrirSubMenu("fxml/subMenuGeral.fxml",new SubMenuDespesas(), null));
+		jbReceitas.setOnMouseClicked(abrirSubMenu("fxml/subMenuGeral.fxml",new SubMenuReceitas(), null));
+		jbCompras.setOnMouseClicked(abrirSubMenu("fxml/subMenuGeral.fxml",new SubMenuCompras(), null));
+		jbUsuarios.setOnMouseClicked(abrirSubMenu("fxml/subMenuGeral.fxml",new SubMenuUsuarios(), null));
 	}
 
 
-	private EventHandler<Event> abrirSubMenu(String local, Controller controller, Object obj) {
+	private EventHandler<Event> abrirSubMenu(String local, Controller controller, Object... obj) {
 		return new EventHandler<Event>() {
 			
 			@Override
 			public void handle(Event event) {				
-				ScreenUtils.abrirNovaJanela(local,controller, obj);
+				if(ScreenUtils.verificaAcessoAdmin(spPrincipal, controller, usuarioLogado.getUsuario())){
+					ScreenUtils.abrirNovaJanela(local,controller, obj);					
+				}
 			}
 		};
 	}

@@ -1,8 +1,6 @@
 package br.com.houseController.controllers.SubMenus;
 
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +17,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -44,13 +43,26 @@ public class SubMenuMetaController extends Controller implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		colMeta.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-//		colData.setCellValueFactory(new PropertyValueFactory<>("dtConclusao"));
 		colData.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Meta,String>, ObservableValue<String>>() {
 			
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Meta, String> param) {
 				return new SimpleStringProperty(param.getValue().getDtConclusao().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 			}
+		});
+		
+		jtvMetas.setRowFactory(tv -> new TableRow<Meta>() {
+		    @Override
+		    public void updateItem(Meta item, boolean empty) {
+		        super.updateItem(item, empty) ;
+		        if (item == null) {
+		            setStyle("");
+		        } else if (item.isCumprido()) {
+		            setStyle("-fx-background-color: #24AD09;");
+		        } else {
+		            setStyle("");
+		        }
+		    }
 		});
 		
 		UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();

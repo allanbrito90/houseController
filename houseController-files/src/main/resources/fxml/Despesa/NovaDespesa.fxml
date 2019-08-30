@@ -21,7 +21,7 @@
   <content>
       <StackPane fx:id="spDialog">
          <children>
-            <VBox prefHeight="555.0" prefWidth="830.0">
+            <VBox prefHeight="1100.0" prefWidth="830.0">
                <children>
                 <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
@@ -54,7 +54,7 @@
                                        </font>
                                     </Label>
                                     <JFXTextArea fx:id="jtaDescricao" labelFloat="true" prefHeight="94.0" prefWidth="415.0" promptText="Descrição da Despesa" wrapText="true" />
-                                    <VBox fx:id="vbValor" prefHeight="200.0" prefWidth="100.0">
+                                    <VBox fx:id="vbValor" prefHeight="81.0" prefWidth="414.0">
                                        <children>
                                           <Label text="Valor">
                                              <font>
@@ -63,7 +63,6 @@
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <JFXCheckBox fx:id="jcbPago" text="Pago" />
                                     <Label text="Usuário">
                                        <font>
                                           <Font size="18.0" />
@@ -75,7 +74,6 @@
                               <VBox prefHeight="435.0" prefWidth="413.0" spacing="5.0">
                                  <children>
                                     <Pane prefHeight="120.0" prefWidth="413.0" />
-                                    <JFXComboBox fx:id="jcbReceita" labelFloat="true" prefHeight="25.0" prefWidth="235.0" promptText="Receita Utilizada" />
                                     <Label text="Data Pagamento">
                                        <font>
                                           <Font size="18.0" />
@@ -110,6 +108,38 @@
                         <Insets />
                      </opaqueInsets>
                   </AnchorPane>
+                  <HBox spacing="5.0">
+                     <children>
+                        <Label text="Receitas Utilizadas">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane fx:id="jbAdd" onMouseClicked="#handleAdicionar" prefHeight="32.0" prefWidth="46.0" styleClass="botaoConfirmacao">
+                           <children>
+                              <Label layoutX="17.0" layoutY="1.0" text="+">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </HBox>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <VBox fx:id="vbReceitas" prefHeight="409.0" prefWidth="810.0" />
+                     </content>
+                  </ScrollPane>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Valor Restante: R$" />
+                        <Label fx:id="jlValorRestante" />
+                     </children>
+                  </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <AnchorPane onMouseClicked="#handleSalvar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao">
@@ -144,7 +174,11 @@
                            </children>
                         </AnchorPane>
                      </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </HBox>
+                  <HBox layoutX="10.0" layoutY="704.0" prefHeight="100.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>

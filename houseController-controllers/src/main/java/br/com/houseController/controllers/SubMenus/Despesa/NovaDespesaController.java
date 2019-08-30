@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -23,6 +24,10 @@ import br.com.houseController.service.Despesa.DespesaService;
 import br.com.houseController.service.Receita.ReceitaService;
 import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -30,16 +35,28 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class NovaDespesaController extends ParametrosObjetos implements Initializable{
 	
 	@FXML
+	private StackPane spDialog;
+	
+	@FXML
 	private VBox vbValor;
 	
 	@FXML
 	private VBox vbVariavel;
+	
+	@FXML
+	private VBox vbReceitas;
+	
+	@FXML
+	private Label valorRestante;
 	
 	@FXML
 	private JFXComboBox<String> jcbCategoria;
@@ -56,11 +73,11 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	@FXML
 	private JFXTextArea jtaDescricao;
 	
-	@FXML
-	private JFXCheckBox jcbPago;
+//	@FXML
+//	private JFXCheckBox jcbPago;
 	
-	@FXML
-	private JFXComboBox<Receita> jcbReceita;
+//	@FXML
+//	private JFXComboBox<Receita> jcbReceita;
 	
 	@FXML
 	private JFXCheckBox jcbRepetirConta;
@@ -73,6 +90,12 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML 
 	private Label jlTitulo;
+	
+	@FXML
+	private AnchorPane jbAdd;
+	
+	HashMap<Integer, Receita> mapReceita = new HashMap<>();
+	int indice = -1;
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
@@ -148,6 +171,79 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		inicializaListeners();
 		
 	}
+	
+	@FXML
+	private void handleAdicionar(){
+		criaReceita(++indice, new Receita());
+	}
+
+	private void criaReceita(int indice, Receita receita) {
+		// Adiciona a nova Receita na lista
+		mapReceita.put(indice, receita);
+		
+		//Cria o HBox para inserção dos campos
+		HBox hBox = new HBox();
+		
+		//Adiciona o HBox no VBox vbReceitas
+		vbReceitas.getChildren().add(hBox);
+		
+		//Cria o ComboBox que ficará com a lista de receitas
+		JFXComboBox<Receita> jcbReceita = new JFXComboBox<>();
+		
+		//Consulta as receitas 
+		ReceitaService receitaService = new ReceitaService();
+		
+		//Adiciona as receitas no ComboBox
+		
+		for(Receita rct : receitaService.findAll()){
+			jcbReceita.getItems().add(receita);
+		}		
+		
+		//Adiciona o ComboBox no HBox
+		hBox.getChildren().add(jcbReceita);
+		
+		//Cria o campo para o valor e adiciona no HBox (Label)
+		Label jlValor = new Label();
+		jlValor.setPrefWidth(200);
+		hBox.getChildren().add(jlValor);
+		
+		//Cria o Botão para deleção e adiciona no HBox
+		JFXButton jbDeletar = new JFXButton("Deletar");
+		hBox.getChildren().add(jbDeletar);
+		
+		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento
+		jbDeletar.setOnAction((event) -> {
+			ScreenUtils.janelaInformação(spDialog, "Janela para deleção", "Deletar?", "É isso aí");
+		});
+		
+		//Adiciona o Listener para que, sempre que selecionado uma nova receita, abra-se uma janela dizendo o quanto há daquela receita disponível
+		jcbReceita.valueProperty().addListener((obs,oldV,newV) -> {
+			Task<BigDecimal> task = new Task<BigDecimal>(){
+
+				@Override
+				protected BigDecimal call() throws Exception {
+					//Chama a janela para inserção do texto
+					return null;
+				}
+				
+			};
+			
+			task.setOnRunning((e)->{
+				 try {
+					if(task.get() != BigDecimal.ZERO){
+						 
+					 }
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			});
+			
+		});
+		
+		//O retorno dessa janela irá adicionar o valor digitado no label campo
+		
+		//Caso o valor seja 0, retorna a seleção da receita para 0
+	}
 
 	private void inicializaCampos() {
 		//Coloca valores no campo de Categorias e setando para o primeiro
@@ -184,7 +280,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 					jcbCategoria.getSelectionModel().select(0);
 				}
 				jntfValor.setText(despesa.getValorDespesa().toString());
-				jcbPago.setSelected(despesa.getPago() != null ? despesa.getPago() : false);
+//				jcbPago.setSelected(despesa.getPago() != null ? despesa.getPago() : false);
 				if(despesa.getUsuario() != null){
 					jcbUsuario.getSelectionModel().select(despesa.getUsuario().getNome());
 				}
@@ -209,9 +305,9 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		ReceitaService receitaService = new ReceitaService();
 		List<Receita> listReceita = receitaService.findAll();
 		
-		for(Receita receita : listReceita){
-			jcbReceita.getItems().add(receita);
-		}
+//		for(Receita receita : listReceita){
+//			jcbReceita.getItems().add(receita);
+//		}
 		
 	}
 	
@@ -225,33 +321,33 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 				despesa.setCategoria(EnumCategoria.VARIAVEL);
 			}
 		});
-		jcbReceita.setCellFactory(new Callback<ListView<Receita>, ListCell<Receita>>() {
-			
-			@Override
-			public ListCell<Receita> call(ListView<Receita> param) {
-				final ListCell<Receita> cell = new ListCell<Receita>(){
-					
-					@Override
-					protected void updateItem(Receita t, boolean b){
-						super.updateItem(t, b);
-						
-						if(t!=null){
-							setText(t.getDescricaoPagamento() + " - " +  t.getValor().toString());
-						}else{
-							setText(null);
-						}
-					}
-				};
-				return cell;
-			}
-		});
+//		jcbReceita.setCellFactory(new Callback<ListView<Receita>, ListCell<Receita>>() {
+//			
+//			@Override
+//			public ListCell<Receita> call(ListView<Receita> param) {
+//				final ListCell<Receita> cell = new ListCell<Receita>(){
+//					
+//					@Override
+//					protected void updateItem(Receita t, boolean b){
+//						super.updateItem(t, b);
+//						
+//						if(t!=null){
+//							setText(t.getDescricaoPagamento() + " - " +  t.getValor().toString());
+//						}else{
+//							setText(null);
+//						}
+//					}
+//				};
+//				return cell;
+//			}
+//		});
 //		jcbReceita.selectionModelProperty().addListener((obs,oldV,newV)->{jcbReceita.getSelectionModel().select(jcbReceita.getSelectionModel().getSelectedItem().getDescricaoPagamento() + " - " + jcbReceita.getSelectionModel().getSelectedItem().getValor().toString());});
 		jtaDescricao.textProperty().addListener((obs,oldV,newV)->{despesa.setDescricaoDespesa(newV);});
 		jntfValor.textProperty().addListener((obs,oldV,newV)->{despesa.setValorDespesa(new BigDecimal(newV));});
 		jcbUsuario.valueProperty().addListener((obs,oldV,newV) -> {despesa.setUsuario(mapUsuario.get(newV));});
 		jdpDtPagamento.valueProperty().addListener((obs,oldV,newV)-> {despesa.setDtPagamento(newV);});
 		jdpDtVencimento.valueProperty().addListener((obs,oldV,newV)-> {despesa.setDtVencimento(newV);});
-		jcbPago.selectedProperty().addListener((obs,oldV,newV)->{despesa.setPago(newV);});
+//		jcbPago.selectedProperty().addListener((obs,oldV,newV)->{despesa.setPago(newV);});
 		
 	}
 	
