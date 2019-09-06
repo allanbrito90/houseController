@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -11,19 +12,24 @@ import com.jfoenix.controls.JFXComboBox;
 
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.model.despesas.Despesa;
+import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.receita.Receita;
+import br.com.houseController.service.Despesa.RelacaoDespesaReceitaService;
 import br.com.houseController.service.Receita.ReceitaService;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 public class PagarDespesaController extends ParametrosObjetos implements Initializable{
 	
@@ -51,6 +57,9 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	@FXML 
 	private Label jlTitulo;
 	
+	RelacaoDespesaReceitaService relacaoDespesaReceitaService = new RelacaoDespesaReceitaService();
+	ReceitaService receitaService = new ReceitaService();
+	
 	HashMap<Integer, Receita> mapReceita = new HashMap<>();
 	int indice = -1;
 	
@@ -68,7 +77,10 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private void handlePesquisar(){
-		
+		List<Despesa> listRelacaoDespesaReceita = relacaoDespesaReceitaService.findDespesaByPeriodo(jsMes.getValue(), jsAno.getValue());
+		for(Despesa despesa : listRelacaoDespesaReceita){
+			jcbDespesa.getItems().add(despesa);
+		}
 	}
 	
 	@FXML
@@ -106,6 +118,27 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		
 		//Cria o ComboBox que ficará com a lista de receitas
 		JFXComboBox<Receita> jcbReceita = new JFXComboBox<>();
+		jcbReceita.setCellFactory(new Callback<ListView<Receita>, ListCell<Receita>>() {
+
+			@Override
+			public ListCell<Receita> call(ListView<Receita> param) {
+				final ListCell<Receita> cell = new ListCell<Receita>(){
+					
+					@Override
+					public void updateItem(Receita item, boolean empty){
+						super.updateItem(item, empty);
+						
+						if(item != null){
+							setText(item.getDescricaoPagamento() + " - " + item.getValor().toString());
+						}else{
+							setText("");
+						}
+						
+					}
+				};
+				return cell;
+			}
+		});
 		
 		//Consulta as receitas 
 		ReceitaService receitaService = new ReceitaService();
@@ -130,7 +163,6 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		
 		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento
 		jbDeletar.setOnAction((event) -> {
-//			ScreenUtils.janelaInformação(spDialog, "Janela para deleção", "Deletar?", "É isso aí");
 			vbReceitas.getChildren().remove(hBox);
 			mapReceita.remove(indice);	
 		});
@@ -165,6 +197,28 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	}
 
 	private void inicializaCampos() {
+		
+		jcbDespesa.setCellFactory(new Callback<ListView<Despesa>, ListCell<Despesa>>() {
+			
+			@Override
+			public ListCell<Despesa> call(ListView<Despesa> param) {
+				final ListCell<Despesa> cell = new ListCell<Despesa>(){
+					
+					@Override
+					public void updateItem(Despesa item, boolean empty){
+						super.updateItem(item, empty);
+						
+						if(item != null){
+							setText(item.getDescricaoDespesa() + " - " + item.getValorDespesa().toString());
+						}else{
+							setText("");
+						}
+						
+					}
+				};
+				return cell;
+			}
+		});
 				
 		Platform.runLater(()->{
 			if(getObjetos() != null){
@@ -176,10 +230,20 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			}
 		});
 		
-		
+			
 	}
 	
 	private void inicializaListeners(){
+		//Inicializa Combobox da Despesa para que quando seja clicado carregue todas as receitas atribuidas.
+		jcbDespesa.valueProperty().addListener((obs,oldV,newV)->{
+			for(RelacaoDespesaReceita relacaoDespesaReceita : relacaoDespesaReceitaService.findReceitaByDespesa(newV.getId())){
+				Receita receita = new Receita();
+				receita.setId(relacaoDespesaReceita.getIdReceita());
+				receita = receitaService.findReceitaById(receita);
+				criaReceita(++indice, receita);
+			}
+		});
+		
 		//Inicializa Listeners do Spinner
 		jsMes.setValueFactory(mesSpinner);
 		jsAno.setValueFactory(anoSpinner);

@@ -53,12 +53,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	private VBox vbVariavel;
 	
 	@FXML
-	private VBox vbReceitas;
-	
-	@FXML
-	private Label valorRestante;
-	
-	@FXML
 	private JFXComboBox<String> jcbCategoria;
 	
 	@FXML
@@ -72,12 +66,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	private JFXTextArea jtaDescricao;
-	
-//	@FXML
-//	private JFXCheckBox jcbPago;
-	
-//	@FXML
-//	private JFXComboBox<Receita> jcbReceita;
 	
 	@FXML
 	private JFXCheckBox jcbRepetirConta;
@@ -93,9 +81,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	private AnchorPane jbAdd;
-	
-	HashMap<Integer, Receita> mapReceita = new HashMap<>();
-	int indice = -1;
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
@@ -172,78 +157,6 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		
 	}
 	
-	@FXML
-	private void handleAdicionar(){
-		criaReceita(++indice, new Receita());
-	}
-
-	private void criaReceita(int indice, Receita receita) {
-		// Adiciona a nova Receita na lista
-		mapReceita.put(indice, receita);
-		
-		//Cria o HBox para inserção dos campos
-		HBox hBox = new HBox();
-		
-		//Adiciona o HBox no VBox vbReceitas
-		vbReceitas.getChildren().add(hBox);
-		
-		//Cria o ComboBox que ficará com a lista de receitas
-		JFXComboBox<Receita> jcbReceita = new JFXComboBox<>();
-		
-		//Consulta as receitas 
-		ReceitaService receitaService = new ReceitaService();
-		
-		//Adiciona as receitas no ComboBox
-		
-		for(Receita rct : receitaService.findAll()){
-			jcbReceita.getItems().add(receita);
-		}		
-		
-		//Adiciona o ComboBox no HBox
-		hBox.getChildren().add(jcbReceita);
-		
-		//Cria o campo para o valor e adiciona no HBox (Label)
-		Label jlValor = new Label();
-		jlValor.setPrefWidth(200);
-		hBox.getChildren().add(jlValor);
-		
-		//Cria o Botão para deleção e adiciona no HBox
-		JFXButton jbDeletar = new JFXButton("Deletar");
-		hBox.getChildren().add(jbDeletar);
-		
-		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento
-		jbDeletar.setOnAction((event) -> {
-			ScreenUtils.janelaInformação(spDialog, "Janela para deleção", "Deletar?", "É isso aí");
-		});
-		
-		//Adiciona o Listener para que, sempre que selecionado uma nova receita, abra-se uma janela dizendo o quanto há daquela receita disponível
-		jcbReceita.valueProperty().addListener((obs,oldV,newV) -> {
-			Task<BigDecimal> task = new Task<BigDecimal>(){
-
-				@Override
-				protected BigDecimal call() throws Exception {
-					//Chama a janela para inserção do texto
-					return null;
-				}
-				
-			};
-			
-			task.setOnRunning((e)->{
-				 try {
-					if(task.get() != BigDecimal.ZERO){
-						 
-					 }
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			});
-			
-		});
-		
-		//O retorno dessa janela irá adicionar o valor digitado no label campo
-		
-		//Caso o valor seja 0, retorna a seleção da receita para 0
-	}
 
 	private void inicializaCampos() {
 		//Coloca valores no campo de Categorias e setando para o primeiro

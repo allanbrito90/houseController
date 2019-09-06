@@ -21,7 +21,7 @@
   <content>
       <StackPane fx:id="spDialog">
          <children>
-            <VBox prefHeight="1100.0" prefWidth="830.0">
+            <VBox prefHeight="600.0" prefWidth="830.0">
                <children>
                 <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
@@ -108,38 +108,6 @@
                         <Insets />
                      </opaqueInsets>
                   </AnchorPane>
-                  <HBox spacing="5.0">
-                     <children>
-                        <Label text="Receitas Utilizadas">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <AnchorPane fx:id="jbAdd" onMouseClicked="#handleAdicionar" prefHeight="32.0" prefWidth="46.0" styleClass="botaoConfirmacao">
-                           <children>
-                              <Label layoutX="17.0" layoutY="1.0" text="+">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                  </HBox>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                     <content>
-                        <VBox fx:id="vbReceitas" prefHeight="409.0" prefWidth="810.0" />
-                     </content>
-                  </ScrollPane>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label text="Valor Restante: R$" />
-                        <Label fx:id="jlValorRestante" />
-                     </children>
-                  </HBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
                      <children>
                         <AnchorPane onMouseClicked="#handleSalvar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao">
@@ -178,7 +146,6 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox layoutX="10.0" layoutY="704.0" prefHeight="100.0" prefWidth="200.0" />
                </children>
             </VBox>
          </children>
