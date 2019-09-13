@@ -3,6 +3,7 @@ package br.com.houseController.controllers.SubMenus.Despesa;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -11,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.receita.Receita;
@@ -25,6 +27,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -60,7 +63,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	RelacaoDespesaReceitaService relacaoDespesaReceitaService = new RelacaoDespesaReceitaService();
 	ReceitaService receitaService = new ReceitaService();
 	
-	HashMap<Integer, Receita> mapReceita = new HashMap<>();
+	HashMap<Integer, RelacaoDespesaReceita> mapRelacaoDespesaReceita = new HashMap<>();
 	int indice = -1;
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
@@ -72,11 +75,17 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	SpinnerValueFactory<Integer> mesSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINMES, MAXMES, MINMES);
 	SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO, MINANO);
 
-	Despesa despesa;
+	
+	BigDecimal total = BigDecimal.ZERO;
 	
 	
 	@FXML
 	private void handlePesquisar(){
+		pesquisarMes();
+	}
+
+	private void pesquisarMes() {
+		jcbDespesa.getItems().clear();
 		List<Despesa> listRelacaoDespesaReceita = relacaoDespesaReceitaService.findDespesaByPeriodo(jsMes.getValue(), jsAno.getValue());
 		for(Despesa despesa : listRelacaoDespesaReceita){
 			jcbDespesa.getItems().add(despesa);
@@ -85,6 +94,13 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private void handleSalvar(){
+		Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();
+		
+		for(RelacaoDespesaReceita relacaoDespesaReceita : mapRelacaoDespesaReceita.values()){
+			relacaoDespesaReceita.setIdReceita(jcbDespesa.getSelectionModel().getSelectedItem().getId());
+			
+			relacaoDespesaReceitaService.insert(relacaoDespesaReceita);
+		}
 		
 	}
 	
@@ -103,12 +119,12 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private void handleAdicionar(){
-		criaReceita(++indice, new Receita());
+		criaReceita(++indice, new RelacaoDespesaReceita());
 	}
 
-	private void criaReceita(int indice, Receita receita) {
+	private void criaReceita(int indice, RelacaoDespesaReceita relacaoDespesaReceita) {
 		// Adiciona a nova Receita na lista
-		mapReceita.put(indice, receita);
+		mapRelacaoDespesaReceita.put(indice, relacaoDespesaReceita);
 		
 		//Cria o HBox para inserção dos campos
 		HBox hBox = new HBox();
@@ -164,36 +180,54 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento
 		jbDeletar.setOnAction((event) -> {
 			vbReceitas.getChildren().remove(hBox);
-			mapReceita.remove(indice);	
+			mapRelacaoDespesaReceita.remove(indice);	
+			total = total.subtract(new BigDecimal(jlValor.getText()));
+			atualizaValorRestante();
 		});
 		
 		//Adiciona o Listener para que, sempre que selecionado uma nova receita, abra-se uma janela dizendo o quanto há daquela receita disponível
+		
 		jcbReceita.valueProperty().addListener((obs,oldV,newV) -> {
+			
 			Task<BigDecimal> task = new Task<BigDecimal>(){
 
 				@Override
 				protected BigDecimal call() throws Exception {
-					//Chama a janela para inserção do texto
-					return null;
+					
+					//Procura por todas as evidencias da utilização da receita
+					ArrayList<RelacaoDespesaReceita> relacaoDespesaReceitaList = relacaoDespesaReceitaService.findAllByReceita(newV.getId());
+					BigDecimal receitaRestante = BigDecimal.ZERO;
+					for(RelacaoDespesaReceita relacaoDespesaReceita : relacaoDespesaReceitaList){
+						receitaRestante = receitaRestante.add(relacaoDespesaReceita.getValor());
+					}
+					
+					//Subtrai o valor da seguinte maneira: TotalReceita - ReceitaBanco( - Receita na Tela)
+					receitaRestante = jcbReceita.getSelectionModel().getSelectedItem().getValor().subtract(receitaRestante);
+					
+					
+					return ScreenUtils.janelaEntradaValor(spDialog, receitaRestante, jcbDespesa.getSelectionModel().getSelectedItem().getValorDespesa().subtract(total));
 				}
 				
 			};
 			
-			task.setOnRunning((e)->{
+			//O retorno dessa janela irá adicionar o valor digitado no label campo
+			task.setOnSucceeded((e)->{
 				 try {
 					if(task.get() != BigDecimal.ZERO){
-						 
+						//Caso o valor seja 0, retorna a seleção da receita para 0
+						jlValor.setText(task.get().toString());
+						total = total.add(task.get());
+						atualizaValorRestante();
 					 }
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
 			});
 			
+			task.run();
 		});
 		
-		//O retorno dessa janela irá adicionar o valor digitado no label campo
 		
-		//Caso o valor seja 0, retorna a seleção da receita para 0
 	}
 
 	private void inicializaCampos() {
@@ -223,7 +257,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		Platform.runLater(()->{
 			if(getObjetos() != null){
 				jlTitulo.setText("Editar Despesa");
-				despesa = (Despesa) getObjetos().get(0);
+//				despesa = (Despesa) getObjetos().get(0);
 				
 			}else{
 				
@@ -236,12 +270,15 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	private void inicializaListeners(){
 		//Inicializa Combobox da Despesa para que quando seja clicado carregue todas as receitas atribuidas.
 		jcbDespesa.valueProperty().addListener((obs,oldV,newV)->{
+			total = BigDecimal.ZERO;
 			for(RelacaoDespesaReceita relacaoDespesaReceita : relacaoDespesaReceitaService.findReceitaByDespesa(newV.getId())){
 				Receita receita = new Receita();
 				receita.setId(relacaoDespesaReceita.getIdReceita());
 				receita = receitaService.findReceitaById(receita);
-				criaReceita(++indice, receita);
+				total = total.add(receita.getValor());
+				criaReceita(++indice, relacaoDespesaReceita);
 			}
+			jlValorRestante.setText(newV.getValorDespesa().subtract(total).toString());
 		});
 		
 		//Inicializa Listeners do Spinner
@@ -250,7 +287,13 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		
 		jsMes.getValueFactory().setValue(LocalDate.now().getMonthValue());
 		jsAno.getValueFactory().setValue(LocalDate.now().getYear());
+		
+		//Carrega despesas do mês vigente
+		pesquisarMes();
 	}
 	
+	public void atualizaValorRestante(){
+		jlValorRestante.setText(jcbDespesa.getSelectionModel().getSelectedItem().getValorDespesa().subtract(total).toString());
+	}
 	
 }

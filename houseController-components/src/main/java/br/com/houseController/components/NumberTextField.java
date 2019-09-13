@@ -1,5 +1,7 @@
 package br.com.houseController.components;
 
+import java.math.BigDecimal;
+
 import com.jfoenix.controls.JFXTextField;
 
 /**
@@ -23,5 +25,9 @@ public class NumberTextField extends JFXTextField
     @Override
     public void replaceSelection(String replacement) {
     	super.replaceSelection(replacement);
+    }
+    
+    public BigDecimal getValor(){
+    	return new BigDecimal(getText());
     }
 }

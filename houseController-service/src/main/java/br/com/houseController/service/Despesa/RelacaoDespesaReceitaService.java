@@ -75,4 +75,13 @@ public class RelacaoDespesaReceitaService implements InterfaceService<RelacaoDes
 		return list;
 	}
 
+	public ArrayList<RelacaoDespesaReceita> findAllByReceita(int idReceita){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from relacao_despesa_receita where idReceita = :idReceita");
+		query.setParameter("idReceita", idReceita);
+		ArrayList<RelacaoDespesaReceita> list = (ArrayList<RelacaoDespesaReceita>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list;
+	}
+	
 }
