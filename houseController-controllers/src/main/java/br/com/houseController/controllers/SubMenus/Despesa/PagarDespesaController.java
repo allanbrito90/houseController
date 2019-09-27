@@ -97,7 +97,6 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();
 		
 		for(RelacaoDespesaReceita relacaoDespesaReceita : mapRelacaoDespesaReceita.values()){
-			relacaoDespesaReceita.setIdReceita(jcbDespesa.getSelectionModel().getSelectedItem().getId());
 			
 			relacaoDespesaReceitaService.insert(relacaoDespesaReceita);
 		}
@@ -185,6 +184,8 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			atualizaValorRestante();
 		});
 		
+
+		
 		//Adiciona o Listener para que, sempre que selecionado uma nova receita, abra-se uma janela dizendo o quanto há daquela receita disponível
 		
 		jcbReceita.valueProperty().addListener((obs,oldV,newV) -> {
@@ -218,6 +219,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 						jlValor.setText(task.get().toString());
 						total = total.add(task.get());
 						atualizaValorRestante();
+						mapRelacaoDespesaReceita.put(indice, new RelacaoDespesaReceita(jcbDespesa.getSelectionModel().getSelectedItem().getId(), jcbReceita.getSelectionModel().getSelectedItem().getId(), task.get()));
 					 }
 				} catch (Exception e1) {
 					e1.printStackTrace();
@@ -227,6 +229,16 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			task.run();
 		});
 		
+		//Verifica se o objeto RelacaoDespesaReceita está vazio
+		if(relacaoDespesaReceita.getValor() != null){
+			Receita receitaTeste = receitaService.findReceitaById(relacaoDespesaReceita.getIdReceita());
+			for(RelacaoDespesaReceita relacao: mapRelacaoDespesaReceita.values()){
+				if(relacao.getIdReceita() == receitaTeste.getId()){
+					jcbReceita.getSelectionModel().select(0);					
+				}
+			}
+			jlValor.setText(relacaoDespesaReceita.getValor().toString());
+		}
 		
 	}
 

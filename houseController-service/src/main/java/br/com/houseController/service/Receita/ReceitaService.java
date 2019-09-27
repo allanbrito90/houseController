@@ -63,5 +63,12 @@ public class ReceitaService implements InterfaceService<Receita>{
 		ConnectionFactory.fecharSessao(session);
 		return receita;
 	}
+	
+	public Receita findReceitaById(int obj){
+		Session session = ConnectionFactory.obterNovaSessao();
+		Receita receita = session.get(Receita.class, obj);
+		ConnectionFactory.fecharSessao(session);
+		return receita;
+	}
 
 }
