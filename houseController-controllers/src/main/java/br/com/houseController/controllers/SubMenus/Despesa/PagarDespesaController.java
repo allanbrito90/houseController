@@ -33,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class PagarDespesaController extends ParametrosObjetos implements Initializable{
 	
@@ -227,6 +228,23 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			});
 			
 			task.run();
+		});
+		
+		jcbReceita.setConverter(new StringConverter<Receita>() {			
+			
+			@Override
+			public String toString(Receita object) {
+				if(object == null) {
+					return null;
+				}else {
+					return object.getDescricaoPagamento() + " - " + object.getValor();
+				}
+			}
+			
+			@Override
+			public Receita fromString(String string) {
+				return null;
+			}
 		});
 		
 		//Verifica se o objeto RelacaoDespesaReceita está vazio
