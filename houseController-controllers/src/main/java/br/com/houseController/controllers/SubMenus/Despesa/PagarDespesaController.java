@@ -1,6 +1,7 @@
 package br.com.houseController.controllers.SubMenus.Despesa;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	ReceitaService receitaService = new ReceitaService();
 	
 	HashMap<Integer, RelacaoDespesaReceita> mapRelacaoDespesaReceita = new HashMap<>();
+	HashMap<Integer, RelacaoDespesaReceita> mapRelacaoDespesaReceitaFixa = new HashMap<>();
 	int indice = -1;
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
@@ -95,11 +97,19 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private void handleSalvar(){
-		Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();
+		Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();		
+		
+		//Aqui há os dois maps (o fixo e o variável), criar lógica para alterar no banco
 		
 		for(RelacaoDespesaReceita relacaoDespesaReceita : mapRelacaoDespesaReceita.values()){
 			
 			relacaoDespesaReceitaService.insert(relacaoDespesaReceita);
+		}
+		
+		for(int i=0; i < mapRelacaoDespesaReceitaFixa.size() - 1; i++){			
+			if(mapRelacaoDespesaReceita.get(i) == null){
+				relacaoDespesaReceitaService.delete(mapRelacaoDespesaReceitaFixa.get(i).getId());
+			}			
 		}
 		
 	}
@@ -180,10 +190,24 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento
 		jbDeletar.setOnAction((event) -> {
 			vbReceitas.getChildren().remove(hBox);
-			mapRelacaoDespesaReceita.remove(indice);	
-			total = total.subtract(new BigDecimal(jlValor.getText()));
+			mapRelacaoDespesaReceita.remove(indice);
+			if(!jlValor.getText().isEmpty()){
+				total = total.subtract(new BigDecimal(jlValor.getText()));
+			}
 			atualizaValorRestante();
 		});
+		
+		//Verifica se o objeto RelacaoDespesaReceita está vazio
+		if(relacaoDespesaReceita.getValor() != null){
+			Receita receitaTeste = receitaService.findReceitaById(relacaoDespesaReceita.getIdReceita());
+			for(RelacaoDespesaReceita relacao: mapRelacaoDespesaReceita.values()){
+				if(relacao.getIdReceita() == receitaTeste.getId()){
+					jcbReceita.getSelectionModel().select(0);
+					mapRelacaoDespesaReceitaFixa.put(indice, relacao);
+				}
+			}
+			jlValor.setText(relacaoDespesaReceita.getValor().toString());
+		}
 		
 
 		
@@ -200,11 +224,11 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 					ArrayList<RelacaoDespesaReceita> relacaoDespesaReceitaList = relacaoDespesaReceitaService.findAllByReceita(newV.getId());
 					BigDecimal receitaRestante = BigDecimal.ZERO;
 					for(RelacaoDespesaReceita relacaoDespesaReceita : relacaoDespesaReceitaList){
-						receitaRestante = receitaRestante.add(relacaoDespesaReceita.getValor());
+						receitaRestante = receitaRestante.add(relacaoDespesaReceita.getValor().setScale(2,RoundingMode.HALF_EVEN));
 					}
 					
 					//Subtrai o valor da seguinte maneira: TotalReceita - ReceitaBanco( - Receita na Tela)
-					receitaRestante = jcbReceita.getSelectionModel().getSelectedItem().getValor().subtract(receitaRestante);
+					receitaRestante = jcbReceita.getSelectionModel().getSelectedItem().getValor().subtract(receitaRestante).setScale(2,RoundingMode.HALF_EVEN);
 					
 					
 					return ScreenUtils.janelaEntradaValor(spDialog, receitaRestante, jcbDespesa.getSelectionModel().getSelectedItem().getValorDespesa().subtract(total));
@@ -214,17 +238,26 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			
 			//O retorno dessa janela irá adicionar o valor digitado no label campo
 			task.setOnSucceeded((e)->{
-				 try {
+				try {
 					if(task.get() != BigDecimal.ZERO){
 						//Caso o valor seja 0, retorna a seleção da receita para 0
-						jlValor.setText(task.get().toString());
-						total = total.add(task.get());
+						jlValor.setText(task.get().setScale(2, RoundingMode.HALF_EVEN).toString());
+						total = total.add(task.get().setScale(2, RoundingMode.HALF_EVEN));
 						atualizaValorRestante();
 						mapRelacaoDespesaReceita.put(indice, new RelacaoDespesaReceita(jcbDespesa.getSelectionModel().getSelectedItem().getId(), jcbReceita.getSelectionModel().getSelectedItem().getId(), task.get()));
-					 }
+					}
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+			});
+			
+			task.setOnCancelled((e)->{
+				vbReceitas.getChildren().remove(hBox);
+				mapRelacaoDespesaReceita.remove(indice);
+				if(!jlValor.getText().isEmpty()){
+					total = total.subtract(new BigDecimal(jlValor.getText()));
+				}
+				atualizaValorRestante();
 			});
 			
 			task.run();
@@ -247,16 +280,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 			}
 		});
 		
-		//Verifica se o objeto RelacaoDespesaReceita está vazio
-		if(relacaoDespesaReceita.getValor() != null){
-			Receita receitaTeste = receitaService.findReceitaById(relacaoDespesaReceita.getIdReceita());
-			for(RelacaoDespesaReceita relacao: mapRelacaoDespesaReceita.values()){
-				if(relacao.getIdReceita() == receitaTeste.getId()){
-					jcbReceita.getSelectionModel().select(0);					
-				}
-			}
-			jlValor.setText(relacaoDespesaReceita.getValor().toString());
-		}
+
 		
 	}
 
@@ -283,6 +307,23 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 				return cell;
 			}
 		});
+		
+		jcbDespesa.setConverter(new StringConverter<Despesa>() {			
+			
+			@Override
+			public String toString(Despesa object) {
+				if(object == null) {
+					return null;
+				}else {
+					return object.getDescricaoDespesa() + " - " + object.getValorDespesa().toString();
+				}
+			}
+			
+			@Override
+			public Despesa fromString(String string) {
+				return null;
+			}
+		});
 				
 		Platform.runLater(()->{
 			if(getObjetos() != null){
@@ -300,12 +341,16 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	private void inicializaListeners(){
 		//Inicializa Combobox da Despesa para que quando seja clicado carregue todas as receitas atribuidas.
 		jcbDespesa.valueProperty().addListener((obs,oldV,newV)->{
+			vbReceitas.getChildren().clear();
+			mapRelacaoDespesaReceitaFixa.clear();
+			indice=-1;
 			total = BigDecimal.ZERO;
 			for(RelacaoDespesaReceita relacaoDespesaReceita : relacaoDespesaReceitaService.findReceitaByDespesa(newV.getId())){
 				Receita receita = new Receita();
 				receita.setId(relacaoDespesaReceita.getIdReceita());
 				receita = receitaService.findReceitaById(receita);
-				total = total.add(receita.getValor());
+				total = total.add(relacaoDespesaReceita.getValor());
+				mapRelacaoDespesaReceitaFixa.put(indice, relacaoDespesaReceita);
 				criaReceita(++indice, relacaoDespesaReceita);
 			}
 			jlValorRestante.setText(newV.getValorDespesa().subtract(total).toString());

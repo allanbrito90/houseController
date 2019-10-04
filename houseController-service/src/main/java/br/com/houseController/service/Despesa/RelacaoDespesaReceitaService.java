@@ -45,7 +45,7 @@ public class RelacaoDespesaReceitaService implements InterfaceService<RelacaoDes
 	public Integer delete(int id) {
 		Session session = ConnectionFactory.obterNovaSessao();
 		session.beginTransaction();
-		Query query = session.createQuery("delete from despesa where id = :id");
+		Query query = session.createQuery("delete from relacao_despesa_receita where id = :id");
 		query.setParameter("id", id);
 		Integer retorno = query.executeUpdate();
 		session.getTransaction().commit();
@@ -82,6 +82,16 @@ public class RelacaoDespesaReceitaService implements InterfaceService<RelacaoDes
 		ArrayList<RelacaoDespesaReceita> list = (ArrayList<RelacaoDespesaReceita>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
+	}
+
+	public void deleteReceitaByIdDespesa(int idDespesa) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		session.beginTransaction();
+		Query query = session.createQuery("delete from relacao_despesa_receita where idDespesa = :idDespesa");
+		query.setParameter("idDespesa", idDespesa);
+		Integer retorno = query.executeUpdate();
+		session.getTransaction().commit();
+		ConnectionFactory.fecharSessao(session);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package br.com.houseController.controllers.SubMenus.Compras;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -242,7 +243,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		});
 		
 		jntfValor.setOnKeyReleased((event)->{
-			produto.setValor(BigDecimal.valueOf(Float.valueOf(jntfValor.getText())));
+			produto.setValor(BigDecimal.valueOf(Float.valueOf(jntfValor.getText())).setScale(2, RoundingMode.HALF_EVEN));
 		});
 		
 		jbApagar.setOnMouseClicked((event)->{

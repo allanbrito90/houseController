@@ -2,6 +2,7 @@ package br.com.houseController.controllers.utils;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
@@ -30,8 +32,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class ScreenUtils {
 	
@@ -217,39 +221,49 @@ public class ScreenUtils {
 		//------------------------------ESTA JANELA FUNCIONOU-----------------------
 		Stage stage = new Stage();
 		
-		Pane pane = new Pane();
+		stage.initStyle(StageStyle.UNDECORATED);
 		
-		Scene scene = new Scene(pane);
+		StackPane stackPane = new StackPane();
+		
+		Scene scene = new Scene(stackPane);
 		
 		stage.setScene(scene);
 		
-		
-		pane.setPrefHeight(100);
-		pane.setPrefWidth(300);
+		stackPane.setPrefHeight(180);
+		stackPane.setPrefWidth(300);
 		
 		VBox vBox = new VBox();
 		vBox.setSpacing(5);
 		
+		HBox espacoCabecalho = new HBox();
+		
+		Label cabecalho = new Label("Valor do Pagamento");
+		
+		espacoCabecalho.getChildren().addAll(cabecalho);
+		espacoCabecalho.setPrefWidth(300);
 		NumberTextField jntf = new NumberTextField();
 		
 		JFXButton jbOk = new JFXButton("OK");
 		
 		jbOk.setOnAction((e)->{
+			if(jntf.getText().isEmpty()){
+				jntf.setText("0");
+			}
 			if(jntf.getValor().compareTo(receitaDisponivel)==1 || jntf.getValor().compareTo(despesaDisponivel)==1){
-				janelaInformação(spDialog,"Erro","O valor é maior do que o permitido","OK");
+				janelaInformação(stackPane,"Erro","O valor é maior do que o permitido","OK");
 			}else{
 				stage.close();
 			}
 		});
 		
-		vBox.getChildren().addAll(jntf,jbOk);
+		vBox.getChildren().addAll(espacoCabecalho, jntf,jbOk);
 		
-		pane.getChildren().add(vBox);
+		stackPane.getChildren().add(vBox);
 		
 		stage.showAndWait();
 		//---------------------------------FIM DA JANELA QUE FUNCIONOU
 		
-		return new BigDecimal(jntf.getText());
+		return new BigDecimal(jntf.getValor().setScale(2,RoundingMode.HALF_EVEN).toString());
 	}
 	
 	public static void janelaAguarde(StackPane spDialog) {

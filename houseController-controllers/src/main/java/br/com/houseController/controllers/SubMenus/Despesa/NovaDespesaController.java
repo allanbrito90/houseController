@@ -1,6 +1,7 @@
 package br.com.houseController.controllers.SubMenus.Despesa;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -192,7 +193,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 				}else{
 					jcbCategoria.getSelectionModel().select(0);
 				}
-				jntfValor.setText(despesa.getValorDespesa().toString());
+				jntfValor.setText(despesa.getValorDespesa().setScale(2, RoundingMode.HALF_EVEN).toString());
 //				jcbPago.setSelected(despesa.getPago() != null ? despesa.getPago() : false);
 				if(despesa.getUsuario() != null){
 					jcbUsuario.getSelectionModel().select(despesa.getUsuario().getNome());
@@ -211,7 +212,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 				despesa.setDtPagamento(LocalDate.now());
 				despesa.setDtVencimento(LocalDate.now());
 				despesa.setPago(false);
-				despesa.setValorDespesa(BigDecimal.ZERO);
+				despesa.setValorDespesa(BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN));
 			}
 		});
 		
@@ -256,7 +257,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 //		});
 //		jcbReceita.selectionModelProperty().addListener((obs,oldV,newV)->{jcbReceita.getSelectionModel().select(jcbReceita.getSelectionModel().getSelectedItem().getDescricaoPagamento() + " - " + jcbReceita.getSelectionModel().getSelectedItem().getValor().toString());});
 		jtaDescricao.textProperty().addListener((obs,oldV,newV)->{despesa.setDescricaoDespesa(newV);});
-		jntfValor.textProperty().addListener((obs,oldV,newV)->{despesa.setValorDespesa(new BigDecimal(newV));});
+		jntfValor.textProperty().addListener((obs,oldV,newV)->{despesa.setValorDespesa(new BigDecimal(newV).setScale(2, RoundingMode.HALF_EVEN));});
 		jcbUsuario.valueProperty().addListener((obs,oldV,newV) -> {despesa.setUsuario(mapUsuario.get(newV));});
 		jdpDtPagamento.valueProperty().addListener((obs,oldV,newV)-> {despesa.setDtPagamento(newV);});
 		jdpDtVencimento.valueProperty().addListener((obs,oldV,newV)-> {despesa.setDtVencimento(newV);});

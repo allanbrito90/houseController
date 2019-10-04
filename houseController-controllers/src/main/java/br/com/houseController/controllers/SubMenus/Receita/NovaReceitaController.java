@@ -1,6 +1,7 @@
 package br.com.houseController.controllers.SubMenus.Receita;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,7 @@ public class NovaReceitaController extends ParametrosObjetos implements Initiali
 			if(getObjetos() != null){
 				receita = (Receita) getObjetos().get(0);
 				jdpData.setValue(receita.getDtPagamento());
-				jntfValor.setText(receita.getValor().toString());
+				jntfValor.setText(receita.getValor().setScale(2, RoundingMode.HALF_EVEN).toString());
 				jtaDescricao.setText(receita.getDescricaoPagamento());
 				jcbUsuario.getSelectionModel().select(receita.getUsuario().getNome());
 			}else{
@@ -69,7 +70,7 @@ public class NovaReceitaController extends ParametrosObjetos implements Initiali
 		}
 		
 		jdpData.valueProperty().addListener((obs,oldV,newV)->{receita.setDtPagamento(newV);});
-		jntfValor.textProperty().addListener((obs,oldV,newV)->{receita.setValor(new BigDecimal(newV));});
+		jntfValor.textProperty().addListener((obs,oldV,newV)->{receita.setValor(new BigDecimal(newV).setScale(2, RoundingMode.HALF_EVEN));});
 		jtaDescricao.textProperty().addListener((obs,oldV,newV)->{receita.setDescricaoPagamento(newV);});
 		jcbUsuario.valueProperty().addListener((obs,oldV,newV)->{receita.setUsuario(mapUsuario.get(newV));});
 	}
