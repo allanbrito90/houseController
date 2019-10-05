@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.GenerationType;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
@@ -36,6 +38,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.geometry.Pos;
 
 public class ScreenUtils {
 	
@@ -226,20 +229,24 @@ public class ScreenUtils {
 		StackPane stackPane = new StackPane();
 		
 		Scene scene = new Scene(stackPane);
-		
+		scene.getStylesheets().addAll("css/principalCss.css");
+		stackPane.getStyleClass().add("bordaPontilhada");
 		stage.setScene(scene);
 		
 		stackPane.setPrefHeight(180);
 		stackPane.setPrefWidth(300);
 		
 		VBox vBox = new VBox();
-		vBox.setSpacing(5);
+		vBox.setSpacing(15);
 		
 		HBox espacoCabecalho = new HBox();
 		
 		Label cabecalho = new Label("Valor do Pagamento");
 		
 		espacoCabecalho.getChildren().addAll(cabecalho);
+		espacoCabecalho.getStyleClass().clear();
+		espacoCabecalho.getStyleClass().add("cabecalhos");
+		cabecalho.setAlignment(Pos.CENTER);
 		espacoCabecalho.setPrefWidth(300);
 		NumberTextField jntf = new NumberTextField();
 		
@@ -255,6 +262,8 @@ public class ScreenUtils {
 				stage.close();
 			}
 		});
+		
+		jbOk.getStyleClass().add("botaoConfirmacao");
 		
 		vBox.getChildren().addAll(espacoCabecalho, jntf,jbOk);
 		

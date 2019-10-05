@@ -44,6 +44,12 @@
 	-fx-effect: dropshadow(three-pass-box, #CDCDCD, 20, 0, 0, 0);
 }
 
+.bordaPontilhada {
+    -fx-border-color: #ABE7F5 ;
+    -fx-border-width: 5 ; 
+    -fx-border-style: segments(10, 15, 15, 15)  line-cap round ;
+}
+
 /*
  * --------------------------------------------------------------------------------------------
  * -------------------------------EFEITOS DE SUB MENUS-----------------------------------------
