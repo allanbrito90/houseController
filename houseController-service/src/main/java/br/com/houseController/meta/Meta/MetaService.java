@@ -56,7 +56,7 @@ public class MetaService implements InterfaceService<Meta> {
 	@SuppressWarnings("unchecked")
 	public ArrayList<Meta> findMetabyUsuario(Usuario usuario){
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from meta where usuario = :usuario");
+		Query query = session.createQuery("from meta where usuario = :usuario order by id desc");
 		query.setParameter("usuario", usuario);
 		ArrayList<Meta> list = (ArrayList<Meta>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);

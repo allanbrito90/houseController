@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.dialogs.AdicionarPagamentoController" stylesheets="css/PrincipalCss.css">
+  <content>
+      <StackPane fx:id="spDialog" prefHeight="320.0" prefWidth="400.0">
+         <children>
+            <VBox prefHeight="302.0" prefWidth="350.0" spacing="15.0">
+               <children>
+                  <AnchorPane maxWidth="830.0" minHeight="0.0" minWidth="0.0" prefHeight="60.0" prefWidth="300.0" styleClass="cabecalhos">
+                     <children>
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Adicionar Pagamento" />
+                     </children>
+                  </AnchorPane>
+                  <Label text="Selecione a Receita:" />
+                  <JFXComboBox fx:id="jcbReceita" prefHeight="25.0" prefWidth="380.0" />
+                  <VBox fx:id="vbValor">
+                     <children>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label text="Valor Restante dessa Receita: R$" />
+                              <Label fx:id="jlValorRestanteReceita" text="0.00" />
+                           </children>
+                        </HBox>
+                        <Label text="Adicione o Valor:" />
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
+                     <children>
+                        <AnchorPane fx:id="jbSalvar" onMouseClicked="#handleSalvar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoConfirmacao" visible="false">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/baseline_done_black_18dp.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="45.0" layoutY="15.0" text="Incluir">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </AnchorPane>
+                        <AnchorPane onMouseClicked="#handleLimpar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
+                           <children>
+                              <ImageView fitHeight="28.0" fitWidth="59.0" layoutX="17.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../images/baseline_clear_black_24dp.png" />
+                                 </image>
+                              </ImageView>
+                              <Label layoutX="45.0" layoutY="15.0" text="Cancelar">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+  </content>
+</ScrollPane>

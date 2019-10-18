@@ -47,38 +47,42 @@
                                  </children>
                               </HBox>
                               <JFXComboBox fx:id="jcbDespesa" prefHeight="25.0" prefWidth="772.0" />
-                              <HBox spacing="5.0">
+                              <VBox fx:id="vbAddReceitas" visible="false">
                                  <children>
-                                    <Label text="Receitas Utilizadas">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <AnchorPane fx:id="jbAdd" onMouseClicked="#handleAdicionar" prefHeight="32.0" prefWidth="46.0" styleClass="botaoConfirmacao">
+                                    <HBox spacing="5.0">
                                        <children>
-                                          <Label layoutX="17.0" layoutY="1.0" text="+">
+                                          <Label text="Receitas Utilizadas">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
+                                          <AnchorPane fx:id="jbAdd" onMouseClicked="#handleAdicionar" prefHeight="32.0" prefWidth="46.0" styleClass="botaoConfirmacao">
+                                             <children>
+                                                <Label layoutX="17.0" layoutY="1.0" text="+">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </AnchorPane>
                                        </children>
-                                    </AnchorPane>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                                       <content>
+                                          <VBox fx:id="vbReceitas" prefHeight="409.0" prefWidth="810.0" />
+                                       </content>
+                                    </ScrollPane>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Valor Restante: R$" />
+                                          <Label fx:id="jlValorRestante" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </HBox>
-                              <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                 <content>
-                                    <VBox fx:id="vbReceitas" prefHeight="409.0" prefWidth="810.0" />
-                                 </content>
-                              </ScrollPane>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Valor Restante: R$" />
-                                    <Label fx:id="jlValorRestante" />
-                                 </children>
-                              </HBox>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>

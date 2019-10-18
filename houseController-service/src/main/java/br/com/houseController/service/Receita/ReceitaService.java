@@ -39,7 +39,7 @@ public class ReceitaService implements InterfaceService<Receita>{
 	@Override
 	public ArrayList<Receita> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from receita");
+		Query query = session.createQuery("from receita order by id desc");
 		ArrayList<Receita> list = (ArrayList<Receita>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;

@@ -20,11 +20,15 @@ import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
+import br.com.houseController.controllers.dialogs.AdicionarPagamentoController;
+import br.com.houseController.model.despesas.Despesa;
+import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.ComboBox;
@@ -34,6 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -131,7 +136,34 @@ public class ScreenUtils {
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static RelacaoDespesaReceita abrirJanelaPopUp(Class classe,Despesa despesa, BigDecimal valorRestanteDespesa){
+		AdicionarPagamentoController apc = null;
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(classe.getClassLoader().getResource("fxml/Despesa/AdicionarPagamento.fxml"));
+			Parent root = (Parent) loader.load();
+			
+			apc = loader.getController();
+			RelacaoDespesaReceita relacao = new RelacaoDespesaReceita();
+			relacao.setIdDespesa(despesa.getId());
+			apc.setRelacaoDespesaReceita(relacao);
+			apc.setValorRestanteDespesa(valorRestanteDespesa);
+			loader.setController(apc);
+			Stage stage = new Stage();
+			stage.initStyle(StageStyle.TRANSPARENT);
+			Scene scene = new Scene(root,402,330);
+			scene.setFill(Color.TRANSPARENT);
+			stage.setScene(scene);
+			stage.setWidth(402);
+			stage.setHeight(330);
+			stage.showAndWait();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return apc.getRelacaoDespesaReceita();
+	}
+	
 	public static void voltarJanela(){
 		if (chaveFxmlAtual - 1 >= 0) {
 			String fxmlAnterior = sequenciaJanelas.get(--chaveFxmlAtual);

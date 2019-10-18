@@ -59,7 +59,7 @@ public class DespesaService implements InterfaceService<Despesa> {
 	@Override
 	public ArrayList<Despesa> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from despesa");
+		Query query = session.createQuery("from despesa order by id desc");
 		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;

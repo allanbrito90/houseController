@@ -32,7 +32,7 @@ public class ComprasService implements InterfaceService<Compras> {
 	@Override
 	public ArrayList<Compras> findAll() {
 		Session session = ConnectionFactory.obterNovaSessao();
-		Query query = session.createQuery("from compras");
+		Query query = session.createQuery("from compras order by id desc");
 		ArrayList<Compras> list = (ArrayList<Compras>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;
