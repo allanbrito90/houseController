@@ -1,5 +1,8 @@
 package br.com.houseController.service.Receita;
 
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 
 import javax.persistence.Query;
@@ -69,6 +72,17 @@ public class ReceitaService implements InterfaceService<Receita>{
 		Receita receita = session.get(Receita.class, obj);
 		ConnectionFactory.fecharSessao(session);
 		return receita;
+	}
+	
+	public ArrayList<Receita> findAllByMes(int mes, int ano){
+		LocalDate localDateFinal = LocalDate.of(ano, mes, 1).with(TemporalAdjusters.lastDayOfMonth());
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from receita where dtPagamento between :dtInicial and :dtFinal");
+		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
+		query.setParameter("dtFinal", localDateFinal);
+		ArrayList<Receita> listReceitas = (ArrayList<Receita>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return listReceitas;
 	}
 
 }
