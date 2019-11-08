@@ -13,6 +13,7 @@ import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.DespesaFixa;
 import br.com.houseController.model.despesas.DespesaVariavel;
+import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import static java.time.temporal.TemporalAdjusters.*;
 
@@ -80,13 +81,25 @@ public class DespesaService implements InterfaceService<Despesa> {
 	public ArrayList<Despesa> findAllByMes(int mes, int ano) {
 		//Obtendo LocalDate
 		LocalDate localDateFinal = LocalDate.of(ano,mes,1).with(lastDayOfMonth());
-		//Obtendo primeiro e último dia do mes
-		
-		
+		//Obtendo primeiro e último dia do mes			
 		Session session = ConnectionFactory.obterNovaSessao();
 		Query query = session.createQuery("from despesa where dtVencimento between :dtInicial and :dtFinal or dtPagamento between :dtInicial and :dtFinal");
 		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
 		query.setParameter("dtFinal", localDateFinal);
+		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return list;
+	}
+	
+	public ArrayList<Despesa> findAllByMesAndUsuario(int mes, int ano, Usuario usuario) {
+		//Obtendo LocalDate
+		LocalDate localDateFinal = LocalDate.of(ano,mes,1).with(lastDayOfMonth());
+		//Obtendo primeiro e último dia do mes			
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from despesa where usuario = :usuario and (dtVencimento between :dtInicial and :dtFinal or dtPagamento between :dtInicial and :dtFinal)");
+		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
+		query.setParameter("dtFinal", localDateFinal);
+		query.setParameter("usuario", usuario);
 		ArrayList<Despesa> list = (ArrayList<Despesa>) query.getResultList();
 		ConnectionFactory.fecharSessao(session);
 		return list;

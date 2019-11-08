@@ -84,5 +84,28 @@ public class MetaService implements InterfaceService<Meta> {
 		ConnectionFactory.fecharSessao(session);
 		return retorno;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<MetaTempo> findAllMetaTempoByUsuario(Usuario usuario) {
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from meta where usuario = :usuario");
+		query.setParameter("usuario", usuario);
+		ArrayList<Meta> list = (ArrayList<Meta>) query.getResultList();
+		ArrayList<MetaTempo> retorno = new ArrayList<>();
+		for(Meta meta : list){
+			MetaTempo mt = new MetaTempo();
+			mt.setId(meta.getId());
+			mt.setCumprido(meta.isCumprido());
+			mt.setDescMeta(meta.getDescMeta());
+			mt.setDtConclusao(meta.getDtConclusao());
+			mt.setDtInicial(meta.getDtInicial());
+			mt.setTitulo(meta.getTitulo());
+			mt.setUsuario(meta.getUsuario());
+			mt.setTempo(meta.getDtConclusao().until(LocalDate.now(), ChronoUnit.DAYS));
+			retorno.add(mt);
+		}
+		ConnectionFactory.fecharSessao(session);
+		return retorno;
+	}
 
 }

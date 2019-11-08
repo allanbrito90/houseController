@@ -102,7 +102,7 @@ public class ScreenUtils {
 		try {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
-			scroll = fxml.load();			
+			scroll = (ScrollPane) fxml.load();			
 			ap.getChildren().add(scroll);
 			if (objs != null) {
 				ParametrosObjetos po = fxml.getController();
@@ -122,7 +122,7 @@ public class ScreenUtils {
 			FXMLLoader fxml = new FXMLLoader();
 			fxml.setController(controller);
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
-			scroll = fxml.load();			
+			scroll = (ScrollPane) fxml.load();			
 			ap.getChildren().add(scroll);
 			if (objs != null) {
 				ParametrosObjetos po = fxml.getController();

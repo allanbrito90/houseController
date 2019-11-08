@@ -84,5 +84,17 @@ public class ReceitaService implements InterfaceService<Receita>{
 		ConnectionFactory.fecharSessao(session);
 		return listReceitas;
 	}
+	
+	public ArrayList<Receita> findAllByMesAndUsuario(int mes, int ano, Usuario usuario){
+		LocalDate localDateFinal = LocalDate.of(ano, mes, 1).with(TemporalAdjusters.lastDayOfMonth());
+		Session session = ConnectionFactory.obterNovaSessao();
+		Query query = session.createQuery("from receita where usuario = :usuario and (dtPagamento between :dtInicial and :dtFinal)");
+		query.setParameter("dtInicial", LocalDate.of(ano, mes, 1));
+		query.setParameter("dtFinal", localDateFinal);
+		query.setParameter("usuario",usuario);
+		ArrayList<Receita> listReceitas = (ArrayList<Receita>) query.getResultList();
+		ConnectionFactory.fecharSessao(session);
+		return listReceitas;
+	}
 
 }

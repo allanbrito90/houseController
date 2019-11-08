@@ -93,36 +93,34 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 //					e1.printStackTrace();
 //				}		
 								
-				Task<Boolean> task = new Task<Boolean>() {
+				Task<Void> task = new Task<Void>() {
 				    @Override 
-				    public Boolean call() {				
-				    		return usuarioService.checaLogin(usuario);
+				    public Void call() throws Exception {			
+				    		Boolean retorno = usuarioService.checaLogin(usuario);
+				    		if(!retorno){
+				    			throw new Exception();
+				    		}
+							return null;
 				    }
 				};
 
 				task.setOnRunning((e) -> Aguarde2.mostrarJanelaAguarde());
 				task.setOnSucceeded((e) -> {
-				    Aguarde2.finalizarJanelaAguarde();
-				    try {
-						if(task.get()){
-							fechaTelaLogin();
-							UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
-							usuarioLogado.setUsuario(usuarioService.findOneByLoginAndSenha(usuario));
-							usuarioLogado.setDtLogin(LocalDate.now());
-							abreTelaPrincipal();					
-						}else{
-							if(ScreenUtils.checarCamposVazios(jtfLogin,jpfSenha)){
-								ScreenUtils.janelaInformação(spStatus, "Erro", "Usuário e/ou Senha Incorreta", "Entendi");
-							}else{
-								ScreenUtils.janelaInformação(spStatus, "Erro", "Há campos não preenchidos", "Entendi");
-							}
-						}
-					} catch (Exception e1) {
-						e1.printStackTrace();
-					}
+				    Aguarde2.finalizarJanelaAguarde();				    
+				    fechaTelaLogin();
+					UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
+					usuarioLogado.setUsuario(usuarioService.findOneByLoginAndSenha(usuario));
+					usuarioLogado.setDtLogin(LocalDate.now());
+					abreTelaPrincipal();
+				   
 				});
 				task.setOnFailed((e) -> {
-					System.out.println("Problema");
+					Aguarde2.finalizarJanelaAguarde();
+					if(ScreenUtils.checarCamposVazios(jtfLogin,jpfSenha)){
+						ScreenUtils.janelaInformação(spStatus, "Erro", "Usuário e/ou Senha Incorreta", "Entendi");
+					}else{
+						ScreenUtils.janelaInformação(spStatus, "Erro", "Há campos não preenchidos", "Entendi");
+					}
 				});
 				new Thread(task).start();				
 			}			
