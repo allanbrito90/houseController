@@ -15,6 +15,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.base.IFXLabelFloatControl;
 
+import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.ParametrosObjetos;
@@ -200,11 +201,11 @@ public class ScreenUtils {
 		}
 	}
 	
-	public static Boolean checarCamposVazios(IFXLabelFloatControl... nodes){
+	public static Boolean checarCamposVazios(IFXLabelFloatControl... nodes) throws CamposNaoPreenchidosException{
 		for(IFXLabelFloatControl node : nodes){
 			if(((TextInputControl) node).getText().equals("")){
 				System.out.println("Campo vazio");
-				return false;
+				throw new CamposNaoPreenchidosException();
 			}
 		}
 		return true;

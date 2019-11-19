@@ -16,6 +16,7 @@ import com.jfoenix.controls.JFXComboBox;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.controllers.dialogs.AdicionarPagamentoController;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
@@ -110,26 +111,49 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private void handleSalvar(){
-		Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();		
 		
-		if(mapRelacaoDespesaReceita.size()==0){
-			relacaoDespesaReceitaService.deleteReceitaByIdDespesa(jcbDespesa.getSelectionModel().getSelectedItem().getId());
-			return;
-		}
-		
-		
-		for(RelacaoDespesaReceita relacaoDespesaReceita : mapRelacaoDespesaReceita.values()){
-			
-			relacaoDespesaReceitaService.insert(relacaoDespesaReceita);
-		}
-		
-		if (mapRelacaoDespesaReceitaFixa.size()>0) {
-			for (int i = 0; i <= indice - 1; i++) {
-				if (mapRelacaoDespesaReceita.get(i) == null) {
-					relacaoDespesaReceitaService.delete(mapRelacaoDespesaReceitaFixa.get(i).getId());
+		Task<Void> taskSalvar = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				Despesa despesa = jcbDespesa.getSelectionModel().getSelectedItem();		
+				
+				if(mapRelacaoDespesaReceita.size()==0){
+					relacaoDespesaReceitaService.deleteReceitaByIdDespesa(jcbDespesa.getSelectionModel().getSelectedItem().getId());
+					return null;
 				}
-			} 
-		}
+				
+				
+				for(RelacaoDespesaReceita relacaoDespesaReceita : mapRelacaoDespesaReceita.values()){
+					
+					relacaoDespesaReceitaService.insert(relacaoDespesaReceita);
+				}
+				
+				if (mapRelacaoDespesaReceitaFixa.size()>0) {
+					for (int i = 0; i <= indice - 1; i++) {
+						if (mapRelacaoDespesaReceita.get(i) == null) {
+							relacaoDespesaReceitaService.delete(mapRelacaoDespesaReceitaFixa.get(i).getId());
+						}
+					} 
+				}
+				return null;
+			}
+			
+		};
+		
+		taskSalvar.setOnRunning(e->{Aguarde2.mostrarJanelaAguarde();});
+		
+		taskSalvar.setOnFailed(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Não foi dessa vez", e.getSource().getException().getMessage(), "Tá bom");
+		});
+		
+		taskSalvar.setOnSucceeded(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Legal", "Despesas alteradas com sucesso", "Tá bom");
+		});
+		new Thread(taskSalvar).start();
+		
 		
 	}
 	

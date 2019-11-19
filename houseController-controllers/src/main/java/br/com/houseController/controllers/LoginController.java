@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.usuario.Usuario;
@@ -116,10 +117,8 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				});
 				task.setOnFailed((e) -> {
 					Aguarde2.finalizarJanelaAguarde();
-					if(ScreenUtils.checarCamposVazios(jtfLogin,jpfSenha)){
+					if(!(e.getSource().getException() instanceof CamposNaoPreenchidosException)){
 						ScreenUtils.janelaInformação(spStatus, "Erro", "Usuário e/ou Senha Incorreta", "Entendi");
-					}else{
-						ScreenUtils.janelaInformação(spStatus, "Erro", "Há campos não preenchidos", "Entendi");
 					}
 				});
 				new Thread(task).start();				

@@ -6,11 +6,16 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.produto.UnidadeMedida;
 import br.com.houseController.service.Compras.UnidadeMedidaService;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -35,10 +40,32 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 	
 	@FXML
 	public void handleSalvar(){
-		if(ScreenUtils.checarCamposVazios(jtfNome)){
-			UnidadeMedidaService unidadeMedidaService = new UnidadeMedidaService();
-			unidadeMedidaService.insert(unidadeMedida);
-		}
+		Task<Void> taskSalvar = new Task<Void>() {
+
+			@Override
+			protected Void call() throws Exception {
+				ScreenUtils.checarCamposVazios(jtfNome);
+				UnidadeMedidaService unidadeMedidaService = new UnidadeMedidaService();
+				unidadeMedidaService.insert(unidadeMedida);
+				return null;
+			}
+	
+		};
+		
+		taskSalvar.setOnRunning(e -> {
+			Aguarde2.mostrarJanelaAguarde();
+		});
+		
+		taskSalvar.setOnSucceeded(e -> {
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Olha aí!", "Cadastro efetuado com sucesso", "Ufa!");
+		});
+		
+		taskSalvar.setOnFailed(e -> {
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Ooops", e.getSource().getException().getMessage() , "Beleza");
+		});
+		new Thread(taskSalvar).start();
 	}
 
 	@FXML

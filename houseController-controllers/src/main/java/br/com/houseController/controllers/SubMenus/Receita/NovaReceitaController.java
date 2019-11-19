@@ -11,19 +11,26 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 
+import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.receita.Receita;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.service.Receita.ReceitaService;
 import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class NovaReceitaController extends ParametrosObjetos implements Initializable{
+	
+	@FXML
+	StackPane spDialog;
 	
 	@FXML
 	private JFXDatePicker jdpData;
@@ -76,11 +83,31 @@ public class NovaReceitaController extends ParametrosObjetos implements Initiali
 	}
 	
 	@FXML
-	private void handleSalvar() {
-		if (ScreenUtils.checarCamposVazios(jtaDescricao,jntfValor)) {
-			ReceitaService receitaService = new ReceitaService();
-			receitaService.insert(receita);
-		}
+	private void handleSalvar() throws CamposNaoPreenchidosException {
+		Task<Void> taskSalvar = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				ScreenUtils.checarCamposVazios(jtaDescricao,jntfValor);
+				ReceitaService receitaService = new ReceitaService();
+				receitaService.insert(receita);
+				return null;
+			}
+			
+		};
+		
+		taskSalvar.setOnRunning(e->{Aguarde2.mostrarJanelaAguarde();});
+		
+		taskSalvar.setOnFailed(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Não deu", e.getSource().getException().getMessage(), "Eita!");
+		});
+		
+		taskSalvar.setOnSucceeded(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Perfeito", "Receita Cadastrada com sucesso!", "Então tá bom!");
+		});
+		new Thread(taskSalvar).start();
 	}
 	
 	@FXML

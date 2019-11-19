@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.Exceptions.UsuarioException;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
@@ -86,27 +87,20 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 	@FXML
 	public void handleSalvar() {
 		
-		Arrumar Task para inserção de Usuário (Criar Exceptions)
-		
 		Task<Void> task = new Task<Void>() {
 		    @Override 
 		    public Void call() throws Exception {		
-		    	if (!ScreenUtils.checarCamposVazios(jtfLogin, jpfSenha, jtfNome, jtfEmail)) {
-		    		throw new Exception();
-		    	}
-
+		    	ScreenUtils.checarCamposVazios(jtfLogin, jpfSenha, jtfNome, jtfEmail);
 				usuario.setAtivo(true);
 				UsuarioService usuarioService = new UsuarioService();
 				if (!jlTitulo.getText().contains("Editar")) {
 					if (!usuarioService.checaLogin(usuario)) {
 						usuarioService.insert(usuario);
 					} else {
-//						ScreenUtils.janelaInformação(spDialog, "Atenção", "Usuário já cadastrado", "Ok");
-						throw new Exception();
+						throw new UsuarioException("Usuário já cadastrado");
 					} 
 				}else{
 					usuarioService.insert(usuario);
-//					ScreenUtils.janelaInformação(spDialog, "Informação", "Usuário alterado com sucesso", "Obrigado!");
 				}
 				return null;
 		    }
@@ -123,37 +117,15 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 		});
 		task.setOnFailed((e) -> {
 			Aguarde2.finalizarJanelaAguarde();
-			if(e.getSource().getException() instanceof Exception){
-				
-			}
+			ScreenUtils.janelaInformação(spDialog, "Vixi", e.getSource().getException().getMessage(), "Tudo bem!");
 		});
 		new Thread(task).start();		
 		
-		
-//		if (ScreenUtils.checarCamposVazios(jtfLogin, jpfSenha, jtfNome, jtfEmail)) {
-//			usuario.setAtivo(true);
-//			UsuarioService usuarioService = new UsuarioService();
-//			if (!jlTitulo.getText().contains("Editar")) {
-//				if (!usuarioService.checaLogin(usuario)) {
-//					usuarioService.insert(usuario);
-//				} else {
-//					ScreenUtils.janelaInformação(spDialog, "Atenção", "Usuário já cadastrado", "Ok");
-//				} 
-//			}else{
-//				usuarioService.insert(usuario);
-//				ScreenUtils.janelaInformação(spDialog, "Informação", "Usuário alterado com sucesso", "Obrigado!");
-////				ScreenUtils.abrirNovaJanela("fxml/Usuario/AlterarUsuario.fxml");
-//			}
-//		}else{
-//			ScreenUtils.janelaInformação(spDialog, "Atenção", "Há campos não preenchidos", "Entendi");
-//		}
 	}
 
 	@FXML
 	public void handleLimpar() {
 		ScreenUtils.limparCampos(jtfLogin, jpfSenha, jtfNome, jtfEmail);
-		
-		
 	}
 
 

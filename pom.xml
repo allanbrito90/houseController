@@ -13,6 +13,7 @@
 		<module>houseController-files</module>
 		<module>houseController-controllers</module>
     	<module>houseController-components</module>
+    	<module>houseController-exceptions</module>
   </modules>
 
 	<properties>

@@ -16,6 +16,7 @@ import com.jfoenix.controls.JFXTextArea;
 
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.despesas.Despesa;
@@ -100,48 +101,68 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	private void handleSalvar(){
-		//Verifica se a categoria for variável para não gravar erroneamente o valor de uma data de vencimento
-		if(despesa.getCategoria().name() == EnumCategoria.VARIAVEL.name()){
-			despesa.setDtVencimento(null);
-		}
-		
-		//Verifica se caso estes campos não tiverem sido alterados o sistema seta o valor que estiver no ComboBox no momento
-		if(despesa.getUsuario() == null){
-			despesa.setUsuario(mapUsuario.get(0));
-		}
-		
-		//Salva a instância
-		DespesaService despesaService = new DespesaService();
-		despesaService.insert(despesa);
-		
-		//Verifica se há receita cadastrada para atualização
-		
-		//Verifica se precisa repetir conta
-		if(jcbRepetirConta.isSelected()){
-		Despesa despesa2;
-			
+		Task<Void> taskSalvar = new Task<Void>(){
 
-		//Cria data de final da repetição
-		LocalDate localDateFinal = LocalDate.of(jsRepetirAno.getValue(), jsRepetirMes.getValue(), 1);
-		LocalDate localDateAtual = jdpDtVencimento.getValue();
-		
-		//Verifica se data é depois da do vencimento
-			if(localDateFinal.isAfter(localDateAtual)){
-		
-		//Caso seja, adiciona um mês a data de vencimento
-				while(localDateFinal.isAfter(localDateAtual)){
-					despesa2 = new Despesa();//Uma nova despesa é criada para que haja um novo endereçamento na memória, caso fosse a mesma instância, o Hibernate atualizaria ao invés de adicionar um novo registro
-					despesa2 = despesa;
-					despesa2.setId(null);
-					localDateAtual = localDateAtual.plusMonths(1);
-					despesa2.setDtVencimento(localDateAtual);
-		
-		//Salva a informação
-					despesaService.insert(despesa2);
+			@Override
+			protected Void call() throws Exception {
+				//Verifica se a categoria for variável para não gravar erroneamente o valor de uma data de vencimento
+				if(despesa.getCategoria().name() == EnumCategoria.VARIAVEL.name()){
+					despesa.setDtVencimento(null);
 				}
+				
+				//Verifica se caso estes campos não tiverem sido alterados o sistema seta o valor que estiver no ComboBox no momento
+				if(despesa.getUsuario() == null){
+					despesa.setUsuario(mapUsuario.get(0));
+				}
+				
+				//Salva a instância
+				DespesaService despesaService = new DespesaService();
+				despesaService.insert(despesa);
+				
+				//Verifica se há receita cadastrada para atualização
+				
+				//Verifica se precisa repetir conta
+				if(jcbRepetirConta.isSelected()){
+					Despesa despesa2;
+					
+					
+					//Cria data de final da repetição
+					LocalDate localDateFinal = LocalDate.of(jsRepetirAno.getValue(), jsRepetirMes.getValue(), 1);
+					LocalDate localDateAtual = jdpDtVencimento.getValue();
+					
+					//Verifica se data é depois da do vencimento
+					if(localDateFinal.isAfter(localDateAtual)){
+						
+						//Caso seja, adiciona um mês a data de vencimento
+						while(localDateFinal.isAfter(localDateAtual)){
+							despesa2 = new Despesa();//Uma nova despesa é criada para que haja um novo endereçamento na memória, caso fosse a mesma instância, o Hibernate atualizaria ao invés de adicionar um novo registro
+							despesa2 = despesa;
+							despesa2.setId(null);
+							localDateAtual = localDateAtual.plusMonths(1);
+							despesa2.setDtVencimento(localDateAtual);
+							
+							//Salva a informação
+							despesaService.insert(despesa2);
+						}
+					}
+				}
+				return null;
 			}
-		}
+			
+		};
 		
+		taskSalvar.setOnRunning(e->{Aguarde2.mostrarJanelaAguarde();});
+		
+		taskSalvar.setOnFailed(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Ah não", e.getSource().getException().getMessage(), "Tá bom");
+		});
+		
+		taskSalvar.setOnSucceeded(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Perfeito", "Despesa cadastrada com sucesso", "OK");
+		});
+		new Thread(taskSalvar).start();
 	}
 	
 	@FXML

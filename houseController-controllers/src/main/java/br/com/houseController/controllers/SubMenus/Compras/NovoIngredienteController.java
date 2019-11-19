@@ -7,7 +7,9 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.UnidadeMedida;
@@ -16,6 +18,7 @@ import br.com.houseController.service.Produto.IngredienteService;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -41,10 +44,34 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 	
 	@FXML
 	public void handleSalvar(){
-		if(ScreenUtils.checarCamposVazios(jtfNome)){
-			IngredienteService ingredienteService = new IngredienteService();
-			ingredienteService.insert(ingrediente);
-		}
+		
+		
+		Task<Void> taskSalvar = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				ScreenUtils.checarCamposVazios(jtfNome);
+				IngredienteService ingredienteService = new IngredienteService();
+				ingredienteService.insert(ingrediente);
+				return null;
+			}
+			
+		};
+		
+		taskSalvar.setOnRunning(e->{
+			Aguarde2.mostrarJanelaAguarde();
+		});
+		
+		taskSalvar.setOnSucceeded(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Opa", "Ingrediente cadastrado com sucesso", "Fechado");
+		});
+		
+		taskSalvar.setOnFailed(e->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, "Oooops", e.getSource().getException().getMessage(), "Fechado");
+		});
+		new Thread(taskSalvar).start();
 	}
 
 	@FXML
