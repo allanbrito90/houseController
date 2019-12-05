@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
@@ -52,6 +54,8 @@ public class Controller{
 		Label label = new Label();
 		label.setText(blocoSubMenu.getNomeMenu());
 		label.setAlignment(Pos.CENTER);
+		label.setLayoutX(100);
+		label.setLayoutY(220);
 		anchorPane.getChildren().add(label);
 		anchorPane.setOnMouseClicked(new EventHandler<Event>() {
 
@@ -60,6 +64,18 @@ public class Controller{
 				ScreenUtils.abrirNovaJanela(blocoSubMenu.getDestino());
 			}
 		});
+		
+		ImageView iv = new ImageView();
+		if(blocoSubMenu.getCaminhoImagemBloco() != null){
+			iv.setImage(new Image(blocoSubMenu.getCaminhoImagemBloco()));
+			iv.setFitWidth(150);
+			iv.setFitHeight(150);
+			iv.setX(50);
+			iv.setY(40);
+			
+		}
+		anchorPane.getChildren().add(iv);
+		System.out.println(anchorPane.getBoundsInParent().getWidth() + " " + anchorPane.getBoundsInParent().getHeight());
 		
 		return anchorPane;
 	}

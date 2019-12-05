@@ -12,6 +12,7 @@ import br.com.houseController.controllers.SubMenus.SubMenuMetaController;
 import br.com.houseController.controllers.SubMenus.SubMenuReceitas;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.model.SubMenu.SequenciaJanelas;
 import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
 import javafx.event.Event;
@@ -77,8 +78,9 @@ public class PrincipalController implements Initializable{
 		
 		ScreenUtils su = new ScreenUtils(sp, apTela);
 		ScreenUtils.setChaveFxmlAtual(0);
-		ScreenUtils.getSequenciaJanelas().put(0,"fxml/home.fxml");
-		ScreenUtils.abrirScrollAnchor("fxml/home.fxml");
+		SequenciaJanelas sj = new SequenciaJanelas("fxml/home.fxml",null);
+		ScreenUtils.getSequenciaJanelas().put(0, sj);
+		ScreenUtils.abrirScrollAnchor(sj);
 //		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
 		
 	}
@@ -150,7 +152,9 @@ public class PrincipalController implements Initializable{
 			@Override
 			public void handle(Event event) {				
 				if(ScreenUtils.verificaAcessoAdmin(spPrincipal, controller, usuarioLogado.getUsuario())){
-					ScreenUtils.abrirNovaJanela(local,controller, obj);					
+//					ScreenUtils.abrirNovaJanela(local,controller, obj);
+					SequenciaJanelas sj = new SequenciaJanelas(local,controller);
+					ScreenUtils.abrirNovaJanela(sj, obj);					
 				}
 			}
 		};

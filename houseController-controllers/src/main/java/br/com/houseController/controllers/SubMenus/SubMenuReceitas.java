@@ -24,8 +24,8 @@ public class SubMenuReceitas extends Controller implements Initializable {
 
 				// Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Nova Receita", null, "fxml/Receita/NovaReceita.fxml"), 
-						new BlocoSubMenu("Alterar Receita", null, "fxml/Receita/AlterarReceita.fxml")
+						new BlocoSubMenu("Nova Receita", "images/nova.png", "fxml/Receita/NovaReceita.fxml"), 
+						new BlocoSubMenu("Alterar Receita", "images/alterar_receita.png", "fxml/Receita/AlterarReceita.fxml")
 						);
 
 				// Adicionando os HBoxes prontos no VBox

@@ -36,8 +36,8 @@ public class SubMenuUsuarios extends Controller implements Initializable{
 				
 //				Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Novo Usuário", null, "fxml/Usuario/NovoUsuario.fxml"),
-						new BlocoSubMenu("Alterar Usuário", null, "fxml/Usuario/AlterarUsuario.fxml"));
+						new BlocoSubMenu("Novo Usuário", "images/novo_usuario.png", "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu("Alterar Usuário", "images/alterar_usuario.png", "fxml/Usuario/AlterarUsuario.fxml"));
 				
 //				Adicionando os HBoxes prontos no VBox				
 				for(HBox hBox : hBoxes){

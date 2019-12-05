@@ -4,6 +4,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 
@@ -57,7 +59,7 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 					jlTitulo.setText("Editar Usuário");
 					jtfNome.setText(usuario.getNome());
 					jtfLogin.setText(usuario.getLogin());
-					jpfSenha.setText(usuario.getSenha());
+					jpfSenha.setText("");
 					jtfEmail.setText(usuario.getEmail());
 
 				}
@@ -80,7 +82,7 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 		});
 
 		jpfSenha.textProperty().addListener((obs, oldT, newT) -> {
-			usuario.setSenha(newT);
+			usuario.setSenha(DigestUtils.md5Hex(newT));
 		});
 	}
 

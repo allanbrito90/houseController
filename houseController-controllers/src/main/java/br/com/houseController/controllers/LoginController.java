@@ -2,9 +2,12 @@ package br.com.houseController.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.apache.commons.codec.Decoder;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.jfoenix.controls.JFXButton;
@@ -14,6 +17,7 @@ import com.jfoenix.controls.JFXTextField;
 import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -36,6 +40,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginController extends ParametrosObjetos implements Initializable {
+	
+
 
 	@FXML
 	JFXTextField jtfLogin;
@@ -71,13 +77,13 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-
-				String encriptado = DigestUtils.md5Hex(jpfSenha.getText());
+				Internationalization.setLocale(new Locale("pt","BR"));
+				Internationalization.setResourceBundle(ResourceBundle.getBundle("internationalization/messages", Internationalization.getInstance()));
+				System.out.println(Internationalization.getMessage("bemvindo"));
 				
 				Usuario usuario = new Usuario();
 				usuario.setLogin(jtfLogin.getText());
-				usuario.setSenha(jpfSenha.getText());
-				
+				usuario.setSenha(DigestUtils.md5Hex(jpfSenha.getText()));
 				UsuarioService usuarioService = new UsuarioService(usuario);
 				
 				
@@ -86,7 +92,7 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 //				
 //				FutureTask<Boolean> tarefa = new FutureTask<Boolean>(usuarioService);
 //				e.execute(tarefa);
-//				
+//					
 //				retornoLogin = tarefa.get();
 //				
 //				

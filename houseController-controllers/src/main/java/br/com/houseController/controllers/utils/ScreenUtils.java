@@ -22,6 +22,7 @@ import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.dialogs.AdicionarPagamentoController;
+import br.com.houseController.model.SubMenu.SequenciaJanelas;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.usuario.Usuario;
@@ -51,17 +52,17 @@ public class ScreenUtils {
 	static ScrollPane scroll;
 	static AnchorPane ap;
 	static Integer chaveFxmlAtual;
-	static Map<Integer,String> sequenciaJanelas;
+	static Map<Integer,SequenciaJanelas> sequenciaJanelas;
 	static JFXDialog informationDialog;
 	
 //	-------------------------------------------------------------------------------
 //	---------------------------GETTERS E SETTERS-----------------------------------
 //	-------------------------------------------------------------------------------
-	public static Map<Integer, String> getSequenciaJanelas() {
+	public static Map<Integer, SequenciaJanelas> getSequenciaJanelas() {
 		return sequenciaJanelas;
 	}
 
-	public static void setSequenciaJanelas(Map<Integer, String> sequenciaJanelas) {
+	public static void setSequenciaJanelas(Map<Integer, SequenciaJanelas> sequenciaJanelas) {
 		ScreenUtils.sequenciaJanelas = sequenciaJanelas;
 	}
 
@@ -77,25 +78,26 @@ public class ScreenUtils {
 //	--------------------------------MÉTODOS----------------------------------------
 //	-------------------------------------------------------------------------------
 	public ScreenUtils(ScrollPane scroll, AnchorPane ap){
-		ScreenUtils.sequenciaJanelas = new HashMap<Integer,String>();
+		ScreenUtils.sequenciaJanelas = new HashMap<Integer,SequenciaJanelas>();
 		ScreenUtils.scroll = scroll;
 		ScreenUtils.ap = ap;
 	}
 	
-	public static void abrirNovaJanela(String caminho){
-		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
-		abrirScrollAnchor(caminho);
+	public static void abrirNovaJanela(SequenciaJanelas sj){
+		sequenciaJanelas.put(++chaveFxmlAtual, sj);
+		abrirScrollAnchor(sj);
 	}
 	
 	public static void abrirNovaJanela(String caminho, Object... objs){
-		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
+		SequenciaJanelas sj = new SequenciaJanelas(caminho,objs);
+		sequenciaJanelas.put(++chaveFxmlAtual, sj);
 		abrirScrollAnchorcomParametros(caminho,objs);
 
 	}
 	
-	public static void abrirNovaJanela(String caminho, Controller controller, Object... objs){
-		sequenciaJanelas.put(++chaveFxmlAtual, caminho);
-		abrirScrollAnchorcomParametros(caminho,controller,objs);
+	public static void abrirNovaJanela(SequenciaJanelas sj, Object... objs){
+		sequenciaJanelas.put(++chaveFxmlAtual, sj);
+		abrirScrollAnchorcomParametros(sj, objs);
 
 	}
 	
@@ -105,7 +107,7 @@ public class ScreenUtils {
 			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
 			scroll = (ScrollPane) fxml.load();			
 			ap.getChildren().add(scroll);
-			if (objs != null) {
+			if (objs != null && objs.length != 0) {
 				ParametrosObjetos po = fxml.getController();
 				List<Object> objetos = new ArrayList<Object>();
 				for (Object obj : objs) {
@@ -118,11 +120,11 @@ public class ScreenUtils {
 		}
 	}
 	
-	private static void abrirScrollAnchorcomParametros(String caminho, Controller controller, Object... objs) {
+	private static void abrirScrollAnchorcomParametros(SequenciaJanelas sj, Object... objs) {
 		try {
 			FXMLLoader fxml = new FXMLLoader();
-			fxml.setController(controller);
-			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(caminho));
+			fxml.setController(sj.getController());
+			fxml.setLocation(PrincipalController.class.getClassLoader().getResource(sj.getCaminho()));
 			scroll = (ScrollPane) fxml.load();			
 			ap.getChildren().add(scroll);
 			if (objs != null) {
@@ -167,22 +169,26 @@ public class ScreenUtils {
 	
 	public static void voltarJanela(){
 		if (chaveFxmlAtual - 1 >= 0) {
-			String fxmlAnterior = sequenciaJanelas.get(--chaveFxmlAtual);
+			SequenciaJanelas fxmlAnterior = sequenciaJanelas.get(--chaveFxmlAtual);
 			abrirScrollAnchor(fxmlAnterior);
 		}
 	}
 	
 	public static void avancarJanela(){
 		if(sequenciaJanelas.get(chaveFxmlAtual+1)!=null){
-			String fxmlAnterior = sequenciaJanelas.get(++chaveFxmlAtual);
+			SequenciaJanelas fxmlAnterior = sequenciaJanelas.get(++chaveFxmlAtual);
 			abrirScrollAnchor(fxmlAnterior);
 		}
 	}
 	
-	public static void abrirScrollAnchor(String caminho){
+	public static void abrirScrollAnchor(SequenciaJanelas sj){
 		try {
-			scroll = FXMLLoader.load(PrincipalController.class.getClassLoader().getResource(caminho));
-			ap.getChildren().add(scroll);
+			scroll = FXMLLoader.load(PrincipalController.class.getClassLoader().getResource(sj.getCaminho()));
+			if(sj.getController() != null && sj.getController() instanceof Controller){
+				abrirScrollAnchorcomParametros(sj, null);
+			}else{
+				ap.getChildren().add(scroll);
+			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();

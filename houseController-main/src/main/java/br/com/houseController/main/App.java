@@ -1,6 +1,11 @@
 package br.com.houseController.main;
 
 
+import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.persistence.ConnectionFactory;
 import br.com.houseController.service.Usuario.UsuarioService;
@@ -29,6 +34,9 @@ public class App extends Application{
     	if(!usuarioService.checaLogin(usuario)) {
     		usuarioService.insert(usuario);
     	}
+    	
+    	
+    	System.out.println(Internationalization.getMessage("saudacao"));
     	
 //    	ReceitaService receitaService = new ReceitaService();
 //    	ArrayList<Receita> receitas = receitaService.findAll();

@@ -77,8 +77,8 @@ public class SubMenuMetaController extends Controller implements Initializable{
 			
 			// Criando os Blocos nos HBoxes
 			List<HBox> hBoxes = criaBlocosSubMenus(
-					new BlocoSubMenu("Nova Meta", null, "fxml/Meta/NovaMeta.fxml"), 
-					new BlocoSubMenu("Alterar Meta", null, "fxml/Meta/AlterarMeta.fxml")
+					new BlocoSubMenu("Nova Meta", "images/nova_meta.png", "fxml/Meta/NovaMeta.fxml"), 
+					new BlocoSubMenu("Alterar Meta", "images/alterar_meta.png", "fxml/Meta/AlterarMeta.fxml")
 					);
 
 			// Adicionando os HBoxes prontos no VBox

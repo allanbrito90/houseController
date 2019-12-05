@@ -24,12 +24,12 @@ public class SubMenuCompras extends Controller implements Initializable {
 
 				// Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Relatório de Compras", null, "fxml/Compras/RelatorioCompras.fxml"), 
-						new BlocoSubMenu("Compras", null, "fxml/Compras/NovoProduto.fxml"),
-						new BlocoSubMenu("Novo Ingrediente", null, "fxml/Compras/NovoIngrediente.fxml"),
-						new BlocoSubMenu("Alterar Ingrediente", null, "fxml/Compras/AlterarIngrediente.fxml"),
-						new BlocoSubMenu("Nova Unidade de Medida", null, "fxml/Compras/NovaUnidadeMedida.fxml"),
-						new BlocoSubMenu("Alterar Unidade de Medida", null, "fxml/Compras/AlterarUnidadeMedida.fxml")
+						new BlocoSubMenu("Relatório de Compras", "images/relatorio_compras.png", "fxml/Compras/RelatorioCompras.fxml"), 
+						new BlocoSubMenu("Compras", "images/compras.png", "fxml/Compras/NovoProduto.fxml"),
+						new BlocoSubMenu("Novo Ingrediente", "images/novo_ingrediente.png", "fxml/Compras/NovoIngrediente.fxml"),
+						new BlocoSubMenu("Alterar Ingrediente", "images/alterar_ingrediente.png", "fxml/Compras/AlterarIngrediente.fxml"),
+						new BlocoSubMenu("Nova Unidade de Medida", "images/nova_unidade_medida.png", "fxml/Compras/NovaUnidadeMedida.fxml"),
+						new BlocoSubMenu("Alterar Unidade de Medida", "images/alterar_unidade_medida.png", "fxml/Compras/AlterarUnidadeMedida.fxml")
 						);
 
 				// Adicionando os HBoxes prontos no VBox

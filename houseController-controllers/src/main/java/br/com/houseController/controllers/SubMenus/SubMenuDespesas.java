@@ -24,9 +24,9 @@ public class SubMenuDespesas extends Controller implements Initializable {
 
 				// Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Pagar Despesa", null, "fxml/Despesa/PagarDespesa.fxml"),
-						new BlocoSubMenu("Nova Despesa", null, "fxml/Despesa/NovaDespesa.fxml"), 
-						new BlocoSubMenu("Alterar Despesa", null, "fxml/Despesa/AlterarDespesa.fxml")
+						new BlocoSubMenu("Pagar Despesa", "images/pagar_despesa.png", "fxml/Despesa/PagarDespesa.fxml"),
+						new BlocoSubMenu("Nova Despesa", "images/nova.png", "fxml/Despesa/NovaDespesa.fxml"), 
+						new BlocoSubMenu("Alterar Despesa", "images/alterar_despesa.png", "fxml/Despesa/AlterarDespesa.fxml")
 						);
 
 				// Adicionando os HBoxes prontos no VBox
