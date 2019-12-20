@@ -28,32 +28,32 @@
                      <children>
                         <AnchorPane fx:id="jbHome" prefHeight="50.0" prefWidth="66.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="17.0" layoutY="17.0" text="Home" />
+                              <Label fx:id="jlHome" layoutX="17.0" layoutY="17.0" text="Home" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="jbDespesas" layoutX="10.0" layoutY="10.0" prefHeight="50.0" prefWidth="66.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="8.0" layoutY="17.0" text="Despesas" />
+                              <Label fx:id="jlDespesas" layoutX="8.0" layoutY="17.0" text="Despesas" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="jbReceitas" layoutX="10.0" layoutY="40.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="11.0" layoutY="17.0" text="Receitas" />
+                              <Label fx:id="jlReceitas" layoutX="11.0" layoutY="17.0" text="Receitas" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="jbCompras" layoutX="10.0" layoutY="70.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="9.0" layoutY="17.0" text="Compras" />
+                              <Label fx:id="jlCompras" layoutX="9.0" layoutY="17.0" text="Compras" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="jbMetas" layoutX="10.0" layoutY="100.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="17.0" layoutY="17.0" text="Metas" />
+                              <Label fx:id="jlMetas" layoutX="17.0" layoutY="17.0" text="Metas" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="jbUsuarios" layoutX="10.0" layoutY="130.0" prefHeight="50.0" prefWidth="200.0" styleClass="botoesMenu">
                            <children>
-                              <Label layoutX="10.0" layoutY="17.0" text="Usuários" />
+                              <Label fx:id="jlUsuarios" layoutX="10.0" layoutY="17.0" text="Usuários" />
                            </children>
                         </AnchorPane>
                      </children>

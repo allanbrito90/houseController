@@ -1,5 +1,6 @@
 package br.com.houseController.internationalization;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -18,6 +19,14 @@ public class Internationalization {
 	
 	public static String getMessage(String message){
 		return resourceBundle.getString(message);
+	}
+	
+	public static String getMessage(String message, String... params){
+		StringBuilder msg = new StringBuilder(resourceBundle.getString(message));
+		for(int i = 0 ; i < params.length; i++){
+			msg = new StringBuilder(msg.toString().replace(String.format("{%s}", i), params[i]));
+		}
+		return msg.toString();
 	}
 
 	public static Locale getLocale() {

@@ -75,7 +75,7 @@ public class Controller{
 			
 		}
 		anchorPane.getChildren().add(iv);
-		System.out.println(anchorPane.getBoundsInParent().getWidth() + " " + anchorPane.getBoundsInParent().getHeight());
+//		System.out.println(anchorPane.getBoundsInParent().getWidth() + " " + anchorPane.getBoundsInParent().getHeight());
 		
 		return anchorPane;
 	}

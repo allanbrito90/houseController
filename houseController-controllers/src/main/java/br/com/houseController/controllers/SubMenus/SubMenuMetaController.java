@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.Controller;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
 import br.com.houseController.model.SubMenu.BlocoSubMenu;
 import br.com.houseController.model.meta.Meta;
@@ -16,6 +17,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
@@ -38,6 +40,12 @@ public class SubMenuMetaController extends Controller implements Initializable{
 	
 	@FXML
 	private TableColumn<Meta, String> colData;
+	
+	@FXML
+	private Label jlTituloMetas;
+	
+	@FXML
+	private Label jlSuasMetas;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -77,15 +85,26 @@ public class SubMenuMetaController extends Controller implements Initializable{
 			
 			// Criando os Blocos nos HBoxes
 			List<HBox> hBoxes = criaBlocosSubMenus(
-					new BlocoSubMenu("Nova Meta", "images/nova_meta.png", "fxml/Meta/NovaMeta.fxml"), 
-					new BlocoSubMenu("Alterar Meta", "images/alterar_meta.png", "fxml/Meta/AlterarMeta.fxml")
+					new BlocoSubMenu(Internationalization.getMessage("botao_nova_meta"), "images/nova_meta.png", "fxml/Meta/NovaMeta.fxml"), 
+					new BlocoSubMenu(Internationalization.getMessage("botao_alterar_meta"), "images/alterar_meta.png", "fxml/Meta/AlterarMeta.fxml")
 					);
 
 			// Adicionando os HBoxes prontos no VBox
 			for (HBox hBox : hBoxes) {
 				vbMenu.getChildren().add(hBox);
 			}
+			
+			internacionalizar();
+			
 		});
+		
+	}
+
+	private void internacionalizar() {
+		jlTituloMetas.setText(Internationalization.getMessage("botao_metas"));		
+		jlSuasMetas.setText(Internationalization.getMessage("label_subtitulo"));
+		colMeta.setText(Internationalization.getMessage("coluna_meta"));
+		colData.setText(Internationalization.getMessage("coluna_data"));
 	}
 	
 

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
+import br.com.houseController.model.Enums.EnumIdioma;
 import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.meta.MetaTempo;
@@ -99,13 +101,13 @@ public class HomeController implements Initializable{
 		Calendar calendar = Calendar.getInstance();
 		UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
 		if(calendar.get(Calendar.HOUR_OF_DAY) < 12){
-			saudacao = "Bom Dia, ";
+			saudacao = Internationalization.getMessage("bom_dia");
 		}else if(calendar.get(Calendar.HOUR_OF_DAY) < 18){
-			saudacao = "Boa Tarde, ";		
+			saudacao = Internationalization.getMessage("boa_tarde");		
 		}else{
-			saudacao = "Boa Noite, ";
+			saudacao = Internationalization.getMessage("boa_noite");
 		}
-		
+		saudacao += ", ";
 		jlSaudacao.setText(saudacao + usuarioLogado.getUsuario().getNome());
 	}
 	
@@ -158,16 +160,16 @@ public class HomeController implements Initializable{
 		final CategoryAxis xAxis = new CategoryAxis();
 		final NumberAxis yAxis = new NumberAxis();
 		
-		xAxis.setLabel("Mês");
-		yAxis.setLabel("Valor");
+		xAxis.setLabel(Internationalization.getMessage("titulo_mes"));
+		yAxis.setLabel(Internationalization.getMessage("titulo_valor"));
 		final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 		
-		lineChart.setTitle("Últimas contas (GERAL)");
+		lineChart.setTitle(Internationalization.getMessage("ultimas_contas_geral"));
 		
 		XYChart.Series series1 = new XYChart.Series();
 		XYChart.Series series2 = new XYChart.Series();
-		series1.setName("Receitas");
-		series2.setName("Despesas");
+		series1.setName(Internationalization.getMessage("titulo_receitas"));
+		series2.setName(Internationalization.getMessage("titulo_despesas"));
 		
 		for(int i = 0; i < listaMesesReceita.size(); i++){
 			series1.getData().add(new XYChart.Data<>(listaMesesReceita.get(i).getDtPagamento().getMonth().toString(),listaMesesReceita.get(i).getValor().setScale(2,RoundingMode.HALF_EVEN)));
@@ -229,16 +231,16 @@ public class HomeController implements Initializable{
 				final CategoryAxis xAxis = new CategoryAxis();
 				final NumberAxis yAxis = new NumberAxis();
 				
-				xAxis.setLabel("Mês");
-				yAxis.setLabel("Valor");
+				xAxis.setLabel(Internationalization.getMessage("titulo_mes"));
+				yAxis.setLabel(Internationalization.getMessage("titulo_valor"));
 				final LineChart<String, Number> lineChart = new LineChart<String, Number>(xAxis, yAxis);
 				
-				lineChart.setTitle("Suas últimas contas");
+				lineChart.setTitle(Internationalization.getMessage("suas_ultimas_contas"));
 				
 				XYChart.Series series1 = new XYChart.Series();
 				XYChart.Series series2 = new XYChart.Series();
-				series1.setName("Receitas");
-				series2.setName("Despesas");
+				series1.setName(Internationalization.getMessage("titulo_receitas"));
+				series2.setName(Internationalization.getMessage("titulo_despesas"));
 				
 				for(int i = 0; i < listaMesesReceita.size(); i++){
 					series1.getData().add(new XYChart.Data<>(listaMesesReceita.get(i).getDtPagamento().getMonth().toString(),listaMesesReceita.get(i).getValor().setScale(2,RoundingMode.HALF_EVEN)));
@@ -286,14 +288,14 @@ public class HomeController implements Initializable{
 				final CategoryAxis xAxis = new CategoryAxis();
 				final NumberAxis yAxis = new NumberAxis();
 				
-				xAxis.setLabel("Mês");
-				yAxis.setLabel("Valor");
+				xAxis.setLabel(Internationalization.getMessage("titulo_mes"));
+				yAxis.setLabel(Internationalization.getMessage("titulo_valor"));
 				final BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 				
-				barChart.setTitle("Últimas compras");
+				barChart.setTitle(Internationalization.getMessage("ultimas_compras"));
 				
 				XYChart.Series series1 = new XYChart.Series();
-				series1.setName("Valores");
+				series1.setName(Internationalization.getMessage("ultimas_compras"));
 				
 				for(int i = 0; i < listaMesesCompras.size(); i++){
 					series1.getData().add(new XYChart.Data<>(listaMesesCompras.get(i).getPeriodoReferencia().getMonth().toString(),listaMesesCompras.get(i).getValorDespesa().setScale(2,RoundingMode.HALF_EVEN)));
@@ -328,11 +330,14 @@ public class HomeController implements Initializable{
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<MetaTempo, String> param) {
 				if(param.getValue().getTempo() < 0){
-					return new SimpleStringProperty("Faltam " + String.valueOf(param.getValue().getTempo()*-1) + " dias");
+						return new SimpleStringProperty(Internationalization.getMessage("meta_restante", String.valueOf(param.getValue().getTempo()*-1)));
+//						return new SimpleStringProperty("Faltam " + String.valueOf(param.getValue().getTempo()*-1) + " dias");
 				}else if(param.getValue().getTempo() > 0){
-					return new SimpleStringProperty("Vencido à " + String.valueOf(param.getValue().getTempo()) + " dias");
+					return new SimpleStringProperty(Internationalization.getMessage("meta_vencida", String.valueOf(param.getValue().getTempo()*-1)));
+//					return new SimpleStringProperty("Vencido à " + String.valueOf(param.getValue().getTempo()) + " dias");
 				}else{					
-					return new SimpleStringProperty("Vence hoje");
+					return new SimpleStringProperty(Internationalization.getMessage("meta_vence_hoje"));
+//					return new SimpleStringProperty("Vence hoje");
 				}
 			}
 		});

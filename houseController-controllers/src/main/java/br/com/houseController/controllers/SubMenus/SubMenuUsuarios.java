@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.Controller;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.SubMenu.BlocoSubMenu;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -32,12 +33,12 @@ public class SubMenuUsuarios extends Controller implements Initializable{
 			@Override
 			public void run() {
 				//Setando título
-				titulo("Usuários");
+				titulo(Internationalization.getMessage("botao_usuarios"));
 				
 //				Criando os Blocos nos HBoxes
 				List<HBox> hBoxes = criaBlocosSubMenus(
-						new BlocoSubMenu("Novo Usuário", "images/novo_usuario.png", "fxml/Usuario/NovoUsuario.fxml"),
-						new BlocoSubMenu("Alterar Usuário", "images/alterar_usuario.png", "fxml/Usuario/AlterarUsuario.fxml"));
+						new BlocoSubMenu(Internationalization.getMessage("botao_novo_usuario"), "images/novo_usuario.png", "fxml/Usuario/NovoUsuario.fxml"),
+						new BlocoSubMenu(Internationalization.getMessage("botao_alterar_usuario"), "images/alterar_usuario.png", "fxml/Usuario/AlterarUsuario.fxml"));
 				
 //				Adicionando os HBoxes prontos no VBox				
 				for(HBox hBox : hBoxes){

@@ -15,6 +15,7 @@
          <bottom>
             <HBox alignment="CENTER_RIGHT" prefHeight="33.0" prefWidth="348.0" spacing="10.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
+                  <JFXButton fx:id="jbLanguage" buttonType="RAISED" ripplerFill="#0d00ff" styleClass="botaoTeste" text="Quem sabe Português?" />
                   <JFXButton fx:id="jbLogin" buttonType="RAISED" ripplerFill="#0d00ff" styleClass="botaoTeste" text="Login" />
                   <JFXButton fx:id="jbSair" buttonType="RAISED" onAction="#sair" ripplerFill="RED" text="Sair" />
                </children>

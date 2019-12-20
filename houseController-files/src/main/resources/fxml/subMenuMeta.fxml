@@ -14,10 +14,10 @@
          <children>
             <AnchorPane prefHeight="60.0" prefWidth="845.0" styleClass="cabecalhos">
                <children>
-                  <Label layoutX="14.0" layoutY="8.0" text="Metas" />
+                  <Label fx:id="jlTituloMetas" layoutX="14.0" layoutY="8.0" text="Metas" />
                </children>
             </AnchorPane>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="847.0" text="Suas Metas" textAlignment="CENTER">
+            <Label fx:id="jlSuasMetas" alignment="CENTER" contentDisplay="CENTER" prefWidth="847.0" text="Suas Metas" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

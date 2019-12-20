@@ -12,6 +12,7 @@ import br.com.houseController.controllers.SubMenus.SubMenuMetaController;
 import br.com.houseController.controllers.SubMenus.SubMenuReceitas;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.SubMenu.SequenciaJanelas;
 import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -19,6 +20,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -67,6 +69,24 @@ public class PrincipalController implements Initializable{
 	@FXML
 	private AnchorPane apTela;
 	
+	@FXML
+	private Label jlHome;
+	
+	@FXML
+	private Label jlUsuarios;
+
+	@FXML
+	private Label jlDespesas;
+	
+	@FXML
+	private Label jlReceitas;
+	
+	@FXML
+	private Label jlMetas;
+	
+	@FXML
+	private Label jlCompras;
+	
 	private ScrollPane sp;
 	
 	private UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
@@ -83,8 +103,20 @@ public class PrincipalController implements Initializable{
 		ScreenUtils.abrirScrollAnchor(sj);
 //		new FadeOut(ivMinimizar).PlayOnFinished(new FadeIn(ivMinimizar)).play();
 		
+		internacionalizar();
+		
 	}
 	
+
+	private void internacionalizar() {
+		jlCompras.setText(Internationalization.getMessage("botao_compras"));
+		jlDespesas.setText(Internationalization.getMessage("botao_despesas"));
+		jlHome.setText(Internationalization.getMessage("botao_home"));
+		jlMetas.setText(Internationalization.getMessage("botao_metas"));
+		jlReceitas.setText(Internationalization.getMessage("botao_receitas"));
+		jlUsuarios.setText(Internationalization.getMessage("botao_usuarios"));
+	}
+
 
 	private void botoesJanela() {
 		ivVoltar.setOnMouseClicked(new EventHandler<Event>() {

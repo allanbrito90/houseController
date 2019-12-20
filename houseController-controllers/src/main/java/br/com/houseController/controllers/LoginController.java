@@ -18,6 +18,7 @@ import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.internationalization.Internationalization;
+import br.com.houseController.model.Enums.EnumIdioma;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.model.usuario.UsuarioLogado;
 import br.com.houseController.persistence.ConnectionFactory;
@@ -63,6 +64,12 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 	
 	@FXML
 	Label jlBemVindo;
+	
+	@FXML
+	JFXButton jbSair;
+	
+	@FXML
+	JFXButton jbLanguage;
 		
 	Stage stage;
 	
@@ -77,9 +84,9 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 		jbLogin.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent event) {
-				Internationalization.setLocale(new Locale("pt","BR"));
-				Internationalization.setResourceBundle(ResourceBundle.getBundle("internationalization/messages", Internationalization.getInstance()));
-				System.out.println(Internationalization.getMessage("bemvindo"));
+//				Internationalization.setLocale(new Locale("pt","BR"));
+//				Internationalization.setResourceBundle(ResourceBundle.getBundle("internationalization/messages", Internationalization.getInstance()));
+//				System.out.println(Internationalization.getMessage("bemvindo"));
 				
 				Usuario usuario = new Usuario();
 				usuario.setLogin(jtfLogin.getText());
@@ -124,7 +131,7 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 				task.setOnFailed((e) -> {
 					Aguarde2.finalizarJanelaAguarde();
 					if(!(e.getSource().getException() instanceof CamposNaoPreenchidosException)){
-						ScreenUtils.janelaInformação(spStatus, "Erro", "Usuário e/ou Senha Incorreta", "Entendi");
+						ScreenUtils.janelaInformação(spStatus, Internationalization.getMessage("header_erro1"), Internationalization.getMessage("login_incorreto"), Internationalization.getMessage("certo_button1"));
 					}
 				});
 				new Thread(task).start();				
@@ -152,7 +159,19 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 			}
 		});
 		
+		jbLanguage.setOnAction((e)->{
+			//Verifica se está em português
+			if(Internationalization.getLocale().getLanguage().equals("pt")){
+				Internationalization.setLocale(new Locale(EnumIdioma.INGLES.getLinguagem(),EnumIdioma.INGLES.getPais()));
+			}else{
+				Internationalization.setLocale(new Locale(EnumIdioma.PORTUGUES.getLinguagem(),EnumIdioma.PORTUGUES.getPais()));
+			}
+			Internationalization.setResourceBundle(ResourceBundle.getBundle("internationalization/messages",Internationalization.getLocale()));
+			internacionalizar();
+		});
+		
 		Platform.runLater(()->{
+			internacionalizar();
 			jtfLogin.requestFocus();			
 		});
 	}
@@ -162,6 +181,14 @@ public class LoginController extends ParametrosObjetos implements Initializable 
 	public void sair(){
 		ConnectionFactory.fecharConexao();
 		System.exit(0);
+	}
+	
+	public void internacionalizar(){
+		jlBemVindo.setText(Internationalization.getMessage("bemvindo"));
+		jtfLogin.setPromptText(Internationalization.getMessage("campoLogin"));
+		jpfSenha.setPromptText(Internationalization.getMessage("campoSenha"));
+		jbSair.setText(Internationalization.getMessage("campoSair"));
+		jbLanguage.setText(Internationalization.getMessage("campoLanguage"));
 	}
 
 }
