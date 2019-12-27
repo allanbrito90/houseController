@@ -30,7 +30,7 @@
                            <children>
                               <VBox prefHeight="200.0" prefWidth="415.0" spacing="20.0">
                                  <children>
-                                    <Label text="Por favor, preencha todos os Campos">
+                                    <Label fx:id="jlSubTitulo" text="Por favor, preencha todos os Campos">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -38,7 +38,7 @@
                                           <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Nome">
+                                    <Label fx:id="jlNome" text="Nome">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -48,7 +48,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <Label text="Login">
+                                    <Label fx:id="jlLogin" text="Login">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -58,7 +58,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </JFXTextField>
-                                    <Label text="Senha">
+                                    <Label fx:id="jlSenha" text="Senha">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -68,7 +68,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </JFXPasswordField>
-                                    <Label text="Email">
+                                    <Label fx:id="jlEmail" text="Email">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -93,7 +93,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                              <Label fx:id="jlSalvar" layoutX="45.0" layoutY="15.0" text="Salvar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -110,7 +110,7 @@
                                     <Image url="@../../images/baseline_clear_black_24dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
+                              <Label fx:id="jlLimpar" layoutX="45.0" layoutY="15.0" text="Limpar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
