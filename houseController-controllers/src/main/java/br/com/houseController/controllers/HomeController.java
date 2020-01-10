@@ -122,7 +122,7 @@ public class HomeController implements Initializable{
 			int mes = localDate.getMonthValue() - i;
 			int ano = localDate.getYear();
 			//Verifica se o valor de mês não será negativo, caso seja ele volta para o Dezembro do ano passado
-			if(mes < 0){
+			if(mes <= 0){
 				mes = 12 + mes;
 				ano--;
 			}
@@ -191,7 +191,7 @@ public class HomeController implements Initializable{
 			int mes = localDate.getMonthValue() - i;
 			int ano = localDate.getYear();
 			//Verifica se o valor de mês não será negativo, caso seja ele volta para o Dezembro do ano passado
-			if(mes < 0){
+			if(mes <= 0){
 				mes = 12 + mes;
 				ano--;
 			}
@@ -262,7 +262,7 @@ public class HomeController implements Initializable{
 			int mes = localDate.getMonthValue() - i;
 			int ano = localDate.getYear();
 			//Verifica se o valor de mês não será negativo, caso seja ele volta para o Dezembro do ano passado
-			if(mes < 0){
+			if(mes <= 0){
 				mes = 12 + mes;
 				ano--;
 			}
@@ -331,7 +331,7 @@ public class HomeController implements Initializable{
 						return new SimpleStringProperty(Internationalization.getMessage("meta_restante", String.valueOf(param.getValue().getTempo()*-1)));
 //						return new SimpleStringProperty("Faltam " + String.valueOf(param.getValue().getTempo()*-1) + " dias");
 				}else if(param.getValue().getTempo() > 0){
-					return new SimpleStringProperty(Internationalization.getMessage("meta_vencida", String.valueOf(param.getValue().getTempo()*-1)));
+					return new SimpleStringProperty(Internationalization.getMessage("meta_vencida", String.valueOf(param.getValue().getTempo())));
 //					return new SimpleStringProperty("Vencido à " + String.valueOf(param.getValue().getTempo()) + " dias");
 				}else{					
 					return new SimpleStringProperty(Internationalization.getMessage("meta_vence_hoje"));

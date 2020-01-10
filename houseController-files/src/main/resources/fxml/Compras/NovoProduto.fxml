@@ -26,7 +26,7 @@
                   </AnchorPane>
                   <HBox prefHeight="32.0" prefWidth="830.0" spacing="15.0">
                      <children>
-                        <Label text="Clique em + para adicionar um novo Produto">
+                        <Label fx:id="jlSubtitulo" text="Clique em + para adicionar um novo Produto">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -40,11 +40,11 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
+                        <Label fx:id="jlPeriodo" alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
                         <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
                         <Label text="/" />
                         <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
-                        <JFXButton onAction="#handlePesquisar" text="Pesquisar" />
+                        <JFXButton fx:id="jbPesquisar" onAction="#handlePesquisar" text="Pesquisar" />
                      </children>
                   </HBox>
                   <ScrollPane prefHeight="374.0" prefWidth="830.0">
@@ -61,7 +61,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                              <Label fx:id="jlSalvar" layoutX="45.0" layoutY="15.0" text="Salvar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

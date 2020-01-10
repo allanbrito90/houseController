@@ -15,7 +15,7 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="847.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.houseController.controllers.SubMenus.Compras.NovaUnidadeMedidaController">
   <content>
-      <StackPane>
+      <StackPane fx:id="spDialog">
          <children>
             <VBox prefHeight="555.0" prefWidth="830.0">
                <children>
@@ -56,7 +56,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                              <Label fx:id="jlSalvar" layoutX="45.0" layoutY="15.0" text="Salvar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -73,7 +73,7 @@
                                     <Image url="@../../images/baseline_clear_black_24dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
+                              <Label fx:id="jlLimpar" layoutX="45.0" layoutY="15.0" text="Limpar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

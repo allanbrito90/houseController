@@ -92,7 +92,7 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 	}
 
 	private void iniciaNomesCampos() {
-		jlTitulo.setText(Internationalization.getMessage("titulo_novo"));
+		jlTitulo.setText(Internationalization.getMessage("botao_novo_usuario"));
 		jlSubTitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
 		jlNome.setText(Internationalization.getMessage("campo_nome"));
 		jlLogin.setText(Internationalization.getMessage("campo_login"));

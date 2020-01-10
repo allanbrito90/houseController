@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
 import br.com.houseController.model.meta.Meta;
 import br.com.houseController.model.usuario.Usuario;
@@ -27,6 +28,24 @@ public class NovaMetaController extends ParametrosObjetos implements Initializab
 	
 	@FXML
 	Label jlTitulo;
+	
+	@FXML
+	Label jlSubtitulo;
+	
+	@FXML
+	Label jlCampoTitulo;
+	
+	@FXML
+	Label jlDescricao;
+	
+	@FXML
+	Label jlSalvar;
+	
+	@FXML
+	Label jlLimpar;
+	
+	@FXML
+	Label jlDataConclusao;
 	
 	@FXML
 	JFXTextField jtfTitulo;
@@ -49,6 +68,7 @@ public class NovaMetaController extends ParametrosObjetos implements Initializab
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		Platform.runLater(()->{
 			if(getObjetos() !=null){
 				meta = (Meta) getObjetos().get(0);
@@ -82,6 +102,19 @@ public class NovaMetaController extends ParametrosObjetos implements Initializab
 		
 	}
 	
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_nova_meta"));
+		jlSubtitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
+		jlCampoTitulo.setText(Internationalization.getMessage("campo_titulo"));
+		jlDescricao.setText(Internationalization.getMessage("campo_descricao"));
+		jtaDescricao.setPromptText(Internationalization.getMessage("campo_detalhe_descricao"));
+		jlDataConclusao.setText(Internationalization.getMessage("campo_data_conclusao"));
+		jcbConcluido.setText(Internationalization.getMessage("campo_concluido"));
+		jcbUsuario.setPromptText(Internationalization.getMessage("campo_atribuido_a"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
+		jlLimpar.setText(Internationalization.getMessage("botao_limpar"));
+	}
+
 	@FXML
 	public void handleSalvar(){
 		MetaService metaService = new MetaService();

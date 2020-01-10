@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.produto.Produto;
 import br.com.houseController.model.produto.RelatorioCompras;
 import br.com.houseController.service.Produto.ProdutoService;
@@ -37,6 +38,8 @@ public class RelatorioComprasController implements Initializable{
 	@FXML
 	private Label jlTotal;
 	@FXML
+	private Label jlSelecioneAno;
+	@FXML
 	private Spinner<Integer> jsAno;
 	@FXML
 	private VBox vbProdutos;
@@ -58,6 +61,7 @@ public class RelatorioComprasController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		jsAno.setValueFactory(anoSpinner);
 		jsAno.getValueFactory().setValue(LocalDate.now().getYear());
 		jtvTotalCompras.setItems(preencheTabela());
@@ -81,6 +85,13 @@ public class RelatorioComprasController implements Initializable{
 		});
 	}
 	
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_relatorio_compras"));
+		colMes.setText(Internationalization.getMessage("titulo_mes"));
+		colValor.setText(Internationalization.getMessage("titulo_valor"));
+		jlSelecioneAno.setText(Internationalization.getMessage("selecione_ano"));
+	}
+
 	public ObservableList<RelatorioCompras> preencheTabela(){
 		ProdutoService produtoService = new ProdutoService();
 		listaProdutos = produtoService.produtosPorAno(jsAno.getValue());
@@ -98,7 +109,7 @@ public class RelatorioComprasController implements Initializable{
 			}
 			produtos.add(new RelatorioCompras(LocalDate.of(jsAno.getValue(), i, 1),totalMes.setScale(2, RoundingMode.HALF_EVEN)));
 		}
-		jlTotal.setText("R$" + total.setScale(2,RoundingMode.HALF_EVEN).toString());
+		jlTotal.setText("$" + total.setScale(2,RoundingMode.HALF_EVEN).toString());
 		return produtos;
 	}
 	

@@ -17,6 +17,7 @@ import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.Enums.EnumContaAtiva;
 import br.com.houseController.model.despesas.Compras;
@@ -60,6 +61,19 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 
 	@FXML
 	private Spinner<Integer> jsAno;
+	
+	@FXML
+	private Label jlSubtitulo;
+	
+	@FXML
+	private Label jlPeriodo;
+	
+	@FXML
+	private JFXButton jbPesquisar;
+	
+	@FXML
+	private Label jlSalvar;
+	
 
 	// TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
@@ -181,6 +195,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		internacionalizar();
 		jsMes.setValueFactory(mesSpinner);
 		jsAno.setValueFactory(anoSpinner);
 		jsMes.getValueFactory().setValue(LocalDate.now().getMonthValue());
@@ -193,6 +208,14 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		Platform.runLater(() -> {
 			carregaListaProdutos(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
 		});
+	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_compras"));
+		jlSubtitulo.setText(Internationalization.getMessage("label_legenda_novo_produto"));
+		jlPeriodo.setText(Internationalization.getMessage("titulo_periodo"));
+		jbPesquisar.setText(Internationalization.getMessage("botao_pesquisar"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
 	}
 
 	private void carregaListaProdutos(LocalDate periodo) {
@@ -240,9 +263,9 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jsQtde);
 
 		NumberTextField jntfValor = new NumberTextField();
-		jntfValor.setPromptText("Valor");
+		jntfValor.setPromptText(Internationalization.getMessage("campo_valor"));
 
-		JFXButton jbApagar = new JFXButton("Deletar");
+		JFXButton jbApagar = new JFXButton(Internationalization.getMessage("botao_excluir"));
 		hbProduto.getChildren().add(jntfValor);
 		hbProduto.getChildren().add(jbApagar);
 

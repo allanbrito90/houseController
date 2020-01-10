@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
 import br.com.houseController.model.meta.Meta;
 import br.com.houseController.model.meta.MetaTempo;
@@ -19,8 +20,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
 public class AlterarMetaController implements Initializable{
+	
+	@FXML
+	private Label jlTitulo;
+	
+	@FXML
+	private Label jlEditar;
+	
+	@FXML
+	private Label jlExcluir;
 	
 	@FXML
 	private StackPane spDialog;
@@ -49,7 +60,7 @@ public class AlterarMetaController implements Initializable{
 			MetaTempo metaTempo = jtvMetas.getSelectionModel().getSelectedItem();
 			ScreenUtils.abrirNovaJanela("fxml/Meta/NovaMeta.fxml", converteMeta(metaTempo));
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
 		}
 	}
 	
@@ -72,7 +83,7 @@ public class AlterarMetaController implements Initializable{
 			metaService.delete(metaTempo.getId());
 			atualizaTabela();
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
 		}
 	}
 
@@ -83,6 +94,7 @@ public class AlterarMetaController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		
 		preencheTabela();	
 		colMeta.setCellValueFactory(new PropertyValueFactory<>("titulo"));
@@ -105,15 +117,28 @@ public class AlterarMetaController implements Initializable{
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<MetaTempo, String> param) {
 				if(param.getValue().getTempo() < 0){
-					return new SimpleStringProperty("Faltam " + String.valueOf(param.getValue().getTempo()*-1) + " dias");
+//					return new SimpleStringProperty("Faltam " + String.valueOf(param.getValue().getTempo()*-1) + " dias");
+					return new SimpleStringProperty(Internationalization.getMessage("meta_restante", String.valueOf(param.getValue().getTempo()*-1)));
 				}else if(param.getValue().getTempo() > 0){
-					return new SimpleStringProperty("Vencido à " + String.valueOf(param.getValue().getTempo()) + " dias");
+//					return new SimpleStringProperty("Vencido à " + String.valueOf(param.getValue().getTempo()) + " dias");
+					return new SimpleStringProperty(Internationalization.getMessage("meta_vencida", String.valueOf(param.getValue().getTempo())));
 				}else{					
-					return new SimpleStringProperty("Vence hoje");
+//					return new SimpleStringProperty("Vence hoje");
+					return new SimpleStringProperty(Internationalization.getMessage("meta_vence_hoje"));
 				}
 			}
 		});
 		
+	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_alterar_meta"));
+		colMeta.setText(Internationalization.getMessage("coluna_meta"));
+		colData.setText(Internationalization.getMessage("coluna_data"));
+		colUsuario.setText(Internationalization.getMessage("campo_atribuido_a"));
+		colDias.setText(Internationalization.getMessage("titulo_col_dias_restantes"));
+		jlEditar.setText(Internationalization.getMessage("botao_editar"));
+		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
 	}
 
 	private void preencheTabela() {

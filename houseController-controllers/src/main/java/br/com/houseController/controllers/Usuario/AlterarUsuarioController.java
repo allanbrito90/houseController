@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.usuario.Usuario;
 import br.com.houseController.service.Usuario.UsuarioService;
 import javafx.collections.FXCollections;
@@ -16,8 +17,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 
 public class AlterarUsuarioController extends ParametrosObjetos implements Initializable{
+	
+	@FXML
+	Label jlTitulo;
+	
+	@FXML
+	Label jlEditar;
+	
+	@FXML
+	Label jlExcluir;
 	
 	@FXML
 	StackPane spDialog;
@@ -49,12 +61,23 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		iniciaNomesCampos();
 		
 		colID.setCellValueFactory(new PropertyValueFactory<>("id"));
 		colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		colLogin.setCellValueFactory(new PropertyValueFactory<>("login"));
 		colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 		jtvUsuarioTable.setItems(preencheTabela());
+	}
+
+	private void iniciaNomesCampos() {
+		jlTitulo.setText(Internationalization.getMessage("botao_alterar_usuario"));
+		colID.setText(Internationalization.getMessage("titulo_col_id_usuario"));
+		colNome.setText(Internationalization.getMessage("titulo_col_nome_usuario"));
+		colLogin.setText(Internationalization.getMessage("titulo_col_login_usuario"));
+		colEmail.setText(Internationalization.getMessage("titulo_col_email_usuario"));
+		jlEditar.setText(Internationalization.getMessage("botao_editar"));
+		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
 	}
 
 	private ObservableList<Usuario> preencheTabela() {
@@ -77,7 +100,7 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 				Usuario usuario = usuarioService.findOne(new Usuario(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex())));
 				ScreenUtils.abrirNovaJanela("fxml/Usuario/NovoUsuario.fxml", usuario);
 			}else{
-				ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+				ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -91,7 +114,7 @@ public class AlterarUsuarioController extends ParametrosObjetos implements Initi
 			usuarioService.delete(colID.getCellData(jtvUsuarioTable.getSelectionModel().getSelectedIndex()));
 			atualizarTable();
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
 		}
 	}
 

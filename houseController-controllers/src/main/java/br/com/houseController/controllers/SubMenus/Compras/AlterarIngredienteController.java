@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.service.Produto.IngredienteService;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,6 +21,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
 public class AlterarIngredienteController implements Initializable{
 	
@@ -35,6 +37,15 @@ public class AlterarIngredienteController implements Initializable{
 	private TableColumn<Ingrediente, String> colNome;
 	@FXML
 	private TableColumn<Ingrediente, String> colUnidadeMedida;
+	
+	@FXML
+	private Label jlTitulo;
+	
+	@FXML
+	private Label jlEditar;
+	
+	@FXML
+	private Label jlExcluir;
 
 	// Event Listener on AnchorPane.onMouseClicked
 	@FXML
@@ -66,6 +77,7 @@ public class AlterarIngredienteController implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		colNome.setCellValueFactory(new PropertyValueFactory<>("descricaoIngrediente"));
 		colUnidadeMedida.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Ingrediente,String>, ObservableValue<String>>() {
 
@@ -77,6 +89,13 @@ public class AlterarIngredienteController implements Initializable{
 		jtvIngredienteTable.setItems(preencheTabela());
 	}
 	
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_alterar_ingrediente"));
+		colNome.setText(Internationalization.getMessage("campo_nome"));
+		colUnidadeMedida.setText(Internationalization.getMessage("campo_unidade_medida"));
+		jlEditar.setText(Internationalization.getMessage("campo_editar"));
+		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
+	}
 	private ObservableList<Ingrediente> preencheTabela() {
 		IngredienteService ingredienteService = new IngredienteService();
 		List<Ingrediente> listIngrediente = ingredienteService.findAll();

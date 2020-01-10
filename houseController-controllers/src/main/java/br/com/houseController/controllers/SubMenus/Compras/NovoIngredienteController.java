@@ -11,6 +11,7 @@ import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.UnidadeMedida;
 import br.com.houseController.service.Compras.UnidadeMedidaService;
@@ -37,6 +38,21 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 	
 	@FXML
 	private Label jlTitulo;
+	
+	@FXML
+	private Label jlSubtitulo;
+	
+	@FXML
+	private Label jlNome;
+	
+	@FXML
+	private Label jlUnidadeMedida;
+	
+	@FXML
+	private Label jlSalvar;
+	
+	@FXML
+	private Label jlLimpar;
 	
 	UnidadeMedidaService unidadeMedidaService = new UnidadeMedidaService();
 	Ingrediente ingrediente;
@@ -81,6 +97,7 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		internacionalizar();
 
 		if (getObjetos() != null) {
 			ingrediente = (Ingrediente) getObjetos().get(0);
@@ -126,6 +143,15 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 			jcbUnidadeMedida.getSelectionModel().select(0);
 		}
 		
+	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_novo_ingrediente"));
+		jlSubtitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
+		jlNome.setText(Internationalization.getMessage("campo_nome"));
+		jlUnidadeMedida.setText(Internationalization.getMessage("campo_unidade_medida"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
+		jlLimpar.setText(Internationalization.getMessage("botao_limpar"));
 	}
 
 }

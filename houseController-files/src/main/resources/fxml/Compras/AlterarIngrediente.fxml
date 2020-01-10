@@ -18,7 +18,7 @@
                <children>
                 <AnchorPane minHeight="0.0" minWidth="0.0" onMouseClicked="#Alterar" prefHeight="60.0" prefWidth="830.0" styleClass="cabecalhos">
                      <children>
-                        <Label layoutX="14.0" layoutY="7.0" text="Alterar Ingrediente" />
+                        <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Alterar Ingrediente" />
                      </children>
                   </AnchorPane>
                   <TableView fx:id="jtvIngredienteTable" prefHeight="408.0" prefWidth="830.0">
@@ -31,12 +31,12 @@
                      <children>
                         <AnchorPane onMouseClicked="#handleEditar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
                            <children>
-                              <Label layoutX="50.0" layoutY="14.0" text="Editar" />
+                              <Label fx:id="jlEditar" layoutX="50.0" layoutY="14.0" text="Editar" />
                            </children>
                         </AnchorPane>
                         <AnchorPane onMouseClicked="#handleExcluir" prefHeight="50.0" prefWidth="100.0" styleClass="botaoExcluir">
                            <children>
-                              <Label layoutX="50.0" layoutY="14.0" text="Excluir" />
+                              <Label fx:id="jlExcluir" layoutX="50.0" layoutY="14.0" text="Excluir" />
                            </children>
                         </AnchorPane>
                      </children>

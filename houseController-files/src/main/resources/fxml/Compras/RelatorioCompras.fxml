@@ -24,7 +24,7 @@
                   </AnchorPane>
                   <HBox prefHeight="32.0" prefWidth="830.0" spacing="15.0">
                      <children>
-                        <Label text="Selecione o ano:">
+                        <Label fx:id="jlSelecioneAno" text="Selecione o ano:">
                            <font>
                               <Font size="18.0" />
                            </font>
