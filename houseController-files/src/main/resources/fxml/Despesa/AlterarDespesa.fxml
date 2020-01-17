@@ -25,11 +25,11 @@
                   </AnchorPane>
                   <HBox prefHeight="29.0" prefWidth="830.0" spacing="5.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
+                        <Label fx:id="jlPeriodo" alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
                         <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
                         <Label text="/" />
                         <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
-                        <JFXButton onAction="#handlePesquisar" text="Pesquisar" />
+                        <JFXButton fx:id="jbPesquisar" onAction="#handlePesquisar" text="Pesquisar" />
                      </children>
                   </HBox>
                   <TableView fx:id="jtvDespesas" prefHeight="408.0" prefWidth="830.0">
@@ -44,12 +44,12 @@
                      <children>
                         <AnchorPane onMouseClicked="#handleEditar" prefHeight="50.0" prefWidth="100.0" styleClass="botaoLimpar">
                            <children>
-                              <Label layoutX="50.0" layoutY="14.0" text="Editar" />
+                              <Label fx:id="jlEditar" layoutX="50.0" layoutY="14.0" text="Editar" />
                            </children>
                         </AnchorPane>
                         <AnchorPane onMouseClicked="#handleExcluir" prefHeight="50.0" prefWidth="100.0" styleClass="botaoExcluir">
                            <children>
-                              <Label layoutX="50.0" layoutY="14.0" text="Excluir" />
+                              <Label fx:id="jlExcluir" layoutX="50.0" layoutY="14.0" text="Excluir" />
                            </children>
                         </AnchorPane>
                      </children>

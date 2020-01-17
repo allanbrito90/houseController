@@ -22,6 +22,7 @@ import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.controllers.SubMenus.SubMenuUsuarios;
 import br.com.houseController.controllers.dialogs.AdicionarPagamentoController;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.SubMenu.SequenciaJanelas;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
@@ -211,7 +212,7 @@ public class ScreenUtils {
 		for(IFXLabelFloatControl node : nodes){
 			if(((TextInputControl) node).getText().equals("")){
 				System.out.println("Campo vazio");
-				throw new CamposNaoPreenchidosException();
+				throw new CamposNaoPreenchidosException(Internationalization.getMessage("campos_nao_preenchidos"));
 			}
 		}
 		return true;
@@ -296,7 +297,7 @@ public class ScreenUtils {
 				jntf.setText("0");
 			}
 			if(jntf.getValor().compareTo(receitaDisponivel)==1 || jntf.getValor().compareTo(despesaDisponivel)==1){
-				janelaInformação(stackPane,"Erro","O valor é maior do que o permitido","OK");
+				janelaInformação(stackPane,Internationalization.getMessage("header_valor_excedente"),Internationalization.getMessage("valor_excedente"),Internationalization.getMessage("certo_button2"));
 			}else{
 				stage.close();
 			}
@@ -329,13 +330,13 @@ public class ScreenUtils {
 	
 	public static void janelaFechar(StackPane spDialog) {
 		JFXDialogLayout dialogContent = new JFXDialogLayout();
-		dialogContent.setHeading(new Text("Fechar a Aplicação?"));
-		dialogContent.setBody(new Text("Deseja realmente finalizar a aplicação?"));
-		JFXButton fechar = new JFXButton("Sim");
+		dialogContent.setHeading(new Text(Internationalization.getMessage("header_fechar_app")));
+		dialogContent.setBody(new Text(Internationalization.getMessage("fechar_app")));
+		JFXButton fechar = new JFXButton(Internationalization.getMessage("botao_sim"));
 		fechar.setButtonType(JFXButton.ButtonType.RAISED);
 		fechar.setStyle("-fx-background-color: #00bfff;");
 		
-		JFXButton naoFechar = new JFXButton("Não");
+		JFXButton naoFechar = new JFXButton(Internationalization.getMessage("botao_nao"));
 		naoFechar.setButtonType(JFXButton.ButtonType.RAISED);
 		naoFechar.setStyle("-fx-background-color: #ce0000;");
 		
@@ -362,7 +363,7 @@ public class ScreenUtils {
 	
 	public static boolean verificaAcessoAdmin(StackPane sp, Controller controller, Usuario usuario){
 		if(!(controller instanceof SubMenuUsuarios) && usuario.getLogin().equals("admin")){
-			ScreenUtils.janelaInformação(sp, "Acesso Negado", "Você não tem acesso com este usuário", "Tudo bem então!");
+			ScreenUtils.janelaInformação(sp, Internationalization.getMessage("header_acesso_negado"), Internationalization.getMessage("acesso_negado"), Internationalization.getMessage("certo_button4"));
 			return false;
 		}else{
 			return true;

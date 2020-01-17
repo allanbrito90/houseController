@@ -18,6 +18,7 @@ import br.com.houseController.controllers.PrincipalController;
 import br.com.houseController.controllers.dialogs.AdicionarPagamentoController;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.receita.Receita;
@@ -75,6 +76,27 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@FXML
 	private VBox vbAddReceitas;
+	
+	@FXML
+	private Label jlSubtitulo;
+	
+	@FXML
+	private Label jlPeriodo;
+	
+	@FXML
+	private JFXButton jbPesquisar;
+	
+	@FXML
+	private Label jlReceitasUtilizadas;
+	
+	@FXML
+	private Label jlTituloValorRestante;
+	
+	@FXML
+	private Label jlSalvar;
+	
+	@FXML
+	private Label jlLimpar;
 	
 	RelacaoDespesaReceitaService relacaoDespesaReceitaService = new RelacaoDespesaReceitaService();
 	ReceitaService receitaService = new ReceitaService();
@@ -145,12 +167,12 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		
 		taskSalvar.setOnFailed(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Não foi dessa vez", e.getSource().getException().getMessage(), "Tá bom");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro5"), e.getSource().getException().getMessage(), Internationalization.getMessage("erro_button4"));
 		});
 		
 		taskSalvar.setOnSucceeded(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Legal", "Despesas alteradas com sucesso", "Tá bom");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso2"), Internationalization.getMessage("despesas_alteradas"), Internationalization.getMessage("certo_button3"));
 		});
 		new Thread(taskSalvar).start();
 		
@@ -164,16 +186,28 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		internacionalizar();
 		inicializaCampos();
 		inicializaListeners();
 		
 	}
 	
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_pagar_despesa"));
+		jlSubtitulo.setText(Internationalization.getMessage("subtitulo_pagar_despesa"));
+		jlPeriodo.setText(Internationalization.getMessage("titulo_periodo"));
+		jbPesquisar.setText(Internationalization.getMessage("botao_pesquisar"));
+		jlReceitasUtilizadas.setText(Internationalization.getMessage("titulo_receitas_utilizadas"));
+		jlTituloValorRestante.setText(Internationalization.getMessage("titulo_valor_restante"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
+		jlLimpar.setText(Internationalization.getMessage("botao_limpar"));
+	}
+
 	@FXML
 	private void handleAdicionar(){		
 		if(jlValorRestante.getText().equals("0.00")){
-			ScreenUtils.janelaInformação(spDialog, "Conta paga", "Não é possível adicionar mais pagamentos a esta conta pois ela já está paga", "Nem tinha visto");
+//			ScreenUtils.janelaInformação(spDialog, "Conta paga", "Não é possível adicionar mais pagamentos a esta conta pois ela já está paga", "Nem tinha visto");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_aviso_conta_paga"), Internationalization.getMessage("aviso_conta_paga"), Internationalization.getMessage("erro_button6"));
 			return;
 		}else{
 			Task<RelacaoDespesaReceita> taskRelacaoDespesaReceita = new Task<RelacaoDespesaReceita>(){
@@ -229,7 +263,7 @@ public class PagarDespesaController extends ParametrosObjetos implements Initial
 		hBox.getChildren().add(jlValor);
 		
 		//Cria o Botão para deleção e adiciona no HBox
-		JFXButton jbDeletar = new JFXButton("Deletar");
+		JFXButton jbDeletar = new JFXButton(Internationalization.getMessage("botao_excluir"));
 		hBox.getChildren().add(jbDeletar);
 		
 		//Evento para, quando clicar no botão de deleção, apagar o respectivo pagamento

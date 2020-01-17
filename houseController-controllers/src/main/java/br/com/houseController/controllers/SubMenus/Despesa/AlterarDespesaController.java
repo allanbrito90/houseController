@@ -7,7 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.meta.Meta;
@@ -56,6 +59,18 @@ public class AlterarDespesaController implements Initializable{
 	@FXML 
 	private Label jlTitulo;
 	
+	@FXML
+	private Label jlPeriodo;
+	
+	@FXML
+	private JFXButton jbPesquisar;
+	
+	@FXML
+	private Label jlEditar;
+	
+	@FXML
+	private Label jlExcluir;
+	
 	DespesaService despesaService = new DespesaService();
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
@@ -72,8 +87,9 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private void handleEditar(){
 			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null) {
-				if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals("Compras")) {
-					ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode alterar compras!", "Fechado");
+				if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals(Internationalization.getMessage("botao_compras"))) {
+//					ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode alterar compras!", "Fechado");
+					ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro4"), Internationalization.getMessage("nao_alterar_compras"), Internationalization.getMessage("erro_button3"));
 					return;
 				}
 				Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
@@ -87,15 +103,17 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private void handleExcluir(){
 		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
-			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals("Compras")) {
-				ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode excluir compras!", "Fechado");
+			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals(Internationalization.getMessage("botao_compras"))) {
+				ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro4"), Internationalization.getMessage("nao_excluir_compras"), Internationalization.getMessage("erro_button3"));
+//				ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode excluir compras!", "Fechado");
 				return;
 			}
 			Despesa despesa = jtvDespesas.getSelectionModel().getSelectedItem();
 			despesaService.delete(despesa.getId());
 			atualizaTabela();
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
+//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 		}
 	}
 	
@@ -112,6 +130,7 @@ public class AlterarDespesaController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		//Pega dados e coloca na tabela
 		preencheTabela(LocalDate.now().getMonthValue(),LocalDate.now().getYear());	
 		
@@ -157,6 +176,20 @@ public class AlterarDespesaController implements Initializable{
 			}
 		});
 	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_alterar_despesa"));
+		jlPeriodo.setText(Internationalization.getMessage("titulo_periodo"));
+		jbPesquisar.setText(Internationalization.getMessage("botao_pesquisar"));
+		colDesc.setText(Internationalization.getMessage("campo_descricao"));
+		colDtPagamento.setText(Internationalization.getMessage("campo_data_pagamento"));
+		colDtVencimento.setText(Internationalization.getMessage("campo_data_vencimento"));
+		colValor.setText(Internationalization.getMessage("titulo_valor"));
+		jlEditar.setText(Internationalization.getMessage("botao_editar"));
+		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
+	}
+
+
 
 	private void preencheTabela(int mes, int ano) {
 		ArrayList<Despesa> despesas = despesaService.findAllByMes(mes, ano);

@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXComboBox;
 import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.Controller;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.despesas.RelacaoDespesaReceita;
 import br.com.houseController.model.receita.Receita;
@@ -52,6 +53,24 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 	@FXML
 	private AnchorPane jbSalvar;
 	
+	@FXML
+	private Label jlTitulo;
+	
+	@FXML
+	private Label jlSubtitulo;
+	
+	@FXML
+	private Label jlTituloValorRestanteReceita;
+	
+	@FXML
+	private Label jlAdicioneValor;
+	
+	@FXML
+	private Label jlIncluir;
+	
+	@FXML
+	private Label jlCancelar;
+	
 	
 	private ReceitaService receitaService = new ReceitaService();
 	private BigDecimal valorRestanteDespesa;
@@ -62,6 +81,7 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		ArrayList<Receita> listReceita = receitaService.findAll();
 		for(Receita receita : listReceita){
 			jcbReceita.getItems().add(receita);
@@ -75,9 +95,6 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 		});
 		
 		
-		
-		
-		
 		jcbReceita.setCellFactory(new Callback<ListView<Receita>, ListCell<Receita>>() {
 			
 			@Override
@@ -89,7 +106,7 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 						super.updateItem(item, empty);
 						
 						if(item != null){
-							setText(item.getDescricaoPagamento() + " - R$" + item.getValor().setScale(2, RoundingMode.HALF_EVEN));
+							setText(item.getDescricaoPagamento() + " - $" + item.getValor().setScale(2, RoundingMode.HALF_EVEN));
 						}else{
 							setText("");
 						}
@@ -107,7 +124,7 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 				if(object == null) {
 					return null;
 				}else {
-					return object.getDescricaoPagamento() + " - R$" + object.getValor().setScale(2, RoundingMode.HALF_EVEN);
+					return object.getDescricaoPagamento() + " - $" + object.getValor().setScale(2, RoundingMode.HALF_EVEN);
 				}
 			}
 			
@@ -134,13 +151,22 @@ public class AdicionarPagamentoController extends Controller implements Initiali
 		
 	}
 
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("titulo_adicionar_pagamento"));
+		jlSubtitulo.setText(Internationalization.getMessage("campo_selecione_mes"));
+		jlTituloValorRestanteReceita.setText(Internationalization.getMessage("campo_valor_restante_receita"));
+		jlAdicioneValor.setText(Internationalization.getMessage("campo_adicione_valor"));
+		jlIncluir.setText(Internationalization.getMessage("botao_incluir"));
+		jlCancelar.setText(Internationalization.getMessage("botao_cancelar"));
+	}
+
 	public AdicionarPagamentoController() {
 		super();
 	}
 	
 	public void handleSalvar(){
 		if(jntf.getValor().compareTo(valorRestante)==1 || jntf.getValor().compareTo(valorRestanteDespesa)==1){
-			ScreenUtils.janelaInformação(spDialog, "Valor excedente", "Valor maior que o permitido", "Ok");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_valor_excedente"), Internationalization.getMessage("valor_excedente"), Internationalization.getMessage("certo_button2"));
 			return;
 		}
 		relacaoDespesaReceita.setIdReceita(jcbReceita.getSelectionModel().getSelectedItem().getId());

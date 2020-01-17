@@ -80,12 +80,12 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 		
 		taskSalvar.setOnSucceeded(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Opa", "Ingrediente cadastrado com sucesso", "Fechado");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso4"), Internationalization.getMessage("ingrediente_cadastrado"), Internationalization.getMessage("certo_button5"));
 		});
 		
 		taskSalvar.setOnFailed(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Oooops", e.getSource().getException().getMessage(), "Fechado");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro6"), e.getSource().getException().getMessage(), Internationalization.getMessage("erro_button3"));
 		});
 		new Thread(taskSalvar).start();
 	}
@@ -109,20 +109,20 @@ public class NovoIngredienteController extends ParametrosObjetos implements Init
 		}
 	
 		
-//		Platform.runLater(new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				if (getObjetos() != null) {
-//					ingrediente = (Ingrediente) getObjetos().get(0);
-//					jlTitulo.setText("Editar Ingrediente");
-//					jtfNome.setText(ingrediente.getDescricaoIngrediente());
-//					jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
-//				}else{
-//					ingrediente = new Ingrediente();
-//				}
-//			}
-//		});
+		Platform.runLater(new Runnable() {
+
+			@Override
+			public void run() {
+				if (getObjetos() != null) {
+					ingrediente = (Ingrediente) getObjetos().get(0);
+					jlTitulo.setText(Internationalization.getMessage("botao_alterar_ingrediente"));
+					jtfNome.setText(ingrediente.getDescricaoIngrediente());
+					jcbUnidadeMedida.getSelectionModel().select(ingrediente.getUnidadeMedida().getDescricao());
+				}else{
+					ingrediente = new Ingrediente();
+				}
+			}
+		});
 		
 		jtfNome.textProperty().addListener((obs, oldT, newT) -> {
 			ingrediente.setDescricaoIngrediente(newT);

@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="100.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1">
+<AnchorPane prefHeight="100.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="br.com.houseController.controllers.dialogs.AguardeController">
    <children>
       <JFXSpinner layoutX="25.0" layoutY="25.0" />
-      <Label layoutX="134.0" layoutY="42.0" text="Por favor, aguarde" />
+      <Label fx:id="jlAguarde" layoutX="134.0" layoutY="42.0" text="Por favor, aguarde" />
    </children>
 </AnchorPane>

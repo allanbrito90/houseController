@@ -29,7 +29,7 @@
                      <children>
                         <VBox fx:id="vbCampos" prefHeight="435.0" prefWidth="826.0" spacing="20.0">
                            <children>
-                              <Label text="Por favor, escolha o mês em que a despesa está:">
+                              <Label fx:id="jlSubtitulo" text="Por favor, escolha o mês em que a despesa está:">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -39,11 +39,11 @@
                               </Label>
                               <HBox prefHeight="29.0" prefWidth="830.0" spacing="5.0">
                                  <children>
-                                    <Label alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
+                                    <Label fx:id="jlPeriodo" alignment="CENTER" prefHeight="27.0" prefWidth="44.0" text="Período:" textAlignment="CENTER" />
                                     <Spinner fx:id="jsMes" prefHeight="25.0" prefWidth="96.0" />
                                     <Label text="/" />
                                     <Spinner fx:id="jsAno" prefHeight="25.0" prefWidth="96.0" />
-                                    <JFXButton onAction="#handlePesquisar" text="Pesquisar" />
+                                    <JFXButton fx:id="jbPesquisar" onAction="#handlePesquisar" text="Pesquisar" />
                                  </children>
                               </HBox>
                               <JFXComboBox fx:id="jcbDespesa" prefHeight="25.0" prefWidth="772.0" />
@@ -51,7 +51,7 @@
                                  <children>
                                     <HBox spacing="5.0">
                                        <children>
-                                          <Label text="Receitas Utilizadas">
+                                          <Label fx:id="jlReceitasUtilizadas" text="Receitas Utilizadas">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -75,9 +75,9 @@
                                           <VBox fx:id="vbReceitas" prefHeight="409.0" prefWidth="810.0" />
                                        </content>
                                     </ScrollPane>
-                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                    <HBox spacing="5.0" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-                                          <Label text="Valor Restante: R$" />
+                                          <Label fx:id="jlTituloValorRestante" text="Valor Restante: R$" />
                                           <Label fx:id="jlValorRestante" />
                                        </children>
                                     </HBox>
@@ -99,7 +99,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                              <Label fx:id="jlSalvar" layoutX="45.0" layoutY="15.0" text="Salvar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -116,7 +116,7 @@
                                     <Image url="@../../images/baseline_clear_black_24dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
+                              <Label fx:id="jlLimpar" layoutX="45.0" layoutY="15.0" text="Limpar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

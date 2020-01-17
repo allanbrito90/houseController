@@ -34,7 +34,7 @@
                            <children>
                               <VBox fx:id="vbCampos" prefHeight="200.0" prefWidth="415.0" spacing="20.0">
                                  <children>
-                                    <Label text="Por favor, preencha todos os Campos">
+                                    <Label fx:id="jlSubtitulo" text="Por favor, preencha todos os Campos">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -42,13 +42,13 @@
                                           <Insets />
                                        </VBox.margin>
                                     </Label>
-                                    <Label text="Categoria">
+                                    <Label fx:id="jlCategoria" text="Categoria">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
                                     <JFXComboBox fx:id="jcbCategoria" labelFloat="true" prefHeight="25.0" prefWidth="250.0" promptText="Categoria" />
-                                    <Label text="Descrição">
+                                    <Label fx:id="jlDescricao" text="Descrição">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -56,14 +56,14 @@
                                     <JFXTextArea fx:id="jtaDescricao" labelFloat="true" prefHeight="94.0" prefWidth="415.0" promptText="Descrição da Despesa" wrapText="true" />
                                     <VBox fx:id="vbValor" prefHeight="81.0" prefWidth="414.0">
                                        <children>
-                                          <Label text="Valor">
+                                          <Label fx:id="jlValor" text="Valor">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Label text="Usuário">
+                                    <Label fx:id="jlUsuario" text="Usuário">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -74,7 +74,7 @@
                               <VBox prefHeight="435.0" prefWidth="413.0" spacing="5.0">
                                  <children>
                                     <Pane prefHeight="120.0" prefWidth="413.0" />
-                                    <Label text="Data Pagamento">
+                                    <Label fx:id="jlDataPagamento" text="Data Pagamento">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -82,7 +82,7 @@
                                     <JFXDatePicker fx:id="jdpDtPagamento" />
                                     <VBox fx:id="vbVariavel" prefHeight="435.0" prefWidth="413.0" spacing="15.0" visible="false">
                                        <children>
-                                          <Label text="Data de Vencimento">
+                                          <Label fx:id="jlDataVencimento" text="Data de Vencimento">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -91,9 +91,9 @@
                                           <JFXCheckBox fx:id="jcbRepetirConta" text="Repetir" />
                                           <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                                              <children>
-                                                <Label text="Mês" />
+                                                <Label fx:id="jlMes" text="Mês" />
                                                 <Spinner fx:id="jsRepetirMes" />
-                                                <Label text="Ano" />
+                                                <Label fx:id="jlAno" text="Ano" />
                                                 <Spinner fx:id="jsRepetirAno" />
                                              </children>
                                           </HBox>
@@ -117,7 +117,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Salvar">
+                              <Label fx:id="jlSalvar" layoutX="45.0" layoutY="15.0" text="Salvar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -134,7 +134,7 @@
                                     <Image url="@../../images/baseline_clear_black_24dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Limpar">
+                              <Label fx:id="jlLimpar" layoutX="45.0" layoutY="15.0" text="Limpar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

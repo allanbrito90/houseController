@@ -18,6 +18,7 @@ import br.com.houseController.components.NumberTextField;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.Enums.EnumCategoria;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.receita.Receita;
@@ -83,6 +84,39 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@FXML
 	private AnchorPane jbAdd;
+	
+	@FXML
+	private Label jlSubtitulo;
+	
+	@FXML
+	private Label jlCategoria;
+	
+	@FXML
+	private Label jlDescricao;
+	
+	@FXML
+	private Label jlValor;
+	
+	@FXML
+	private Label jlUsuario;
+	
+	@FXML
+	private Label jlDataPagamento;
+	
+	@FXML
+	private Label jlDataVencimento;
+	
+	@FXML
+	private Label jlMes;
+	
+	@FXML
+	private Label jlAno;
+	
+	@FXML
+	private Label jlSalvar;
+	
+	@FXML
+	private Label jlLimpar;
 	
 	//TODO Colocar estes statics numa classe fixa para acesso por todos
 	final static int MINANO = 2000;
@@ -155,12 +189,12 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		
 		taskSalvar.setOnFailed(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Ah não", e.getSource().getException().getMessage(), "Tá bom");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro8"), e.getSource().getException().getMessage(), Internationalization.getMessage("erro_button4"));
 		});
 		
 		taskSalvar.setOnSucceeded(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Perfeito", "Despesa cadastrada com sucesso", "OK");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso6"), Internationalization.getMessage("despesa_cadastrada"), Internationalization.getMessage("certo_button7"));
 		});
 		new Thread(taskSalvar).start();
 	}
@@ -172,6 +206,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		vbValor.getChildren().add(jntfValor);
 		
 		inicializaCampos();
@@ -179,6 +214,21 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		
 	}
 	
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_nova_despesa"));
+		jlSubtitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
+		jlDescricao.setText(Internationalization.getMessage("campo_descricao"));
+		jlValor.setText(Internationalization.getMessage("campo_valor"));
+		jlUsuario.setText(Internationalization.getMessage("campo_atribuido_a"));
+		jlDataPagamento.setText(Internationalization.getMessage("campo_data_pagamento"));
+		jlDataVencimento.setText(Internationalization.getMessage("campo_data_vencimento"));
+		jcbRepetirConta.setText(Internationalization.getMessage("campo_repetir"));
+		jlMes.setText(Internationalization.getMessage("titulo_mes"));
+		jlAno.setText(Internationalization.getMessage("campo_ano"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
+		jlLimpar.setText(Internationalization.getMessage("botao_limpar"));
+	}
 
 	private void inicializaCampos() {
 		//Coloca valores no campo de Categorias e setando para o primeiro
@@ -206,7 +256,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 		
 		Platform.runLater(()->{
 			if(getObjetos() != null){
-				jlTitulo.setText("Editar Despesa");
+				jlTitulo.setText(Internationalization.getMessage("botao_alterar_despesa"));
 				despesa = (Despesa) getObjetos().get(0);
 //				jcbCategoria.getSelectionModel().select(despesa.getCategoria().name());
 				if(despesa.getCategoria().name().toUpperCase() == EnumCategoria.FIXA.name()){

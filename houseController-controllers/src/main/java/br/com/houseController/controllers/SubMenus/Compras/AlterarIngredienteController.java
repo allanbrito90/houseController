@@ -59,7 +59,8 @@ public class AlterarIngredienteController implements Initializable{
 			Ingrediente ingrediente = jtvIngredienteTable.getSelectionModel().getSelectedItem();
 			ScreenUtils.abrirNovaJanela("fxml/Compras/NovoIngrediente.fxml", ingrediente);
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
+//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 		}
 	}
 	// Event Listener on AnchorPane.onMouseClicked
@@ -71,7 +72,8 @@ public class AlterarIngredienteController implements Initializable{
 			ingredienteService.delete(ingrediente.getId());
 			atualizarTable();
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
+//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 		}
 	}
 	
@@ -93,7 +95,7 @@ public class AlterarIngredienteController implements Initializable{
 		jlTitulo.setText(Internationalization.getMessage("botao_alterar_ingrediente"));
 		colNome.setText(Internationalization.getMessage("campo_nome"));
 		colUnidadeMedida.setText(Internationalization.getMessage("campo_unidade_medida"));
-		jlEditar.setText(Internationalization.getMessage("campo_editar"));
+		jlEditar.setText(Internationalization.getMessage("botao_editar"));
 		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
 	}
 	private ObservableList<Ingrediente> preencheTabela() {

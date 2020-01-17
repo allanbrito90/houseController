@@ -79,7 +79,7 @@ public class NovoUsuarioController extends ParametrosObjetos implements Initiali
 			public void run() {
 				if (getObjetos() != null) {
 					usuario = (Usuario) getObjetos().get(0);
-					jlTitulo.setText(Internationalization.getMessage("titulo_editar"));
+					jlTitulo.setText(Internationalization.getMessage("botao_alterar_usuario"));
 					jtfNome.setText(usuario.getNome());
 					jtfLogin.setText(usuario.getLogin());
 					jpfSenha.setText("");

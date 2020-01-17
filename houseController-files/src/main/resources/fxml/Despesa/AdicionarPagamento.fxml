@@ -23,17 +23,17 @@
                         <Label fx:id="jlTitulo" layoutX="14.0" layoutY="7.0" text="Adicionar Pagamento" />
                      </children>
                   </AnchorPane>
-                  <Label text="Selecione a Receita:" />
+                  <Label fx:id="jlSubtitulo" text="Selecione a Receita:" />
                   <JFXComboBox fx:id="jcbReceita" prefHeight="25.0" prefWidth="380.0" />
                   <VBox fx:id="vbValor">
                      <children>
                         <HBox spacing="10.0">
                            <children>
-                              <Label text="Valor Restante dessa Receita: R$" />
+                              <Label fx:id="jlTituloValorRestanteReceita" text="Valor Restante dessa Receita: R$" />
                               <Label fx:id="jlValorRestanteReceita" text="0.00" />
                            </children>
                         </HBox>
-                        <Label text="Adicione o Valor:" />
+                        <Label fx:id="jlAdicioneValor" text="Adicione o Valor:" />
                      </children>
                   </VBox>
                   <HBox prefHeight="50.0" prefWidth="200.0" spacing="20.0">
@@ -45,7 +45,7 @@
                                     <Image url="@../../images/baseline_done_black_18dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Incluir">
+                              <Label fx:id="jlIncluir" layoutX="45.0" layoutY="15.0" text="Incluir">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -62,7 +62,7 @@
                                     <Image url="@../../images/baseline_clear_black_24dp.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="45.0" layoutY="15.0" text="Cancelar">
+                              <Label fx:id="jlCancelar" layoutX="45.0" layoutY="15.0" text="Cancelar">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

@@ -10,6 +10,7 @@ import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.produto.UnidadeMedida;
 import br.com.houseController.service.Compras.UnidadeMedidaService;
 import javafx.application.Platform;
@@ -35,6 +36,15 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 	@FXML
 	private Label jlTitulo;
 	
+	@FXML
+	private Label jlNome;
+	
+	@FXML
+	private Label jlSalvar;
+	
+	@FXML
+	private Label jlLimpar;
+	
 	UnidadeMedida unidadeMedida = new UnidadeMedida();
 	
 	
@@ -58,12 +68,12 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 		
 		taskSalvar.setOnSucceeded(e -> {
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Olha aí!", "Cadastro efetuado com sucesso", "Ufa!");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso3"), Internationalization.getMessage("unidade_medida_cadastrada"), Internationalization.getMessage("certo_button4"));
 		});
 		
 		taskSalvar.setOnFailed(e -> {
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Ooops", e.getSource().getException().getMessage() , "Beleza");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro6"), e.getSource().getException().getMessage() , Internationalization.getMessage("erro_button1"));
 		});
 		new Thread(taskSalvar).start();
 	}
@@ -75,6 +85,7 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		internacionalizar();
 		
 		jtfNome.textProperty().addListener((obs, oldT, newT) -> {
 			unidadeMedida.setDescricao(newT);
@@ -90,13 +101,21 @@ public class NovaUnidadeMedidaController extends ParametrosObjetos implements In
 			public void run() {
 				if (getObjetos() != null) {
 					unidadeMedida = (UnidadeMedida) getObjetos().get(0);
-					jlTitulo.setText("Editar Usuário");
+					jlTitulo.setText(Internationalization.getMessage("botao_alterar_unidade_medida"));
 					jtfNome.setText(unidadeMedida.getDescricao());
 					jcbFracionado.selectedProperty().setValue(unidadeMedida.getFracionado());
 				}
 			}
 		});
 		
+	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_nova_unidade_medida"));		
+		jlNome.setText(Internationalization.getMessage("campo_nome"));
+		jcbFracionado.setText(Internationalization.getMessage("campo_unidade_medida_fracionada"));
+		jlSalvar.setText(Internationalization.getMessage("botao_salvar"));
+		jlLimpar.setText(Internationalization.getMessage("botao_limpar"));
 	}
 
 }

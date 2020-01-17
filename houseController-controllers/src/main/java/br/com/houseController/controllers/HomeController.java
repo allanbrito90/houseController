@@ -322,6 +322,8 @@ public class HomeController implements Initializable{
 			}
 		}
 		
+		colMeta.setText(Internationalization.getMessage("botao_metas"));
+		colDias.setText(Internationalization.getMessage("titulo_col_dias_restantes"));
 		colMeta.setCellValueFactory(new PropertyValueFactory<>("titulo"));
 		colDias.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MetaTempo,String>, ObservableValue<String>>() {
 
@@ -355,6 +357,8 @@ public class HomeController implements Initializable{
 			}
 		}
 		
+		colDespesa.setText(Internationalization.getMessage("botao_despesas"));
+		colValor.setText(Internationalization.getMessage("titulo_valor"));
 		colDespesa.setCellValueFactory(new PropertyValueFactory<>("descricaoDespesa"));
 		colValor.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Despesa,String>, ObservableValue<String>>() {
 			

@@ -112,7 +112,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 							listProdutos.add(mapProduto.get(i));
 							produtoService.insert(mapProduto.get(i));
 						} else {
-							throw new CamposNaoPreenchidosException();
+							throw new CamposNaoPreenchidosException(Internationalization.getMessage("campos_nao_preenchidos"));
 						}
 					}
 				}
@@ -141,12 +141,13 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		
 		taskSalvar.setOnFailed(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Ai ai ai", e.getSource().getException().getMessage(), "OK");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro7"), e.getSource().getException().getMessage(), Internationalization.getMessage("erro_button5"));
 		});
 		
 		taskSalvar.setOnSucceeded(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, "Aeeee", "Compras cadastradas com sucesso", "Maravilha");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso5"), e.getSource().getException().getMessage(), Internationalization.getMessage("certo_button6"));
+//			ScreenUtils.janelaInformação(spDialog, "Aeeee", "Compras cadastradas com sucesso", "Maravilha");
 		});
 		new Thread(taskSalvar).start();
 	}

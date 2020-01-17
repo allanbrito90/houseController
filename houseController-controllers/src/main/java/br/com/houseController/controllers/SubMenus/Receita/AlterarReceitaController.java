@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import br.com.houseController.controllers.ParametrosObjetos;
 import br.com.houseController.controllers.utils.ScreenUtils;
+import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.model.receita.Receita;
 import br.com.houseController.service.Receita.ReceitaService;
 import javafx.beans.property.SimpleStringProperty;
@@ -20,28 +21,39 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
+import javafx.scene.control.Label;
 
 public class AlterarReceitaController extends ParametrosObjetos implements Initializable{
 	
 	@FXML
-	StackPane spDialog;
+	private StackPane spDialog;
 	
 	@FXML
-	TableView<Receita> jtvReceitaTable;
+	private TableView<Receita> jtvReceitaTable;
 	
 	@FXML
-	TableColumn<Receita, String> colData;
+	private TableColumn<Receita, String> colData;
 	
 	@FXML
-	TableColumn<Receita, BigDecimal> colValor;
+	private TableColumn<Receita, BigDecimal> colValor;
 	
 	@FXML
-	TableColumn<Receita, String> colDescricao;
+	private TableColumn<Receita, String> colDescricao;
+	
+	@FXML
+	private Label jlTitulo;
+	
+	@FXML
+	private Label jlEditar;
+	
+	@FXML
+	private Label jlExcluir;
 	
 	ReceitaService receitaService = new ReceitaService();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		internacionalizar();
 		
 		colData.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Receita,String>, ObservableValue<String>>() {
 			
@@ -53,6 +65,15 @@ public class AlterarReceitaController extends ParametrosObjetos implements Initi
 		colValor.setCellValueFactory(new PropertyValueFactory<>("valor"));
 		colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricaoPagamento"));
 		preencheTabela();
+	}
+
+	private void internacionalizar() {
+		jlTitulo.setText(Internationalization.getMessage("botao_alterar_receita"));
+		colData.setText(Internationalization.getMessage("coluna_data"));
+		colDescricao.setText(Internationalization.getMessage("campo_descricao"));
+		colValor.setText(Internationalization.getMessage("campo_valor"));
+		jlEditar.setText(Internationalization.getMessage("botao_editar"));
+		jlExcluir.setText(Internationalization.getMessage("botao_excluir"));
 	}
 
 	private void preencheTabela() {
@@ -70,7 +91,8 @@ public class AlterarReceitaController extends ParametrosObjetos implements Initi
 				Receita receita = receitaService.findOne(jtvReceitaTable.getSelectionModel().getSelectedItem());
 				ScreenUtils.abrirNovaJanela("fxml/Receita/NovaReceita.fxml", receita);
 			}else{
-				ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+				ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
+//				ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -84,7 +106,8 @@ public class AlterarReceitaController extends ParametrosObjetos implements Initi
 			receitaService.delete(receita.getId());
 			atualizarTable();
 		}else{
-			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro3"), Internationalization.getMessage("item_nao_selecionado"), Internationalization.getMessage("erro_button2"));
+//			ScreenUtils.janelaInformação(spDialog, "Ops", "Por favor, selecione um item.", "Sem problemas");
 		}
 	}
 
