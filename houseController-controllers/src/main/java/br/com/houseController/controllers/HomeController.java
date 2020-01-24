@@ -1,5 +1,7 @@
 package br.com.houseController.controllers;
 
+import static br.com.houseController.internationalization.Internationalization.getMessage;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URL;
@@ -99,11 +101,11 @@ public class HomeController implements Initializable{
 		Calendar calendar = Calendar.getInstance();
 		UsuarioLogado usuarioLogado = UsuarioLogado.getInstance();
 		if(calendar.get(Calendar.HOUR_OF_DAY) < 12){
-			saudacao = Internationalization.getMessage("bom_dia");
+			saudacao = getMessage("bom_dia");
 		}else if(calendar.get(Calendar.HOUR_OF_DAY) < 18){
-			saudacao = Internationalization.getMessage("boa_tarde");		
+			saudacao = getMessage("boa_tarde");		
 		}else{
-			saudacao = Internationalization.getMessage("boa_noite");
+			saudacao = getMessage("boa_noite");
 		}
 		saudacao += ", ";
 		jlSaudacao.setText(saudacao + usuarioLogado.getUsuario().getNome());

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTextField;
 
 import br.com.houseController.Exceptions.CamposNaoPreenchidosException;
 import br.com.houseController.components.NumberTextField;
@@ -24,11 +25,14 @@ import br.com.houseController.model.despesas.Compras;
 import br.com.houseController.model.despesas.Despesa;
 import br.com.houseController.model.produto.Ingrediente;
 import br.com.houseController.model.produto.Produto;
+import br.com.houseController.model.produto.UnidadeMedida;
 import br.com.houseController.service.Compras.ComprasService;
 import br.com.houseController.service.Despesa.DespesaService;
 import br.com.houseController.service.Produto.IngredienteService;
 import br.com.houseController.service.Produto.ProdutoService;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -41,6 +45,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.util.StringConverter;
 
 public class NovoProdutoController extends ParametrosObjetos implements Initializable {
 
@@ -86,7 +91,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO,
 			MINANO);
 
-	ObservableList<String> ingredientes;
+	ObservableList<Ingrediente> ingredientes;
 
 	ProdutoService produtoService = new ProdutoService();
 	IngredienteService ingredienteService = new IngredienteService();
@@ -157,7 +162,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 
 		BigDecimal totalMes = BigDecimal.ZERO;
 		for (Produto produto : listProdutos) {
-			totalMes = totalMes.add(produto.getValor().multiply(new BigDecimal(produto.getQuantidade())));
+			totalMes = totalMes.add(produto.getValor().multiply(produto.getQuantidade()));
 		}
 		Compras compras = comprasService.findOneByMonthAndYear(jsMes.getValue(), jsAno.getValue());
 		if (compras == null) {
@@ -233,12 +238,12 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		}
 	}
 
-	private ObservableList<String> carregaListaIngredientes() {
+	private ObservableList<Ingrediente> carregaListaIngredientes() {
 		IngredienteService ingredienteService = new IngredienteService();
 		List<Ingrediente> listIngrediente = ingredienteService.findAll();
 		ingredientes = FXCollections.observableArrayList();
 		for (Ingrediente ingrediente : listIngrediente) {
-			ingredientes.add(ingrediente.getDescricaoIngrediente());
+			ingredientes.add(ingrediente);
 		}
 		return ingredientes;
 	}
@@ -250,19 +255,56 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		vbProdutos.getChildren().add(hbProduto);
 		hbProduto.setSpacing(10);
 
-		JFXComboBox<String> jcbProduto = new JFXComboBox<>();
+		JFXComboBox<Ingrediente> jcbProduto = new JFXComboBox<>();
 		jcbProduto.setItems(carregaListaIngredientes());
 		jcbProduto.setPrefWidth(400);
+		
+		jcbProduto.setConverter(new StringConverter<Ingrediente>() {
+			
+			@Override
+			public String toString(Ingrediente object) {
+				return object.getDescricaoIngrediente();
+			}
+			
+			@Override
+			public Ingrediente fromString(String string) {
+				return jcbProduto.getItems().stream().filter(prod -> prod.getDescricaoIngrediente().equals(string)).findFirst().orElse(null);
+			}
+		});
+		
 		hbProduto.getChildren().add(jcbProduto);
-
+		
+		//----------------------------Campo de Quantidade
+		//Inicialmente criamos nossos nodes e deixamo-os corretamente confirgurados
+		/*Produtos Inteiros*/
 		Spinner<Integer> jsQtde = new Spinner<>();
 		SpinnerValueFactory<Integer> valorSpinnerInt = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0);
-		jsQtde.setValueFactory(valorSpinnerInt);// Por enquanto sertá usado
-												// Integer para ambos os casos
-		// SpinnerValueFactory<Double> valorSpinnerDoub = new
-		// SpinnerValueFactory.DoubleSpinnerValueFactory(0, 255, 0);
-		hbProduto.getChildren().add(jsQtde);
-
+		/*Produtos Fracionados*/
+		JFXTextField jtfQtde = new JFXTextField();
+		jsQtde.setValueFactory(valorSpinnerInt);
+		valorSpinnerInt = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0);
+		
+		//Ambos são adicionados ao HBox
+		hbProduto.getChildren().addAll(jtfQtde, jsQtde);
+		
+		//É analisado qual o tipo de Unidade de medida deve ser utilizado, caso o produto seja novo será utilizado o inteiro
+		if (produto!=null && produto.getIngrediente() != null && produto.getIngrediente().getUnidadeMedida().getFracionado()) {
+			jtfQtde.setVisible(true);
+			jtfQtde.setPrefSize(100, 50);
+			jsQtde.setVisible(false);
+			jsQtde.setPrefSize(0, 0);
+		}else if(produto != null && produto.getIngrediente() != null && !produto.getIngrediente().getUnidadeMedida().getFracionado()) {
+			jtfQtde.setVisible(false);
+			jtfQtde.setPrefSize(0, 0);
+			jsQtde.setVisible(true);
+			jsQtde.setPrefSize(100, 50);
+		}else {
+			jtfQtde.setVisible(false);
+			jtfQtde.setPrefSize(0, 0);
+			jsQtde.setVisible(true);
+			jtfQtde.setPrefSize(100, 50);
+		}
+		
 		NumberTextField jntfValor = new NumberTextField();
 		jntfValor.setPromptText(Internationalization.getMessage("campo_valor"));
 
@@ -271,32 +313,45 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jbApagar);
 
 		if (produto.getIngrediente() != null) {
-			jcbProduto.getSelectionModel().select(produto.getIngrediente().getDescricaoIngrediente());
-			if (produto.getIngrediente().getUnidadeMedida().getFracionado()) {
-				jsQtde.setValueFactory(valorSpinnerInt);// Por enquanto sertá
-														// usado Integer para
-														// ambos os casos
-			} else {
-				jsQtde.setValueFactory(valorSpinnerInt);// Por enquanto sertá
-														// usado Integer para
-														// ambos os casos
-			}
+			jcbProduto.getSelectionModel().select(produto.getIngrediente());
 		}
 
 		if (produto.getQuantidade() != null) {
-			jsQtde.getValueFactory().setValue(produto.getQuantidade());
+			jtfQtde.setText(produto.getQuantidade().toString());
+			jsQtde.getValueFactory().setValue(produto.getQuantidade().intValueExact());
 		}
 
 		if (produto.getValor() != null) {
 			jntfValor.setText(produto.getValor().toString());
 		}
-
-		jcbProduto.setOnAction((event) -> {
-			produto.setIngrediente(mapIngrediente.get(jcbProduto.getSelectionModel().getSelectedItem()));
+		
+		jcbProduto.getSelectionModel().selectedItemProperty().addListener((obs,oldV,newV)->{
+			if(newV.getUnidadeMedida().getFracionado()) {
+				jsQtde.setVisible(false);
+				jsQtde.setPrefSize(0, 0);
+				jtfQtde.setVisible(true);
+				jtfQtde.setPrefSize(100, 50);
+			}else {
+				jsQtde.setVisible(true);
+				jsQtde.setPrefSize(100, 50);
+				jtfQtde.setVisible(false);
+				jtfQtde.setPrefSize(0, 0);
+			}
 		});
 
+//		jcbProduto.setOnAction((event) -> {
+//			produto.setIngrediente(mapIngrediente.get(jcbProduto.getSelectionModel().getSelectedItem()));
+//		});
+
 		jsQtde.valueProperty().addListener((obs, oldV, newV) -> {
-			produto.setQuantidade(Integer.valueOf(newV));
+			BigDecimal valor = new BigDecimal(newV).setScale(2,RoundingMode.HALF_EVEN);
+			produto.setQuantidade(valor);
+			jtfQtde.setText(valor.toString());
+		});
+		
+		jtfQtde.textProperty().addListener((obs,oldV,newV)->{
+			produto.setQuantidade(new BigDecimal(newV));
+			jsQtde.getValueFactory().setValue(new BigDecimal(newV).setScale(2, RoundingMode.HALF_EVEN).intValueExact());
 		});
 
 		jntfValor.setOnKeyReleased((event) -> {

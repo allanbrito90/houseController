@@ -26,7 +26,7 @@ public class Produto {
 	private BigDecimal valor;
 	
 	@Column
-	private Integer quantidade;
+	private BigDecimal quantidade;
 	
 	@Column
 	private LocalDate periodoReferencia;
@@ -66,10 +66,10 @@ public class Produto {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
-	public Integer getQuantidade() {
+	public BigDecimal getQuantidade() {
 		return quantidade;
 	}
-	public void setQuantidade(Integer quantidade) {
+	public void setQuantidade(BigDecimal quantidade) {
 		this.quantidade = quantidade;
 	}	
 	

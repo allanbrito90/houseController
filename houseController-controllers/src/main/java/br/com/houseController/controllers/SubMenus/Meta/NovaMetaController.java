@@ -12,7 +12,10 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.concurrent.Task;
+
 import br.com.houseController.controllers.ParametrosObjetos;
+import br.com.houseController.controllers.dialogs.Aguarde2;
 import br.com.houseController.controllers.utils.ScreenUtils;
 import br.com.houseController.internationalization.Internationalization;
 import br.com.houseController.meta.Meta.MetaService;
@@ -23,8 +26,12 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 public class NovaMetaController extends ParametrosObjetos implements Initializable{
+	
+	@FXML
+	StackPane spDialog;
 	
 	@FXML
 	Label jlTitulo;
@@ -117,8 +124,26 @@ public class NovaMetaController extends ParametrosObjetos implements Initializab
 
 	@FXML
 	public void handleSalvar(){
-		MetaService metaService = new MetaService();
-		metaService.insert(meta);
+		Task<Void> taskSalvar = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				MetaService metaService = new MetaService();
+				metaService.insert(meta);
+				return null;
+			}
+			
+		};
+		
+		taskSalvar.setOnRunning(e->Aguarde2.mostrarJanelaAguarde());
+		taskSalvar.setOnFailed((e)->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro8"), e.getSource().getException().getMessage(), Internationalization.getMessage("erro_button2"));
+		});
+		taskSalvar.setOnSucceeded((e)->{
+			Aguarde2.finalizarJanelaAguarde();
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso4"), Internationalization.getMessage(""), Internationalization.getMessage("certo_button6"));
+		});
 	}
 	
 	@FXML

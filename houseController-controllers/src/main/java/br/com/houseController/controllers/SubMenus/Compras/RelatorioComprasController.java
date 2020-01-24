@@ -102,7 +102,7 @@ public class RelatorioComprasController implements Initializable{
 			BigDecimal quantidade = BigDecimal.ZERO;
 			for(Produto produto : listaProdutos){
 				if(produto.getPeriodoReferencia().getMonthValue() == i){
-					quantidade = new BigDecimal(produto.getQuantidade());
+					quantidade = produto.getQuantidade();
 					totalMes = totalMes.add(produto.getValor().multiply(quantidade));
 					total = total.add(produto.getValor().multiply(quantidade));
 				}
