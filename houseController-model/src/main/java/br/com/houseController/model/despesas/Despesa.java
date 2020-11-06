@@ -44,13 +44,16 @@ public class Despesa extends AbstractDespesa implements Serializable{
 		this.dtPagamento = dtPagamento;
 	}
 
-
+	
 
 	@Column
 	private LocalDate dtPagamento;
 	
 	@Column
 	private LocalDate dtVencimento;
+	
+	@Column
+	private Boolean isCompras;
 
 
 	public LocalDate getDtPagamento() {
