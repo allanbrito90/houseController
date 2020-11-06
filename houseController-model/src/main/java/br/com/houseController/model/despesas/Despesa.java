@@ -52,7 +52,7 @@ public class Despesa extends AbstractDespesa implements Serializable{
 	@Column
 	private LocalDate dtVencimento;
 	
-	@Column
+	@Column(columnDefinition = "false")
 	private Boolean isCompras;
 
 
@@ -70,5 +70,15 @@ public class Despesa extends AbstractDespesa implements Serializable{
 	public void setDtVencimento(LocalDate dtVencimento) {
 		this.dtVencimento = dtVencimento;
 	}
+
+	public Boolean isCompras() {
+		return isCompras;
+	}
+
+	public void setCompras(Boolean isCompras) {
+		this.isCompras = isCompras;
+	}
+	
+	
 	
 }

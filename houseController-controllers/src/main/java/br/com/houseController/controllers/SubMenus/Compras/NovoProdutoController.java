@@ -91,7 +91,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 	SpinnerValueFactory<Integer> anoSpinner = new SpinnerValueFactory.IntegerSpinnerValueFactory(MINANO, MAXANO,
 			MINANO);
 
-	ObservableList<Ingrediente> ingredientes;
+	ObservableList<String> ingredientes;
 
 	ProdutoService produtoService = new ProdutoService();
 	IngredienteService ingredienteService = new IngredienteService();
@@ -109,6 +109,8 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 			@Override
 			protected Void call() throws Exception {
 
+				Platform.runLater(()->{
+					
 				for (int i = 0; i <= indice; i++) {
 					if (mapProduto.get(i) != null) {
 						if (mapProduto.get(i).getIngrediente() != null && mapProduto.get(i).getQuantidade() != null && mapProduto.get(i).getValor() != null) {
@@ -117,7 +119,8 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 							listProdutos.add(mapProduto.get(i));
 							produtoService.insert(mapProduto.get(i));
 						} else {
-							throw new CamposNaoPreenchidosException(Internationalization.getMessage("campos_nao_preenchidos"));
+							System.out.println("Erro");
+//							throw new CamposNaoPreenchidosException(Internationalization.getMessage("campos_nao_preenchidos"));
 						}
 					}
 				}
@@ -135,6 +138,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 				}
 				armazenaTabelaCompras(jsMes.getValue(), jsAno.getValue());
 				carregaListaProdutos(LocalDate.of(jsAno.getValue(), jsMes.getValue(), 1));
+				});
 
 				return null;
 			}
@@ -151,8 +155,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		
 		taskSalvar.setOnSucceeded(e->{
 			Aguarde2.finalizarJanelaAguarde();
-			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso5"), e.getSource().getException().getMessage(), Internationalization.getMessage("certo_button6"));
-//			ScreenUtils.janelaInformação(spDialog, "Aeeee", "Compras cadastradas com sucesso", "Maravilha");
+			ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_sucesso5"), "Funcionou", Internationalization.getMessage("certo_button6"));
 		});
 		new Thread(taskSalvar).start();
 	}
@@ -177,7 +180,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		Despesa despesa = new Despesa();
 
 		// Coloca valores de descrição e data na despesa
-		despesa.setDescricaoDespesa("Compras");
+		despesa.setDescricaoDespesa(Internationalization.getMessage("botao_compras"));
 		despesa.setDtPagamento(compras.getPeriodoReferencia());
 
 		// Verifica se há despesa com este mês
@@ -186,7 +189,7 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		// Caso não haja, cria uma despesa com o mês vigente
 		if (despesa == null) {
 			despesa = new Despesa();
-			despesa.setDescricaoDespesa("Compras");
+			despesa.setDescricaoDespesa(Internationalization.getMessage("botao_compras"));
 			despesa.setDtPagamento(compras.getPeriodoReferencia());
 			despesa.setCategoria(EnumCategoria.VARIAVEL);
 			despesa.setContaAtiva(EnumContaAtiva.ATIVO);
@@ -195,6 +198,9 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		// Atualiza o valor
 		despesa.setValorDespesa(compras.getValorDespesa());
 
+		//Seta o valor como compra
+		despesa.setCompras(true);
+		
 		// Armazena na tabela de despesas como Despesa variável
 		despesaService.insert(despesa);
 	}
@@ -238,12 +244,12 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		}
 	}
 
-	private ObservableList<Ingrediente> carregaListaIngredientes() {
+	private ObservableList<String> carregaListaIngredientes() {
 		IngredienteService ingredienteService = new IngredienteService();
 		List<Ingrediente> listIngrediente = ingredienteService.findAll();
 		ingredientes = FXCollections.observableArrayList();
 		for (Ingrediente ingrediente : listIngrediente) {
-			ingredientes.add(ingrediente);
+			ingredientes.add(ingrediente.getDescricaoIngrediente());
 		}
 		return ingredientes;
 	}
@@ -255,23 +261,23 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		vbProdutos.getChildren().add(hbProduto);
 		hbProduto.setSpacing(10);
 
-		JFXComboBox<Ingrediente> jcbProduto = new JFXComboBox<>();
+		JFXComboBox<String> jcbProduto = new JFXComboBox<>();
 		jcbProduto.setItems(carregaListaIngredientes());
 		jcbProduto.setPrefWidth(400);
 		
-		jcbProduto.setConverter(new StringConverter<Ingrediente>() {
-			
-			@Override
-			public String toString(Ingrediente object) {
-				return object.getDescricaoIngrediente();
-			}
-			
-			@Override
-			public Ingrediente fromString(String string) {
-				return jcbProduto.getItems().stream().filter(prod -> prod.getDescricaoIngrediente().equals(string)).findFirst().orElse(null);
-			}
-		});
-		
+//		jcbProduto.setConverter(new StringConverter<Ingrediente>() {
+//			
+//			@Override
+//			public String toString(Ingrediente object) {
+//				return object.getDescricaoIngrediente();
+//			}
+//			
+//			@Override
+//			public Ingrediente fromString(Ingrediente string) {
+//				return jcbProduto.getItems().stream().filter(prod -> prod.getDescricaoIngrediente().equals(string)).findFirst().orElse(null);
+//			}
+//		});
+//		
 		hbProduto.getChildren().add(jcbProduto);
 		
 		//----------------------------Campo de Quantidade
@@ -288,21 +294,21 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().addAll(jtfQtde, jsQtde);
 		
 		//É analisado qual o tipo de Unidade de medida deve ser utilizado, caso o produto seja novo será utilizado o inteiro
-		if (produto!=null && produto.getIngrediente() != null && produto.getIngrediente().getUnidadeMedida().getFracionado()) {
+		if (produto.getIngrediente() != null && produto.getIngrediente().getUnidadeMedida().getFracionado()) {
 			jtfQtde.setVisible(true);
-			jtfQtde.setPrefSize(100, 50);
+			jtfQtde.setPrefSize(100, 10);
 			jsQtde.setVisible(false);
 			jsQtde.setPrefSize(0, 0);
-		}else if(produto != null && produto.getIngrediente() != null && !produto.getIngrediente().getUnidadeMedida().getFracionado()) {
+		}else if(produto.getIngrediente() != null && !produto.getIngrediente().getUnidadeMedida().getFracionado()) {
 			jtfQtde.setVisible(false);
 			jtfQtde.setPrefSize(0, 0);
 			jsQtde.setVisible(true);
-			jsQtde.setPrefSize(100, 50);
+			jsQtde.setPrefSize(100, 10);
 		}else {
 			jtfQtde.setVisible(false);
 			jtfQtde.setPrefSize(0, 0);
 			jsQtde.setVisible(true);
-			jtfQtde.setPrefSize(100, 50);
+			jsQtde.setPrefSize(100, 10);
 		}
 		
 		NumberTextField jntfValor = new NumberTextField();
@@ -313,12 +319,12 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		hbProduto.getChildren().add(jbApagar);
 
 		if (produto.getIngrediente() != null) {
-			jcbProduto.getSelectionModel().select(produto.getIngrediente());
+			jcbProduto.getSelectionModel().select(produto.getIngrediente().getDescricaoIngrediente());
 		}
 
 		if (produto.getQuantidade() != null) {
 			jtfQtde.setText(produto.getQuantidade().toString());
-			jsQtde.getValueFactory().setValue(produto.getQuantidade().intValueExact());
+			jsQtde.getValueFactory().setValue(produto.getQuantidade().intValue());
 		}
 
 		if (produto.getValor() != null) {
@@ -326,14 +332,16 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		}
 		
 		jcbProduto.getSelectionModel().selectedItemProperty().addListener((obs,oldV,newV)->{
-			if(newV.getUnidadeMedida().getFracionado()) {
+			produto.setIngrediente(ingredienteService.findOne(new Ingrediente(newV)));
+//			produto.setIngrediente(mapIngrediente.get(jcbProduto.getSelectionModel().getSelectedItem().getDescricaoIngrediente()));
+			if(produto.getIngrediente().getUnidadeMedida().getFracionado()) {
 				jsQtde.setVisible(false);
 				jsQtde.setPrefSize(0, 0);
 				jtfQtde.setVisible(true);
-				jtfQtde.setPrefSize(100, 50);
+				jtfQtde.setPrefSize(100, 10);
 			}else {
 				jsQtde.setVisible(true);
-				jsQtde.setPrefSize(100, 50);
+				jsQtde.setPrefSize(100, 10);
 				jtfQtde.setVisible(false);
 				jtfQtde.setPrefSize(0, 0);
 			}
@@ -350,8 +358,8 @@ public class NovoProdutoController extends ParametrosObjetos implements Initiali
 		});
 		
 		jtfQtde.textProperty().addListener((obs,oldV,newV)->{
-			produto.setQuantidade(new BigDecimal(newV));
-			jsQtde.getValueFactory().setValue(new BigDecimal(newV).setScale(2, RoundingMode.HALF_EVEN).intValueExact());
+			produto.setQuantidade(new BigDecimal(newV).setScale(2,RoundingMode.HALF_EVEN));
+			jsQtde.getValueFactory().setValue(new BigDecimal(newV).setScale(2, RoundingMode.HALF_EVEN).intValue());
 		});
 
 		jntfValor.setOnKeyReleased((event) -> {

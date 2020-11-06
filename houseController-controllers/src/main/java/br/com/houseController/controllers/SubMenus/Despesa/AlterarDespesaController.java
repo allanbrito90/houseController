@@ -87,8 +87,7 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private void handleEditar(){
 			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null) {
-				if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals(Internationalization.getMessage("botao_compras"))) {
-//					ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode alterar compras!", "Fechado");
+				if (jtvDespesas.getSelectionModel().getSelectedItem().isCompras()) {
 					ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro4"), Internationalization.getMessage("nao_alterar_compras"), Internationalization.getMessage("erro_button3"));
 					return;
 				}
@@ -103,7 +102,7 @@ public class AlterarDespesaController implements Initializable{
 	@FXML
 	private void handleExcluir(){
 		if(colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()) != null){
-			if (colDesc.getCellData(jtvDespesas.getSelectionModel().getSelectedIndex()).equals(Internationalization.getMessage("botao_compras"))) {
+			if (jtvDespesas.getSelectionModel().getSelectedItem().isCompras()) {
 				ScreenUtils.janelaInformação(spDialog, Internationalization.getMessage("header_erro4"), Internationalization.getMessage("nao_excluir_compras"), Internationalization.getMessage("erro_button3"));
 //				ScreenUtils.janelaInformação(spDialog, "Oh-oh", "Não se pode excluir compras!", "Fechado");
 				return;

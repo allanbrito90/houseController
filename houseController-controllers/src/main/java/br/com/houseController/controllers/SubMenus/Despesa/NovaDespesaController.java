@@ -149,6 +149,9 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 					despesa.setUsuario(mapUsuario.get(0));
 				}
 				
+				//Seta como não compra
+				despesa.setCompras(false);
+				
 				//Salva a instância
 				DespesaService despesaService = new DespesaService();
 				despesaService.insert(despesa);
@@ -218,6 +221,7 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	private void internacionalizar() {
 		jlTitulo.setText(Internationalization.getMessage("botao_nova_despesa"));
 		jlSubtitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
+		jlCategoria.setText(Internationalization.getMessage("campo_categoria"));
 		jlDescricao.setText(Internationalization.getMessage("campo_descricao"));
 		jlValor.setText(Internationalization.getMessage("campo_valor"));
 		jlUsuario.setText(Internationalization.getMessage("campo_atribuido_a"));
@@ -232,8 +236,8 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 
 	private void inicializaCampos() {
 		//Coloca valores no campo de Categorias e setando para o primeiro
-		jcbCategoria.getItems().add("Variável");
-		jcbCategoria.getItems().add("Fixa");
+		jcbCategoria.getItems().add(Internationalization.getMessage("opcao_variavel"));
+		jcbCategoria.getItems().add(Internationalization.getMessage("opcao_fixa"));
 		jcbCategoria.getSelectionModel().select(0);
 		
 		//Coloca valores no campo de Usuários e setando para o primeiro
@@ -258,14 +262,12 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 			if(getObjetos() != null){
 				jlTitulo.setText(Internationalization.getMessage("botao_alterar_despesa"));
 				despesa = (Despesa) getObjetos().get(0);
-//				jcbCategoria.getSelectionModel().select(despesa.getCategoria().name());
-				if(despesa.getCategoria().name().toUpperCase() == EnumCategoria.FIXA.name()){
+				if(despesa.getCategoria() == EnumCategoria.FIXA){
 					jcbCategoria.getSelectionModel().select(1);
 				}else{
 					jcbCategoria.getSelectionModel().select(0);
 				}
 				jntfValor.setText(despesa.getValorDespesa().setScale(2, RoundingMode.HALF_EVEN).toString());
-//				jcbPago.setSelected(despesa.getPago() != null ? despesa.getPago() : false);
 				if(despesa.getUsuario() != null){
 					jcbUsuario.getSelectionModel().select(despesa.getUsuario().getNome());
 				}
@@ -297,8 +299,18 @@ public class NovaDespesaController extends ParametrosObjetos implements Initiali
 	}
 	
 	private void inicializaListeners(){
-		jcbCategoria.valueProperty().addListener((obs,oldV,newV)->{
-			if(newV.toUpperCase().equals(EnumCategoria.FIXA.name())){
+//		jcbCategoria.valueProperty().addListener((obs,oldV,newV)->{
+//			if(newV.toUpperCase().equals(EnumCategoria.FIXA.name())){
+//				vbVariavel.setVisible(true);
+//				despesa.setCategoria(EnumCategoria.FIXA);
+//			}else{
+//				vbVariavel.setVisible(false);			
+//				despesa.setCategoria(EnumCategoria.VARIAVEL);
+//			}
+//		});
+		
+		jcbCategoria.getSelectionModel().selectedIndexProperty().addListener((obs,oldV,newV)->{
+			if(newV.intValue() == 1) {
 				vbVariavel.setVisible(true);
 				despesa.setCategoria(EnumCategoria.FIXA);
 			}else{

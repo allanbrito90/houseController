@@ -55,6 +55,9 @@ public class NovaReceitaController extends ParametrosObjetos implements Initiali
 	private Label jlSubtitulo;
 	
 	@FXML
+	private Label jlDataReceita;
+	
+	@FXML
 	private Label jlDescricao;
 	
 	@FXML
@@ -112,6 +115,7 @@ public class NovaReceitaController extends ParametrosObjetos implements Initiali
 	private void internacionalizar() {
 		jlTitulo.setText(Internationalization.getMessage("botao_nova_receita"));
 		jlSubtitulo.setText(Internationalization.getMessage("msg_preencha_campos"));
+		jlDataReceita.setText(Internationalization.getMessage("campo_data_receita"));
 		jlDescricao.setText(Internationalization.getMessage("campo_descricao"));
 		jlUsuario.setText(Internationalization.getMessage("campo_atribuido_a"));
 		jlValor.setText(Internationalization.getMessage("campo_valor"));
